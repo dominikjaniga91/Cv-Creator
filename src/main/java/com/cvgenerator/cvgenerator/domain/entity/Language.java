@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -20,13 +19,10 @@ public class Language {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String school;
-    private String city;
-    private LocalDateTime startDate;
-    private LocalDateTime finishDate;
-    private String degree;
-    private String specialization;
+    private String name;
     private String description;
+    private String level;
+    private Integer start;
 
 
 
