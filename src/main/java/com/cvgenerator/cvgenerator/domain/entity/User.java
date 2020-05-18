@@ -24,7 +24,7 @@ public class User {
     private boolean isActive;
     private LocalDateTime registrationDate;
 
-    @ManyToMany
+    @ManyToOne
     @JoinColumn(name = "userCvId")
     UserCv userCv;
 
