@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-@Entity
+@Entity(name = "languages")
 public class Language {
 
     @Id
