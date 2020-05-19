@@ -21,11 +21,10 @@ public class UserCvServiceImpl implements UserCvService {
     }
 
     @Override
-    public UserCv saveUserCv(Long userId, UserCv userCv) {
+    public void saveUserCv(Long userId, UserCv userCv) {
 
         User user = userRepository.findById(userId).orElseThrow();
-        UserCv newUserCv = userCvRepository.save(userCv);
-        newUserCv.setUser(user);
-        return newUserCv;
+        userCv.setUser(user);
+        userCvRepository.save(userCv);
     }
 }

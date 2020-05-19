@@ -4,5 +4,5 @@ import com.cvgenerator.cvgenerator.domain.entity.UserCv;
 
 public interface UserCvService {
 
-    UserCv saveUserCv(Long userId, UserCv userCv);
+    void saveUserCv(Long userId, UserCv userCv);
 }
