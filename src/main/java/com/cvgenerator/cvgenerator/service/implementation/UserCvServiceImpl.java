@@ -15,8 +15,9 @@ public class UserCvServiceImpl implements UserCvService {
     private UserRepository userRepository;
 
     @Autowired
-    public UserCvServiceImpl(UserCvRepository userCvRepository) {
+    public UserCvServiceImpl(UserCvRepository userCvRepository, UserRepository userRepository) {
         this.userCvRepository = userCvRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
