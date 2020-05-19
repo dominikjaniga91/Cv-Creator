@@ -1,7 +1,9 @@
 package com.cvgenerator.cvgenerator.service.implementation;
 
+import com.cvgenerator.cvgenerator.domain.entity.User;
 import com.cvgenerator.cvgenerator.domain.entity.UserCv;
 import com.cvgenerator.cvgenerator.repository.UserCvRepository;
+import com.cvgenerator.cvgenerator.repository.UserRepository;
 import com.cvgenerator.cvgenerator.service.UserCvService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 public class UserCvServiceImpl implements UserCvService {
 
     private UserCvRepository userCvRepository;
+    private UserRepository userRepository;
 
     @Autowired
     public UserCvServiceImpl(UserCvRepository userCvRepository) {
@@ -17,8 +20,11 @@ public class UserCvServiceImpl implements UserCvService {
     }
 
     @Override
-    public UserCv saveUserCv(UserCv userCv) {
+    public UserCv saveUserCv(Long userId, UserCv userCv) {
 
-        return userCvRepository.save(userCv);
+        User user = userRepository.findById(userId).orElseThrow();
+        UserCv newUserCv = userCvRepository.save(userCv);
+        newUserCv.setUser(user);
+        return newUserCv;
     }
 }
