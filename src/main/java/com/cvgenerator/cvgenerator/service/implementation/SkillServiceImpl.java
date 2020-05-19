@@ -22,12 +22,10 @@ public class SkillServiceImpl implements SkillService {
     }
 
     @Override
-    public Skill saveSkill(Long userCvId, Skill skill) {
+    public void saveSkill(Long userCvId, Skill skill) {
 
         UserCv userCv = userCvRepository.findById(userCvId).orElseThrow();
-        Skill newSkill = skillRepository.save(skill);
-        newSkill.setUserCv(userCv);
-
-        return newSkill;
+        skill.setUserCv(userCv);
+        skillRepository.save(skill);
     }
 }

@@ -4,5 +4,5 @@ import com.cvgenerator.cvgenerator.domain.entity.Skill;
 
 public interface SkillService {
 
-    Skill saveSkill(Long userCvId, Skill skill);
+    void saveSkill(Long userCvId, Skill skill);
 }
