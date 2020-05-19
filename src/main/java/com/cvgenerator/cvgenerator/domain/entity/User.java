@@ -3,6 +3,8 @@ package com.cvgenerator.cvgenerator.domain.entity;
 import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Getter
@@ -22,11 +24,11 @@ public class User {
     private String email;
     private String password;
     private boolean isActive;
-    private LocalDateTime registrationDate;
+    private LocalDateTime registration;
 
-    @ManyToOne
-    @JoinColumn(name = "userCvId")
-    UserCv userCv;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    List<UserCv> listOfUserCv = new ArrayList<>();
 
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    List<Token> tokens;
 }

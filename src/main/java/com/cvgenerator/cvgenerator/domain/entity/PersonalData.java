@@ -1,10 +1,8 @@
 package com.cvgenerator.cvgenerator.domain.entity;
 
 import lombok.*;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -28,5 +26,12 @@ public class PersonalData {
     private String github;
     private String twitter;
     private String website;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "addressId")
+    private Address address;
+
+    @OneToOne(mappedBy = "personalData")
+    private UserCv userCv;
 
 }

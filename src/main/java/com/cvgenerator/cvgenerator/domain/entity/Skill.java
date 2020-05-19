@@ -2,10 +2,7 @@ package com.cvgenerator.cvgenerator.domain.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 @Getter
@@ -24,4 +21,8 @@ public class Skill {
     private String description;
     private String level;
     private Integer start;
+
+    @ManyToOne
+    @JoinColumn(name = "userCvId")
+    private UserCv userCv;
 }

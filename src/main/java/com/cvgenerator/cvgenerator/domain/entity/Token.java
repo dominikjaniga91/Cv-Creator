@@ -23,4 +23,9 @@ public class Token {
     @Enumerated(EnumType.STRING)
     private TokenType tokenType;
 
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
+
+
 }

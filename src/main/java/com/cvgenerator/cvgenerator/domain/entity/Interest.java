@@ -18,4 +18,8 @@ public class Interest {
     private Long id;
     private String name;
 
+    @ManyToOne
+    @JoinColumn(name = "userCvId")
+    private UserCv userCv;
+
 }

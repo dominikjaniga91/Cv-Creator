@@ -2,10 +2,9 @@ package com.cvgenerator.cvgenerator.domain.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,5 +22,31 @@ public class UserCv {
     private String templateName;
     private String summary;
     private String clause;
+
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
+
+    @OneToOne
+    @JoinColumn(name = "personalDataId")
+    private PersonalData personalData;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userCv")
+    List<Project> projects;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userCv")
+    List<Skill> skills;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userCv")
+    List<Language> languages;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userCv")
+    List<Interest> interests;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userCv")
+    List<Education> educations;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userCv")
+    List<Experience> experiences;
 
 }
