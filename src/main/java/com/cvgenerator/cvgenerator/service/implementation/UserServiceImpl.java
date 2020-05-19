@@ -6,6 +6,8 @@ import com.cvgenerator.cvgenerator.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -19,5 +21,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User saveUser(User user) {
         return null;
+    }
+
+    public Optional<User> findUserById(Long id){
+        return userRepository.findById(id);
     }
 }
