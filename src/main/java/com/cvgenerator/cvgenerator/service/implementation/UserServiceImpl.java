@@ -19,10 +19,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User saveUser(User user) {
-        return null;
+    public void saveUser(User user) {
+        userRepository.save(user);
     }
 
+    @Override
     public Optional<User> findUserById(Long id){
         return userRepository.findById(id);
     }
