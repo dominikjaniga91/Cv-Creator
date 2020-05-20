@@ -1,9 +1,9 @@
 package com.cvgenerator.config.security;
 
-import lombok.Getter;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 
-@Getter
+@Data
 public class JwtConfig {
 
     @Value("${jwt.secret}")
