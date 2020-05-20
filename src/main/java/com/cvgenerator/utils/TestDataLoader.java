@@ -1,4 +1,4 @@
-package com.cvgenerator;
+package com.cvgenerator.utils;
 
 
 import com.cvgenerator.repository.*;
