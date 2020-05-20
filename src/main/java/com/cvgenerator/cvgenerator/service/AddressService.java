@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface AddressService {
 
-   Address saveAddress(Address address);
+   void saveAddress(Long personalDataId, Address address);
 }
