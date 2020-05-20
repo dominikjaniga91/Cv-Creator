@@ -1,4 +1,4 @@
-package com.cvgenerator.cvgenerator.config.security;
+package com.cvgenerator.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -24,6 +24,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/h2-console/**").permitAll()
                 .and().httpBasic()
                 .and().formLogin().permitAll();
+
+        http.headers().frameOptions().disable();
     }
 
     @Bean
