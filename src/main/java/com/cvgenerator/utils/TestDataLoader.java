@@ -1,23 +1,10 @@
 package com.cvgenerator.utils;
 
-<<<<<<< HEAD:src/main/java/com/cvgenerator/utils/TestDataLoader.java
-import com.cvgenerator.domain.entity.*;
-import com.cvgenerator.domain.entity.User;
-import com.cvgenerator.domain.entity.UserCv;
-import com.cvgenerator.repository.InterestRepository;
-import com.cvgenerator.repository.LanguageRepository;
-import com.cvgenerator.repository.*;
-import com.cvgenerator.domain.entity.Address;
-import com.cvgenerator.domain.entity.PersonalData;
-import com.cvgenerator.repository.*;
-=======
-
 import com.cvgenerator.repository.*;
 import com.cvgenerator.domain.entity.Address;
 import com.cvgenerator.domain.entity.PersonalData;
 import com.cvgenerator.domain.entity.User;
 import com.cvgenerator.domain.entity.UserCv;
->>>>>>> security_and_authentication:src/main/java/com/cvgenerator/utils/TestDataLoader.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
