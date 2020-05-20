@@ -1,5 +1,7 @@
 package com.cvgenerator.config.security;
 
+import com.cvgenerator.service.implementation.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,10 +13,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private UserDetailsServiceImpl userDetailsService;
+
+    @Autowired
+    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("Dominik").password(passwordEncoder().encode("dominik123")).roles("ADMIN");
+        auth.userDetailsService(userDetailsService);
     }
 
     @Override

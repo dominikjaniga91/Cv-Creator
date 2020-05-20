@@ -1,14 +1,11 @@
 package com.cvgenerator;
 
-import com.cvgenerator.cvgenerator.domain.entity.*;
-import com.cvgenerator.repository.InterestRepository;
-import com.cvgenerator.repository.LanguageRepository;
-import com.cvgenerator.cvgenerator.repository.*;
+
+import com.cvgenerator.repository.*;
 import com.cvgenerator.domain.entity.Address;
 import com.cvgenerator.domain.entity.PersonalData;
 import com.cvgenerator.domain.entity.User;
 import com.cvgenerator.domain.entity.UserCv;
-import com.cvgenerator.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
