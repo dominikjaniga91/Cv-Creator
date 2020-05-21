@@ -12,15 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Component
 public class AuthenticationFilter extends OncePerRequestFilter {
 
-    private AuthenticationService authenticationService;
-
-    @Autowired
-    public AuthenticationFilter(AuthenticationService authenticationService) {
-        this.authenticationService = authenticationService;
-    }
+    private AuthenticationService authenticationService = new AuthenticationService();
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
