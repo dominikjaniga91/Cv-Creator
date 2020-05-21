@@ -1,5 +1,7 @@
 package com.cvgenerator.config.security;
 
+import com.cvgenerator.config.filter.AuthenticationFilter;
+import com.cvgenerator.config.filter.LoginFilter;
 import com.cvgenerator.service.implementation.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -31,7 +34,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/h2-console/**").permitAll()
                 .and().httpBasic()
-                .and().formLogin().permitAll();
+                .and().formLogin().permitAll()
+                .and()
+                .addFilterBefore(new LoginFilter("/login", authenticationManager()),
+                        UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new AuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         http.headers().frameOptions().disable();
     }
@@ -45,4 +52,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public JwtConfig jwtConfig(){
         return new JwtConfig();
     }
+
 }
