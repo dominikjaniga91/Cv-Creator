@@ -22,11 +22,13 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private AuthenticationService authenticationService;
     private UserDetailsServiceImpl userDetailsService;
 
     @Autowired
-    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService) {
+    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService, AuthenticationService authenticationService) {
         this.userDetailsService = userDetailsService;
+        this.authenticationService = authenticationService;
     }
 
     @Override
@@ -45,9 +47,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/h2-console/**").permitAll()
                 .and()
-                .addFilterBefore(new LoginFilter("/login", authenticationManager()),
-                        UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new AuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new LoginFilter("/login", authenticationManager(), authenticationService),
+                                UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new AuthenticationFilter(authenticationService), UsernamePasswordAuthenticationFilter.class);
 
         http.headers().frameOptions().disable();
     }
@@ -57,10 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public JwtConfig jwtConfig(){
-        return new JwtConfig();
-    }
+
 
     @Bean
     CorsConfigurationSource corsConfigurationSource(){
