@@ -1,5 +1,6 @@
 package com.cvgenerator.domain.entity;
 
+import com.cvgenerator.domain.enums.LanguageLevel;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,8 +19,10 @@ public class Language {
     private Long id;
     private String name;
     private String description;
-    private String level;
-    private Integer start;
+
+    @Enumerated(EnumType.STRING)
+    private LanguageLevel level;
+    private Integer stars;
 
     @ManyToOne
     @JoinColumn(name = "userCvId")

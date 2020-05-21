@@ -1,6 +1,7 @@
 package com.cvgenerator.utils;
 
 import com.cvgenerator.domain.entity.*;
+import com.cvgenerator.domain.enums.LanguageLevel;
 import com.cvgenerator.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -101,11 +102,11 @@ public class TestDataLoader {
         createInterest("Komputery, Piwo, Czytanie książek ", cv4);
         createInterest("Siatkówka, Piwo, Koszykówka ", cv5);
 
-        createLanguage("English", null, "B2", 3, cv1);
-        createLanguage("Germany", null, "B1", 3, cv2);
-        createLanguage("French", null, "C1", 4, cv3);
-        createLanguage("English", null, "C2", 5, cv4);
-        createLanguage("Germany", null, "B2", 3, cv5);
+        createLanguage("English", null, LanguageLevel.B2, 3, cv1);
+        createLanguage("Germany", null, LanguageLevel.B1, 3, cv2);
+        createLanguage("French", null, LanguageLevel.C1, 4, cv3);
+        createLanguage("English", null, LanguageLevel.C2, 5, cv4);
+        createLanguage("Germany", null, LanguageLevel.B2, 3, cv5);
 
         createProject("Car Database", LocalDate.of(2015,1,1), LocalDate.of(2020,6,30), "Simple CRUD app", cv1);
         createProject("Flights Database", LocalDate.of(2015,1,1), LocalDate.of(2020,6,30), "Simple CRUD app", cv2);
@@ -190,7 +191,7 @@ public class TestDataLoader {
 
     private void createLanguage(String name,
                                 String description,
-                                String level,
+                                LanguageLevel level,
                                 Integer stars,
                                 UserCv cv){
         Language language = new Language();
