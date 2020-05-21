@@ -4,6 +4,7 @@ import com.cvgenerator.domain.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,6 +16,7 @@ import java.util.Collections;
 import java.util.Date;
 
 @Service
+@NoArgsConstructor
 public class AuthenticationService {
 
     private JwtConfig jwtConfig;
