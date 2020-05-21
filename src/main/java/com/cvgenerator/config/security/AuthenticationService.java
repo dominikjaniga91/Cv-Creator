@@ -50,7 +50,7 @@ public class AuthenticationService {
 
             Claims claims = Jwts.parser()
                                 .setSigningKey(jwtConfig.getSecret())
-                                .parseClaimsJws(token.substring(8))
+                                .parseClaimsJws(token.substring(7))
                                 .getBody();
 
             String username = claims.getSubject();
