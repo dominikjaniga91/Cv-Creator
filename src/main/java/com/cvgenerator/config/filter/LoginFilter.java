@@ -19,14 +19,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collections;
 
-
 public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 
-    private AuthenticationService authenticationService = new AuthenticationService();
+    private AuthenticationService authenticationService;
 
-    public LoginFilter(String url, AuthenticationManager authenticationManager) {
+    public LoginFilter(String url, AuthenticationManager authenticationManager, AuthenticationService authenticationService) {
         super(new AntPathRequestMatcher(url));
         setAuthenticationManager(authenticationManager);
+        this.authenticationService = authenticationService;
     }
 
     @SneakyThrows
