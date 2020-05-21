@@ -9,5 +9,5 @@ public interface UserService {
 
     void saveUser(User user);
 
-    Optional<User> findUserById(Long id);
+    User findUserById(Long id);
 }
