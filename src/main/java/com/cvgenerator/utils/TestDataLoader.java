@@ -4,6 +4,7 @@ import com.cvgenerator.domain.entity.*;
 import com.cvgenerator.domain.enums.LanguageLevel;
 import com.cvgenerator.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
@@ -23,6 +24,7 @@ public class TestDataLoader {
     private EducationRepository educationRepository;
     private CourseRepository courseRepository;
     private AddressRepository addressRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public TestDataLoader(UserRepository userRepository,
@@ -35,7 +37,8 @@ public class TestDataLoader {
                           ExperienceRepository experienceRepository,
                           EducationRepository educationRepository,
                           CourseRepository courseRepository,
-                          AddressRepository addressRepository) {
+                          AddressRepository addressRepository,
+                          PasswordEncoder passwordEncoder) {
 
         this.userRepository = userRepository;
         this.userCvRepository = userCvRepository;
@@ -48,16 +51,17 @@ public class TestDataLoader {
         this.educationRepository = educationRepository;
         this.courseRepository = courseRepository;
         this.addressRepository = addressRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostConstruct
     public void saveUsersToDatabase(){
 
-        User user1 = createUser("Dominik", "Janiga", "dominikjaniga@gmail.com", "dominik123", true, "ROLE_USER", LocalDateTime.now());
-        User user2 = createUser("Andrzej", "Kowalski", "andrezjkowalski@gmail.com", "andrej123", true, "ROLE_USER", LocalDateTime.now());
-        User user3 = createUser("Jurek", "Nowak", "jureknowak@gmail.com", "jurek123", true, "ROLE_USER", LocalDateTime.now());
-        User user4 = createUser("Katarzyna", "Piekarska", "katarzynapiekarska@gmail.com", "kasia123", true, "ROLE_USER", LocalDateTime.now());
-        User user5 = createUser("Anna", "Pompka", "annapompka@gmail.com", "anna123", false, "ROLE_USER", LocalDateTime.now());
+        User user1 = createUser("Dominik", "Janiga", "dominikjaniga@gmail.com",passwordEncoder.encode("dominik123"), true, "ROLE_USER", LocalDateTime.now());
+        User user2 = createUser("Andrzej", "Kowalski", "andrezjkowalski@gmail.com", passwordEncoder.encode("andrej123"), true, "ROLE_USER", LocalDateTime.now());
+        User user3 = createUser("Jurek", "Nowak", "jureknowak@gmail.com", passwordEncoder.encode("jurek123"), true, "ROLE_USER", LocalDateTime.now());
+        User user4 = createUser("Katarzyna", "Piekarska", "katarzynapiekarska@gmail.com", passwordEncoder.encode("kasia123"), true, "ROLE_USER", LocalDateTime.now());
+        User user5 = createUser("Anna", "Pompka", "annapompka@gmail.com", passwordEncoder.encode("anna123"), false, "ROLE_USER", LocalDateTime.now());
 
         Address address1 = createAddress("Źródlana", 56, "33-111", "Koszyce Male");
         Address address2 = createAddress("Bitwy pod Lenino", 24, "80-809", "Gdansk");
