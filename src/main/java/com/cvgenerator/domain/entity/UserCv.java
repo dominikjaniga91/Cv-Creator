@@ -31,21 +31,21 @@ public class UserCv {
     private PersonalData personalData;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userCv")
-    List<Project> projects;
+    private List<Project> projects;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userCv")
-    List<Skill> skills;
+    private List<Skill> skills;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userCv")
-    List<Language> languages;
+    private List<Language> languages;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userCv")
-    List<Interest> interests;
+    private List<Interest> interests;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userCv")
-    List<Education> educations;
+    private List<Education> educations;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userCv")
-    List<Experience> experiences;
+    private List<Experience> experiences;
 
 }
