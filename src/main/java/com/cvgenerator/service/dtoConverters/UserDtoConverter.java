@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserDtoConverter implements EntityToDtoConverter<UserDto, User>{
+public class UserDtoConverter implements EntityToDtoConverter<UserDto, User>, DtoToEntityConverter<User, UserDto>{
 
     private ModelMapper modelMapper;
 
@@ -19,5 +19,10 @@ public class UserDtoConverter implements EntityToDtoConverter<UserDto, User>{
     @Override
     public UserDto convertToDto(User user) {
         return modelMapper.map(user, UserDto.class);
+    }
+
+    @Override
+    public User convertToEntity(UserDto userDto) {
+        return modelMapper.map(userDto, User.class);
     }
 }
