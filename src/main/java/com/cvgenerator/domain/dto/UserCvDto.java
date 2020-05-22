@@ -18,8 +18,7 @@ public class UserCvDto {
     private String templateName;
     private String summary;
     private String clause;
-    private User user;
-    private PersonalData personalData;
+    private PersonalDataDto personalData;
     private List<ProjectDto> projects;
     private List<SkillDto> skills;
     private List<LanguageDto> languages;

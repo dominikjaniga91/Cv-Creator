@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface UserCvRepository extends JpaRepository<UserCv, Long> {
 
     Optional<List<UserCv>> getAllByUser(User user);
+
+    Optional<UserCv> findUserCvById(Long id);
 }
