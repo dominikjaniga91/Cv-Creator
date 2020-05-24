@@ -1,5 +1,6 @@
 package com.cvgenerator.controller;
 
+import com.cvgenerator.domain.dto.UserDto;
 import com.cvgenerator.domain.entity.User;
 import com.cvgenerator.service.implementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,11 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public void createUserAccount(@RequestBody User user){
         userService.saveUser(user);
+    }
+
+    @PutMapping("/user")
+    public void updateUserAccount(@RequestBody UserDto userDto){
+        userService.updateUser(userDto);
     }
 
 }
