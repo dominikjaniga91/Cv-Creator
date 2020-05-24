@@ -45,4 +45,11 @@ public class UserController {
         userService.updateUser(userDto);
     }
 
+    @DeleteMapping("/user/{userId}")
+    public void deleteUserAccount(@PathVariable Long userId,
+                                  @RequestParam String password){
+
+        userService.deleteUserAccount(userId, password);
+    }
+
 }

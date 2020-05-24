@@ -6,8 +6,6 @@ import com.cvgenerator.domain.entity.UserCv;
 import com.cvgenerator.repository.UserCvRepository;
 import com.cvgenerator.repository.UserRepository;
 import com.cvgenerator.service.UserService;
-import com.cvgenerator.service.dtoConverters.UserCvDtoConverter;
-import com.cvgenerator.service.dtoConverters.UserDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -59,5 +57,15 @@ public class UserServiceImpl implements UserService {
         if(user.getPassword() != null){
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
+    }
+
+    public void deleteUserAccount(Long userId, String password){
+
+        User user = userRepository.findById(userId).orElseThrow();
+
+        if(user.getPassword().equals(password)){
+            userRepository.delete(user);
+        }
+
     }
 }
