@@ -20,7 +20,7 @@ public class Skill {
     private String name;
     private String description;
     private String level;
-    private Integer start;
+    private Integer stars;
 
     @ManyToOne
     @JoinColumn(name = "userCvId")
