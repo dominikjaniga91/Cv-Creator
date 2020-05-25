@@ -20,6 +20,7 @@ public class Experience {
     private Long id;
     private String company;
     private String city;
+    private String position;
     private LocalDate startDate;
     private LocalDate finishDate;
     private String description;
