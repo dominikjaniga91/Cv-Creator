@@ -1,11 +1,13 @@
 package com.cvgenerator.service.implementation;
 
+import com.cvgenerator.domain.dto.UserCvShortDto;
 import com.cvgenerator.domain.dto.UserDto;
 import com.cvgenerator.domain.entity.User;
 import com.cvgenerator.domain.entity.UserCv;
 import com.cvgenerator.repository.UserCvRepository;
 import com.cvgenerator.repository.UserRepository;
 import com.cvgenerator.service.UserService;
+import com.cvgenerator.service.dtoConverters.UserCvShortDtoConverter;
 import com.cvgenerator.service.dtoConverters.UserDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,17 +22,20 @@ public class UserServiceImpl implements UserService {
     private UserCvRepository userCvRepository;
     private PasswordEncoder passwordEncoder;
     private UserDtoConverter userDtoConverter;
+    private UserCvShortDtoConverter userCvShortDtoConverter;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
                            UserCvRepository userCvRepository,
                            PasswordEncoder passwordEncoder,
-                           UserDtoConverter userDtoConverter){
+                           UserDtoConverter userDtoConverter,
+                           UserCvShortDtoConverter userCvShortDtoConverter){
 
         this.userRepository = userRepository;
         this.userCvRepository = userCvRepository;
         this.passwordEncoder = passwordEncoder;
         this.userDtoConverter = userDtoConverter;
+        this.userCvShortDtoConverter = userCvShortDtoConverter;
     }
 
     @Override
@@ -45,14 +50,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<List<UserCv>> getListOfUserCv(Long id) {
+    public List<UserCvShortDto> getListOfUserCv(Long id) {
 
         User user = userRepository.findById(id).orElseThrow();
-        Optional<List<UserCv>> userCv = userCvRepository.getAllByUser(user);
-
-        return userCv;
+        List<UserCv> userCv = userCvRepository.getAllByUser(user).orElseThrow();
+        return userCvShortDtoConverter.convertListToDto(userCv);
     }
 
+    @Override
     public void updateUser(UserDto userDto) {
 
         User user = userRepository.findUserByEmail(userDto.getEmail()).orElseThrow();
@@ -64,10 +69,9 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
     public void deleteUserAccount(Long userId, String password){
-
         User user = userRepository.findById(userId).orElseThrow();
-
         if(user.getPassword().equals(password)){
             userRepository.delete(user);
         }

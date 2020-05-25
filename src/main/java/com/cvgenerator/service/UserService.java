@@ -1,6 +1,7 @@
 package com.cvgenerator.service;
 
 
+import com.cvgenerator.domain.dto.UserCvShortDto;
 import com.cvgenerator.domain.dto.UserDto;
 import com.cvgenerator.domain.entity.User;
 import com.cvgenerator.domain.entity.UserCv;
@@ -13,5 +14,9 @@ public interface UserService {
 
     UserDto findUserById(Long id);
 
-    Optional<List<UserCv>> getListOfUserCv(Long id);
+    List<UserCvShortDto> getListOfUserCv(Long id);
+
+    void updateUser(UserDto userDto);
+
+    void deleteUserAccount(Long userId, String password);
 }
