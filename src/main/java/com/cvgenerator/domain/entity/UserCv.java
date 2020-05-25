@@ -26,9 +26,12 @@ public class UserCv {
     @JoinColumn(name = "userId")
     private User user;
 
-    @OneToOne
+    @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "personalDataId")
     private PersonalData personalData;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userCv")
+    private List<Course> courses;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userCv")
     private List<Project> projects;

@@ -30,6 +30,11 @@ public class UserCvController {
         userCvService.saveUserCv(userId, userCvDto);
     }
 
+    @DeleteMapping("/cv/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteUserCv(@PathVariable Long id){
+        userCvService.deleteCvById(id);
+    }
 
 
 }

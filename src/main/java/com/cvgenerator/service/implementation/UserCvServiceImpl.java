@@ -36,8 +36,14 @@ public class UserCvServiceImpl implements UserCvService {
         userCvRepository.save(userCv);
     }
 
+    @Override
     public UserCvDto getUserCvById(Long id) {
         UserCv userCv = userCvRepository.findUserCvById(id).orElseThrow();
         return userCvDtoConverter.convertToDto(userCv);
+    }
+
+    @Override
+    public void deleteCvById(Long id) {
+        userCvRepository.deleteById(id);
     }
 }

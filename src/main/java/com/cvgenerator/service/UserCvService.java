@@ -8,4 +8,6 @@ public interface UserCvService {
     void saveUserCv(Long userId, UserCvDto userCvDto);
 
     UserCvDto getUserCvById(Long id);
+
+    void deleteCvById(Long id);
 }
