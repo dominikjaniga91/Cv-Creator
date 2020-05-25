@@ -6,6 +6,7 @@ import com.cvgenerator.domain.entity.UserCv;
 import com.cvgenerator.repository.UserCvRepository;
 import com.cvgenerator.repository.UserRepository;
 import com.cvgenerator.service.UserService;
+import com.cvgenerator.service.dtoConverters.UserDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,15 +19,18 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private UserCvRepository userCvRepository;
     private PasswordEncoder passwordEncoder;
+    private UserDtoConverter userDtoConverter;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
                            UserCvRepository userCvRepository,
-                           PasswordEncoder passwordEncoder){
+                           PasswordEncoder passwordEncoder,
+                           UserDtoConverter userDtoConverter){
 
         this.userRepository = userRepository;
         this.userCvRepository = userCvRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userDtoConverter = userDtoConverter;
     }
 
     @Override
@@ -35,8 +39,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserById(Long id){
-        return userRepository.findById(id).orElseThrow();
+    public UserDto findUserById(Long id){
+        User user = userRepository.findById(id).orElseThrow();
+        return userDtoConverter.convertToDto(user);
     }
 
     @Override
