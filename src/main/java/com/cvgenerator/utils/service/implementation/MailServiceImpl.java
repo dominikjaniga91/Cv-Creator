@@ -33,5 +33,12 @@ public class MailServiceImpl implements MailService {
         javaMailSender.send(mailMessage);
     }
 
-
+    @Override
+    public void sendWelcomeEmail(User user) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(user.getEmail());
+        mailMessage.setSubject(mail.getWelcomeTitle());
+        mailMessage.setText(mail.getWelcomeMessage());
+        javaMailSender.send(mailMessage);
+    }
 }

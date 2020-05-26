@@ -7,4 +7,5 @@ public interface MailService {
 
     void sendConfirmationEmail(User user, Token token);
 
+    void sendWelcomeEmail(User user);
 }
