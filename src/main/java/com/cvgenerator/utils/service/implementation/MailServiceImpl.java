@@ -1,6 +1,8 @@
 package com.cvgenerator.utils.service.implementation;
 
 import com.cvgenerator.config.MailMessageConfig;
+import com.cvgenerator.domain.entity.Token;
+import com.cvgenerator.domain.entity.User;
 import com.cvgenerator.utils.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -22,14 +24,14 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendConfirmationEmail() {
-        String token = UUID.randomUUID().toString();
+    public void sendConfirmationEmail(User user, Token token) {
         String message = mail.getConfirmationMessage() + "\n" + mail.getConfirmationLink() + token;
-
         SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo("dominikjaniga91@gmail.com");;
+        mailMessage.setTo(user.getEmail());
         mailMessage.setSubject(mail.getConfirmationTitle());
         mailMessage.setText(message);
         javaMailSender.send(mailMessage);
     }
+
+
 }
