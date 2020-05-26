@@ -22,27 +22,20 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public String createConfirmationToken(User user) {
-
-        String tokenValue = UUID.randomUUID().toString();
-
-        Token token = new Token();
-        token.setUser(user);
-        token.setTokenType(TokenType.VERIFICATION);
-        token.setExpiryDate(LocalDateTime.now());
-        token.setValue(tokenValue);
-        tokenRepository.save(token);
-
-        return tokenValue;
+        return generateToken(user, TokenType.VERIFICATION);
     }
 
     @Override
     public String createPasswordResetToken(User user) {
+       return generateToken(user, TokenType.PASSWORD_RESET);
+    }
+
+    private String generateToken(User user, TokenType tokenType){
 
         String tokenValue = UUID.randomUUID().toString();
-
         Token token = new Token();
         token.setUser(user);
-        token.setTokenType(TokenType.PASSWORD_RESET);
+        token.setTokenType(tokenType);
         token.setExpiryDate(LocalDateTime.now());
         token.setValue(tokenValue);
         tokenRepository.save(token);
