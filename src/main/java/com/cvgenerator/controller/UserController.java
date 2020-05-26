@@ -41,8 +41,8 @@ public class UserController {
     }
 
     @PutMapping("/user")
-    public void updateUserAccount(@RequestBody UserDto userDto){
-        userService.updateUser(userDto);
+    public void updateUserAccount(@RequestBody User user){
+        userService.updateUser(user);
     }
 
     @DeleteMapping("/user/{userId}")
