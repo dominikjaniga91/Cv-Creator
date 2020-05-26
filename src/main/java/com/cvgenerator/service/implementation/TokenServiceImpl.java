@@ -34,4 +34,19 @@ public class TokenServiceImpl implements TokenService {
 
         return tokenValue;
     }
+
+    @Override
+    public String createPasswordResetToken(User user) {
+
+        String tokenValue = UUID.randomUUID().toString();
+
+        Token token = new Token();
+        token.setUser(user);
+        token.setTokenType(TokenType.PASSWORD_RESET);
+        token.setExpiryDate(LocalDateTime.now());
+        token.setValue(tokenValue);
+        tokenRepository.save(token);
+
+        return tokenValue;
+    }
 }
