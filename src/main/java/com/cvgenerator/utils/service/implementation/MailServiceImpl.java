@@ -1,31 +1,38 @@
 package com.cvgenerator.utils.service.implementation;
 
 import com.cvgenerator.config.MailMessageConfig;
-import com.cvgenerator.domain.entity.Token;
 import com.cvgenerator.domain.entity.User;
+import com.cvgenerator.service.implementation.TokenServiceImpl;
 import com.cvgenerator.utils.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
 
 @Service
 public class MailServiceImpl implements MailService {
 
     private final JavaMailSender javaMailSender;
     private final MailMessageConfig mail;
+    private final TokenServiceImpl tokenService;
 
     @Autowired
-    MailServiceImpl(JavaMailSender javaMailSender, MailMessageConfig mail) {
+    MailServiceImpl(JavaMailSender javaMailSender,
+                    MailMessageConfig mail,
+                    TokenServiceImpl tokenService) {
         this.javaMailSender = javaMailSender;
         this.mail = mail;
+        this.tokenService = tokenService;
     }
 
     @Override
     public void sendConfirmationEmail(User user) {
-        String message = mail.getConfirmationMessage() + "\n" + mail.getConfirmationLink();
+        String token = tokenService.createConfirmationToken(user);
+        String message = mail.getConfirmationMessage() + "\n" +
+                         mail.getConfirmationLink() +
+                         token;
+
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject(mail.getConfirmationTitle());
@@ -44,7 +51,11 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public void sendPasswordResetEmail(User user) {
-        String message = mail.getPasswordMessage() + "\n" + mail.getPasswordLink();
+        String token = tokenService.createPasswordResetToken(user);
+        String message = mail.getPasswordMessage() + "\n" +
+                         mail.getPasswordLink() +
+                         token;
+
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject(mail.getConfirmationTitle());
