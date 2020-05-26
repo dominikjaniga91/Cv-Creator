@@ -1,9 +1,8 @@
 package com.cvgenerator.controller;
 
+import com.cvgenerator.utils.service.implementation.MailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,19 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 class MailTestController {
 
-    private final JavaMailSender javaMailSender;
+    private final MailServiceImpl mailService;
 
     @Autowired
-    MailTestController(JavaMailSender javaMailSender) {
-        this.javaMailSender = javaMailSender;
+    MailTestController(MailServiceImpl mailService) {
+        this.mailService = mailService;
     }
     @RequestMapping("/mail")
     @ResponseStatus(HttpStatus.OK)
     public void sendEmail() {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo("dominikjaniga91@gmail.com");;
-        mailMessage.setSubject("Confirmation email");
-        mailMessage.setText("Please click to below link to confirm email ");
-        javaMailSender.send(mailMessage);
+        mailService.sendConfirmationEmail();
     }
 }
