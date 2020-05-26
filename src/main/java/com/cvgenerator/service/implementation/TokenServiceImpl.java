@@ -8,6 +8,7 @@ import com.cvgenerator.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -41,5 +42,10 @@ public class TokenServiceImpl implements TokenService {
         tokenRepository.save(token);
 
         return tokenValue;
+    }
+
+    @Override
+    public Optional<Token> findTokenByValue(String value) {
+        return tokenRepository.getTokenByValue(value);
     }
 }
