@@ -24,8 +24,8 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendConfirmationEmail(User user, Token token) {
-        String message = mail.getConfirmationMessage() + "\n" + mail.getConfirmationLink() + token;
+    public void sendConfirmationEmail(User user) {
+        String message = mail.getConfirmationMessage() + "\n" + mail.getConfirmationLink();
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject(mail.getConfirmationTitle());
@@ -39,6 +39,16 @@ public class MailServiceImpl implements MailService {
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject(mail.getWelcomeTitle());
         mailMessage.setText(mail.getWelcomeMessage());
+        javaMailSender.send(mailMessage);
+    }
+
+    @Override
+    public void sendPasswordResetEmail(User user) {
+        String message = mail.getPasswordMessage() + "\n" + mail.getPasswordLink();
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(user.getEmail());
+        mailMessage.setSubject(mail.getConfirmationTitle());
+        mailMessage.setText(message);
         javaMailSender.send(mailMessage);
     }
 }
