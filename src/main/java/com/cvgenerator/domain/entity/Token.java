@@ -27,5 +27,5 @@ public class Token {
     @JoinColumn(name = "userId")
     private User user;
 
-
+    String value;
 }
