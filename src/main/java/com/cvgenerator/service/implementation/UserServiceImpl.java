@@ -24,22 +24,19 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
     private UserDtoConverter userDtoConverter;
     private UserCvShortDtoConverter userCvShortDtoConverter;
-    private final MailServiceImpl mailService;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
                            UserCvRepository userCvRepository,
                            PasswordEncoder passwordEncoder,
                            UserDtoConverter userDtoConverter,
-                           UserCvShortDtoConverter userCvShortDtoConverter,
-                           MailServiceImpl mailService){
+                           UserCvShortDtoConverter userCvShortDtoConverter){
 
         this.userRepository = userRepository;
         this.userCvRepository = userCvRepository;
         this.passwordEncoder = passwordEncoder;
         this.userDtoConverter = userDtoConverter;
         this.userCvShortDtoConverter = userCvShortDtoConverter;
-        this.mailService = mailService;
     }
 
     @Override
@@ -47,7 +44,6 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRegistration(LocalDateTime.now());
         userRepository.save(user);
-        mailService.sendConfirmationEmail(user);
     }
 
     @Override
