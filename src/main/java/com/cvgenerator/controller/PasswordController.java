@@ -8,14 +8,18 @@ import com.cvgenerator.service.implementation.UserServiceImpl;
 import com.cvgenerator.utils.service.implementation.MailServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@Api(tags = "Password controller")
 @RestController
 @RequestMapping("/api")
 public class PasswordController {
@@ -36,6 +40,7 @@ public class PasswordController {
         this.userRepository = userRepository;
     }
 
+    @ApiOperation(value = "Request for user password reset - send email to user with password reset link")
     @GetMapping("/password-reset/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public void requestForPasswordReset(@PathVariable Long userId){
@@ -43,6 +48,12 @@ public class PasswordController {
         mailService.sendPasswordResetEmail(user);
     }
 
+    @ApiOperation(value = "Reset user password")
+    @ApiResponses(value = {
+            @ApiResponse(code=200, message = "Your password has been changed"),
+            @ApiResponse(code=400, message = "Reset link is not valid"),
+            @ApiResponse(code=401, message = "Reset link expired")
+    })
     @PostMapping("/new-password")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> resetUserPassword(@RequestParam("value") String tokenValue, @RequestBody String newPassword) throws JsonProcessingException {
@@ -58,7 +69,7 @@ public class PasswordController {
             }
             return new ResponseEntity<>("Reset link expired", HttpStatus.OK);
         }else{
-           return new ResponseEntity<>("Reset link is not valid", HttpStatus.BAD_REQUEST);
+           return new ResponseEntity<>("Reset link is not valid", HttpStatus.UNAUTHORIZED);
         }
     }
 
