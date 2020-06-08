@@ -5,6 +5,10 @@ import com.cvgenerator.domain.entity.User;
 import com.cvgenerator.service.implementation.TokenServiceImpl;
 import com.cvgenerator.service.implementation.UserServiceImpl;
 import com.cvgenerator.utils.service.implementation.MailServiceImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@Api(tags = "Confirmation token controller")
 @RestController
 public class ConfirmTokenController {
 
@@ -30,6 +35,12 @@ public class ConfirmTokenController {
         this.mailService = mailService;
     }
 
+    @ApiOperation(value = "Check confirmation link and activate (or not) user account")
+    @ApiResponses(value = {
+            @ApiResponse(code=200, message = "Your account is active"),
+            @ApiResponse(code=400, message = "Confirmation link doesn't exist"),
+            @ApiResponse(code=401, message = "Confirmation link expired")
+    })
     @GetMapping("/token")
     public ResponseEntity<?> checkConfirmationEmailToken(@RequestParam("value") String tokenValue){
 
