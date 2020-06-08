@@ -62,16 +62,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(User user) {
-<<<<<<< HEAD
-
-        User foundedUser = userRepository.findUserByEmail(user.getEmail()).orElseThrow();
-        foundedUser.setFirstName(user.getFirstName());
-        foundedUser.setLastName(user.getLastName());
-        foundedUser.setEmail(user.getEmail());
-        if(user.getPassword() != null){
-            foundedUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        }
-=======
         User foundedUser = userRepository.findUserByEmail(user.getEmail()).orElseThrow();
         foundedUser.setFirstName(user.getFirstName());
         foundedUser.setLastName(user.getLastName());
@@ -86,7 +76,6 @@ public class UserServiceImpl implements UserService {
         User foundedUser = userRepository.findUserByEmail(user.getEmail()).orElseThrow();
         foundedUser.setPassword(passwordEncoder.encode(password));
         userRepository.save(foundedUser);
->>>>>>> a17b5a5edb18abbe401e7ea88d908af22270931d
     }
 
     @Override
