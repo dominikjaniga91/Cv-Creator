@@ -3,6 +3,7 @@ package com.cvgenerator.controller;
 import com.cvgenerator.domain.dto.UserDto;
 import com.cvgenerator.domain.entity.User;
 import com.cvgenerator.service.implementation.UserServiceImpl;
+import com.cvgenerator.utils.service.implementation.MailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +14,13 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private UserServiceImpl userService;
+    private final MailServiceImpl mailService;
 
     @Autowired
-    public UserController(UserServiceImpl userService) {
+    public UserController(UserServiceImpl userService,
+                          MailServiceImpl mailService) {
         this.userService = userService;
+        this.mailService = mailService;
     }
 
     @GetMapping("/user/{userId}")
@@ -38,11 +42,12 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public void createUserAccount(@RequestBody User user){
         userService.saveUser(user);
+        mailService.sendConfirmationEmail(user);
     }
 
     @PutMapping("/user")
-    public void updateUserAccount(@RequestBody UserDto userDto){
-        userService.updateUser(userDto);
+    public void updateUserAccount(@RequestBody User user){
+        userService.updateUser(user);
     }
 
     @DeleteMapping("/user/{userId}")

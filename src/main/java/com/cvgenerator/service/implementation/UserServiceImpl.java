@@ -9,11 +9,12 @@ import com.cvgenerator.repository.UserRepository;
 import com.cvgenerator.service.UserService;
 import com.cvgenerator.service.dtoConverters.UserCvShortDtoConverter;
 import com.cvgenerator.service.dtoConverters.UserDtoConverter;
+import com.cvgenerator.utils.service.implementation.MailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -40,6 +41,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRegistration(LocalDateTime.now());
         userRepository.save(user);
     }
 
@@ -58,15 +61,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(UserDto userDto) {
+    public void updateUser(User user) {
+        User foundedUser = userRepository.findUserByEmail(user.getEmail()).orElseThrow();
+        foundedUser.setFirstName(user.getFirstName());
+        foundedUser.setLastName(user.getLastName());
+        foundedUser.setEmail(user.getEmail());
+        foundedUser.setActive(user.isActive());
+        userRepository.save(foundedUser);
+    }
 
-        User user = userRepository.findUserByEmail(userDto.getEmail()).orElseThrow();
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setEmail(userDto.getEmail());
-        if(user.getPassword() != null){
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-        }
+    @Override
+    public void updateUserPassword(User user, String password) {
+        System.out.println(" password " + password);
+        User foundedUser = userRepository.findUserByEmail(user.getEmail()).orElseThrow();
+        foundedUser.setPassword(passwordEncoder.encode(password));
+        userRepository.save(foundedUser);
     }
 
     @Override
