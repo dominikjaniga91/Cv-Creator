@@ -71,6 +71,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void updateUserPassword(User user, String password) {
+        System.out.println(" password " + password);
+        User foundedUser = userRepository.findUserByEmail(user.getEmail()).orElseThrow();
+        foundedUser.setPassword(passwordEncoder.encode(password));
+        userRepository.save(foundedUser);
+    }
+
+    @Override
     public void deleteUserAccount(Long userId, String password){
         User user = userRepository.findById(userId).orElseThrow();
         if(user.getPassword().equals(password)){

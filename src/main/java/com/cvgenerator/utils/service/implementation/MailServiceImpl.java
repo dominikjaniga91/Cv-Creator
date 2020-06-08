@@ -58,7 +58,7 @@ public class MailServiceImpl implements MailService {
 
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(user.getEmail());
-        mailMessage.setSubject(mail.getConfirmationTitle());
+        mailMessage.setSubject(mail.getPasswordTitle());
         mailMessage.setText(message);
         javaMailSender.send(mailMessage);
     }
