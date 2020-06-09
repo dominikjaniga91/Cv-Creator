@@ -11,8 +11,8 @@
     <groupId>com.cvgenerator</groupId>
     <artifactId>cvgenerator</artifactId>
     <version>1</version>
-    <name>cvgenerator</name>
-    <description>Demo project for .cvgenerator</description>
+    <name>cvbuilder</name>
+    <description>Demo project for cvbuilder</description>
 
     <properties>
         <java.version>11</java.version>
