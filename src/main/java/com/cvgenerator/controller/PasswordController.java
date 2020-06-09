@@ -8,10 +8,7 @@ import com.cvgenerator.service.implementation.UserServiceImpl;
 import com.cvgenerator.utils.service.implementation.MailServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +45,8 @@ public class PasswordController {
         mailService.sendPasswordResetEmail(user);
     }
 
-    @ApiOperation(value = "Reset user password")
+    @ApiOperation(value = "Check does token (from reset password link) exist in database and does not expired. " +
+                          "If true then set new password to user  ")
     @ApiResponses(value = {
             @ApiResponse(code=200, message = "Your password has been changed"),
             @ApiResponse(code=400, message = "Reset link is not valid"),
@@ -56,7 +54,9 @@ public class PasswordController {
     })
     @PostMapping("/new-password")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> resetUserPassword(@RequestParam("value") String tokenValue, @RequestBody String newPassword) throws JsonProcessingException {
+    public ResponseEntity<?> resetUserPassword(@ApiParam(value = "Value of token which was send with confirmation link")
+                                               @RequestParam("value") String tokenValue,
+                                               @RequestBody String newPassword) throws JsonProcessingException {
 
         Optional<Token> token = tokenService.findTokenByValue(tokenValue);
         if(token.isPresent()){
