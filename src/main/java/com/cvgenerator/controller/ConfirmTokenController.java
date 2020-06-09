@@ -2,8 +2,8 @@ package com.cvgenerator.controller;
 
 import com.cvgenerator.domain.entity.Token;
 import com.cvgenerator.domain.entity.User;
+import com.cvgenerator.repository.UserRepository;
 import com.cvgenerator.service.implementation.TokenServiceImpl;
-import com.cvgenerator.service.implementation.UserServiceImpl;
 import com.cvgenerator.utils.service.implementation.MailServiceImpl;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +22,15 @@ import java.util.Optional;
 public class ConfirmTokenController {
 
     private final TokenServiceImpl tokenService;
-    private final UserServiceImpl userService;
+    private final UserRepository userRepository;
     private final MailServiceImpl mailService;
 
     @Autowired
     public ConfirmTokenController(TokenServiceImpl tokenService,
-                                  UserServiceImpl userService,
+                                  UserRepository userRepository,
                                   MailServiceImpl mailService) {
         this.tokenService = tokenService;
-        this.userService = userService;
+        this.userRepository = userRepository;
         this.mailService = mailService;
     }
 
@@ -54,7 +54,7 @@ public class ConfirmTokenController {
             if(isNotExpired(foundedToken)){
                 User user = foundedToken.getUser();
                 user.setActive(true);
-                userService.updateUser(user);
+                userRepository.save(user);
                 mailService.sendWelcomeEmail(user);
                 return new ResponseEntity<>("Your account is active", HttpStatus.OK);
             }else{
