@@ -1,6 +1,5 @@
 package com.cvgenerator.service.implementation;
 
-import com.cvgenerator.domain.dto.EducationDto;
 import com.cvgenerator.domain.entity.Education;
 import com.cvgenerator.domain.entity.UserCv;
 import com.cvgenerator.repository.EducationRepository;
@@ -26,5 +25,21 @@ public class EducationServiceImpl implements EducationService {
         UserCv userCv = userCvRepository.findById(userCvId).orElseThrow();
         education.setUserCv(userCv);
         educationRepository.save(education);
+    }
+
+    public void updateEducation(Education education) {
+        Long id = education.getId();
+        Education foundedEducation = educationRepository.findById(id).orElseThrow();
+
+        foundedEducation.setId(education.getId());
+        foundedEducation.setSchool(education.getSchool());
+        foundedEducation.setCity(education.getCity());
+        foundedEducation.setStartDate(education.getStartDate());
+        foundedEducation.setFinishDate(education.getFinishDate());
+        foundedEducation.setDegree(education.getDegree());
+        foundedEducation.setSpecialization(education.getSpecialization());
+        foundedEducation.setDescription(education.getDescription());
+
+        educationRepository.save(foundedEducation);
     }
 }

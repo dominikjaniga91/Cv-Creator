@@ -27,4 +27,11 @@ public class EducationController {
     public void createEducation(@PathVariable Long id, @RequestBody Education education) {
         educationService.createEducation(id, education);
     }
+
+    @ApiOperation(value = "Updates details about education")
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/cv/education")
+    public void updateEducation(@RequestBody Education education) {
+        educationService.updateEducation(education);
+    }
 }
