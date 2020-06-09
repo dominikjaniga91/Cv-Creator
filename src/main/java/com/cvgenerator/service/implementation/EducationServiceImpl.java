@@ -1,5 +1,6 @@
 package com.cvgenerator.service.implementation;
 
+import com.cvgenerator.domain.dto.EducationDto;
 import com.cvgenerator.domain.entity.Education;
 import com.cvgenerator.domain.entity.UserCv;
 import com.cvgenerator.repository.EducationRepository;
@@ -21,7 +22,7 @@ public class EducationServiceImpl implements EducationService {
     }
 
     @Override
-    public void saveEducation(Long userCvId, Education education) {
+    public void createEducation(Long userCvId, Education education) {
         UserCv userCv = userCvRepository.findById(userCvId).orElseThrow();
         education.setUserCv(userCv);
         educationRepository.save(education);
