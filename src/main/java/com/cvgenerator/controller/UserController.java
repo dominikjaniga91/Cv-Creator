@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class UserController {
 
-    private UserServiceImpl userService;
+    private final UserServiceImpl userService;
     private final MailServiceImpl mailService;
 
     @Autowired

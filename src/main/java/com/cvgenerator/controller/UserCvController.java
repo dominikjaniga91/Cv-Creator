@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserCvController {
 
 
-    private UserCvServiceImpl userCvService;
+    private final UserCvServiceImpl userCvService;
 
     @Autowired
     public UserCvController(UserCvServiceImpl userCvService) {
