@@ -10,6 +10,8 @@ import com.cvgenerator.service.dtoConverters.UserCvDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserCvServiceImpl implements UserCvService {
 
@@ -45,5 +47,15 @@ public class UserCvServiceImpl implements UserCvService {
     @Override
     public void deleteCvById(Long id) {
         userCvRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateUserCvBasicInfo(UserCvDto userCvDto) {
+        Long id = userCvDto.getId();
+        UserCv userCv = userCvRepository.findUserCvById(id)
+                                                .orElseThrow();
+        userCv.setName(userCvDto.getName());
+        userCv.setTemplateName(userCvDto.getTemplateName());
+        userCvRepository.save(userCv);
     }
 }

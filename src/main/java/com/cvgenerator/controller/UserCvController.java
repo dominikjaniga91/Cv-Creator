@@ -35,6 +35,12 @@ public class UserCvController {
         userCvService.saveUserCv(userId, userCvDto);
     }
 
+    @ApiOperation(value = "Update basic info about user CV (name and templateName)")
+    @PutMapping("/cv/{id}")
+    public void updateUserCvBasicInfo(@RequestBody UserCvDto userCvDto){
+        userCvService.updateUserCvBasicInfo(userCvDto);
+    }
+
     @ApiOperation(value = "Delete CV from database using ID")
     @DeleteMapping("/cv/{id}")
     @ResponseStatus(HttpStatus.OK)

@@ -10,4 +10,6 @@ public interface UserCvService {
     UserCvDto getUserCvById(Long id);
 
     void deleteCvById(Long id);
+
+    void updateUserCvBasicInfo(UserCvDto userCvDto);
 }
