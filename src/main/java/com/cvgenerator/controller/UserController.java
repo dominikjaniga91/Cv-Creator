@@ -49,8 +49,8 @@ public class UserController {
 
     @ApiOperation(value ="Updates information about user account")
     @PutMapping("/user")
-    public void updateUserAccount(@RequestBody User user){
-        userService.updateUser(user);
+    public void updateUserAccount(@RequestBody UserDto userDto){
+        userService.updateUser(userDto);
     }
 
     @ApiOperation(value ="Delete user account with all resumes")

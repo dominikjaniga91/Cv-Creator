@@ -16,7 +16,7 @@ public interface UserService {
 
     List<UserCvShortDto> getListOfUserCv(Long id);
 
-    void updateUser(User user);
+    void updateUser(UserDto userDto);
 
     void deleteUserAccount(Long userId, String password);
 
