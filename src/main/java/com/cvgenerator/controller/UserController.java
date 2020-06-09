@@ -17,13 +17,11 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserServiceImpl userService;
-    private final MailServiceImpl mailService;
+
 
     @Autowired
-    public UserController(UserServiceImpl userService,
-                          MailServiceImpl mailService) {
+    public UserController(UserServiceImpl userService) {
         this.userService = userService;
-        this.mailService = mailService;
     }
 
     @ApiOperation(value = "Get information about user")
@@ -38,16 +36,15 @@ public class UserController {
     @ApiOperation(value = "Get list of user cv. List contains basic information about CV like: id, cv name, and template name")
     @GetMapping("/user/resume/{id}")
     public ResponseEntity<?> getListOfUserCv(@PathVariable Long id){
-
         return new ResponseEntity<>(userService.getListOfUserCv(id), HttpStatus.OK);
     }
 
     @ApiOperation(value ="Creates new user account")
     @PostMapping("/user")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createUserAccount(@RequestBody User user){
-        userService.saveUser(user);
-        mailService.sendConfirmationEmail(user);
+    public void createUserAccount(@RequestBody UserDto userDto){
+        userService.saveUser(userDto);
+
     }
 
     @ApiOperation(value ="Updates information about user account")

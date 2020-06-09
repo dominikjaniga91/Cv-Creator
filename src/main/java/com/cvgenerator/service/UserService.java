@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface UserService {
 
-    void saveUser(User user);
+    void saveUser(UserDto userDto);
 
     UserDto findUserById(Long id);
 

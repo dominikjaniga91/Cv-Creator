@@ -24,26 +24,31 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserDtoConverter userDtoConverter;
     private final UserCvShortDtoConverter userCvShortDtoConverter;
+    private final MailServiceImpl mailService;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
                            UserCvRepository userCvRepository,
                            PasswordEncoder passwordEncoder,
                            UserDtoConverter userDtoConverter,
-                           UserCvShortDtoConverter userCvShortDtoConverter){
+                           UserCvShortDtoConverter userCvShortDtoConverter,
+                           MailServiceImpl mailService){
 
         this.userRepository = userRepository;
         this.userCvRepository = userCvRepository;
         this.passwordEncoder = passwordEncoder;
         this.userDtoConverter = userDtoConverter;
         this.userCvShortDtoConverter = userCvShortDtoConverter;
+        this.mailService = mailService;
     }
 
     @Override
-    public void saveUser(User user) {
+    public void saveUser(UserDto userDto) {
+        User user = userDtoConverter.convertToEntity(userDto);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRegistration(LocalDateTime.now());
         userRepository.save(user);
+        mailService.sendConfirmationEmail(user);
     }
 
     @Override
