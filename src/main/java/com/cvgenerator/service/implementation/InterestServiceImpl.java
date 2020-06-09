@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class InterestServiceImpl implements InterestService {
 
-    private UserCvRepository userCvRepository;
-    private InterestRepository interestRepository;
+    private final UserCvRepository userCvRepository;
+    private final InterestRepository interestRepository;
 
     @Autowired
     public InterestServiceImpl(UserCvRepository userCvRepository, InterestRepository interestRepository) {

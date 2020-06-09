@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class EducationServiceImpl implements EducationService {
 
-    private UserCvRepository userCvRepository;
-    private EducationRepository educationRepository;
+    private final UserCvRepository userCvRepository;
+    private final EducationRepository educationRepository;
 
     @Autowired
     public EducationServiceImpl(UserCvRepository userCvRepository, EducationRepository educationRepository) {

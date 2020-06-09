@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 public class SkillServiceImpl implements SkillService {
 
 
-    private SkillRepository skillRepository;
-    private UserCvRepository userCvRepository;
+    private final SkillRepository skillRepository;
+    private final UserCvRepository userCvRepository;
 
     @Autowired
     public SkillServiceImpl(SkillRepository skillRepository, UserCvRepository userCvRepository) {

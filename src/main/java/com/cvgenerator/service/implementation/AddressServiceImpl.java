@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class AddressServiceImpl implements AddressService {
 
-    private AddressRepository addressRepository;
-    private PersonalDataRepository dataRepository;
+    private final AddressRepository addressRepository;
+    private final PersonalDataRepository dataRepository;
 
     @Autowired
     public AddressServiceImpl(AddressRepository addressRepository, PersonalDataRepository dataRepository) {

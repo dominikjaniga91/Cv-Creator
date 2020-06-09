@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ExperienceServiceImpl implements ExperienceService {
 
-    private UserCvRepository userCvRepository;
-    private ExperienceRepository experienceRepository;
+    private final UserCvRepository userCvRepository;
+    private final ExperienceRepository experienceRepository;
 
     @Autowired
     public ExperienceServiceImpl(UserCvRepository userCvRepository, ExperienceRepository experienceRepository) {

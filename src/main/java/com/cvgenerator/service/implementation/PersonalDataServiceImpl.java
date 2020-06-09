@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class PersonalDataServiceImpl implements PersonalDataService {
 
-    private UserCvRepository userCvRepository;
-    private PersonalDataRepository dataRepository;
+    private final UserCvRepository userCvRepository;
+    private final PersonalDataRepository dataRepository;
 
     @Autowired
     public PersonalDataServiceImpl(UserCvRepository userCvRepository, PersonalDataRepository dataRepository) {

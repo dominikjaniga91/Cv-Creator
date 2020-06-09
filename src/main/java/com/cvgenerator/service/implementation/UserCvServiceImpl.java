@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserCvServiceImpl implements UserCvService {
 
-    private UserCvRepository userCvRepository;
-    private UserRepository userRepository;
-    private UserCvDtoConverter userCvDtoConverter;
+    private final UserCvRepository userCvRepository;
+    private final UserRepository userRepository;
+    private final UserCvDtoConverter userCvDtoConverter;
 
     @Autowired
     public UserCvServiceImpl(UserCvRepository userCvRepository,

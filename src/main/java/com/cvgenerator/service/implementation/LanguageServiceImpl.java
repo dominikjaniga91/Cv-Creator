@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class LanguageServiceImpl implements LanguageService {
 
-    private LanguageRepository languageRepository;
-    private UserCvRepository userCvRepository;
+    private final LanguageRepository languageRepository;
+    private final UserCvRepository userCvRepository;
 
     @Autowired
     public LanguageServiceImpl(LanguageRepository languageRepository, UserCvRepository userCvRepository) {

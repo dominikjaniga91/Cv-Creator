@@ -19,11 +19,11 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
-    private UserCvRepository userCvRepository;
-    private PasswordEncoder passwordEncoder;
-    private UserDtoConverter userDtoConverter;
-    private UserCvShortDtoConverter userCvShortDtoConverter;
+    private final UserRepository userRepository;
+    private final UserCvRepository userCvRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserDtoConverter userDtoConverter;
+    private final UserCvShortDtoConverter userCvShortDtoConverter;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,

@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProjectServiceImpl implements ProjectService {
 
-    private ProjectRepository projectRepository;
-    private UserCvRepository userCvRepository;
+    private final ProjectRepository projectRepository;
+    private final UserCvRepository userCvRepository;
 
     @Autowired
     public ProjectServiceImpl(ProjectRepository projectRepository, UserCvRepository userCvRepository) {
