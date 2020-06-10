@@ -65,7 +65,6 @@ public class UserControllerTest {
         BDDMockito.given(userService.findUserById(1L)).willReturn(userDto);
 
         mockMvc.perform(get("/api/user/{id}", 1L)
-                .contentType(MediaType.APPLICATION_JSON)
                 .header("Authorization", "Bearer " + token)
                 .header("Access-Control-Expose-Headers", "Authorization"))
                 .andExpect(status().isOk())
@@ -89,7 +88,7 @@ public class UserControllerTest {
 
         BDDMockito.doNothing().when(userService).saveUser(userDto);
 
-        mockMvc.perform(post("/api/user", 1L)
+        mockMvc.perform(post("/api/user")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(userDto))
                 .header("Authorization", "Bearer " + token)
@@ -104,7 +103,7 @@ public class UserControllerTest {
 
         BDDMockito.doNothing().when(userService).updateUser(userDto);
 
-        mockMvc.perform(put("/api/user", 1L)
+        mockMvc.perform(put("/api/user")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(userDto))
                 .header("Authorization", "Bearer " + token)
@@ -113,4 +112,17 @@ public class UserControllerTest {
                 .andDo(print());
     }
 
+    @Test
+    @DisplayName("DELETE should return status 'ok' after delete User")
+    void shouldReturnStatusOK_afterDeleteUser() throws Exception {
+
+        BDDMockito.doNothing().when(userService).deleteUserAccount(1L, "admin");
+
+        mockMvc.perform(delete("/api/user/{id}", 1L)
+                .content("admin")
+                .header("Authorization", "Bearer " + token)
+                .header("Access-Control-Expose-Headers", "Authorization"))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
 }
