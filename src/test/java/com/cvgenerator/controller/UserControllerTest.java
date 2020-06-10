@@ -1,5 +1,6 @@
 package com.cvgenerator.controller;
 
+import com.cvgenerator.domain.dto.UserCvShortDto;
 import com.cvgenerator.domain.dto.UserDto;
 import com.cvgenerator.service.implementation.UserServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import java.util.Date;
+import java.util.List;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -36,6 +38,7 @@ public class UserControllerTest {
     @MockBean private UserServiceImpl userService;
     private String token;
     private UserDto userDto;
+
 
     @BeforeEach
     void setUp() {
@@ -56,6 +59,8 @@ public class UserControllerTest {
                 .setExpiration(new Date(System.currentTimeMillis() + 86_400_000))
                 .signWith(SignatureAlgorithm.HS256, "6fg28#h$h*uiq2con!%^&k5k()_mrj8")
                 .compact();
+
+
     }
 
 
@@ -134,5 +139,28 @@ public class UserControllerTest {
 
         BDDMockito.verify(userService, Mockito.times(1)).deleteUserAccount(1L, "admin");
         BDDMockito.verifyNoMoreInteractions(userService);
+    }
+
+
+    @Test
+    @DisplayName("GET should return list of user resumes")
+    void shouldReturnListOfUsersCv_afterRequestToEndpoint() throws Exception {
+
+        List<UserCvShortDto> userCvList = List.of(new UserCvShortDto(1L, "my cv", "blue template"));
+        BDDMockito.given(userService.getListOfUserCv(1L)).willReturn(userCvList);
+
+        mockMvc.perform(get("/api/user/resume/{id}", 1L)
+                .header("Authorization", "Bearer " + token)
+                .header("Access-Control-Expose-Headers", "Authorization"))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andDo(System.out::println)
+                .andExpect(jsonPath("$[0].id", is(1)))
+                .andExpect(jsonPath("$[0].name", is("my cv")))
+                .andExpect(jsonPath("$[0].templateName", is("blue template")));
+
+        BDDMockito.verify(userService, Mockito.times(1)).getListOfUserCv(1L);
+        BDDMockito.verifyNoMoreInteractions(userService);
+
     }
 }
