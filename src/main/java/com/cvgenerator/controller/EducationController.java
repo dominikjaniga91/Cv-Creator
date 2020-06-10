@@ -34,4 +34,11 @@ public class EducationController {
     public void updateEducation(@RequestBody Education education) {
         educationService.updateEducation(education);
     }
+
+    @ApiOperation(value = "Delete education from cv education")
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/cv/education/{id}")
+    public void deleteEducation(@PathVariable Long id) {
+        educationService.deleteEducation(id);
+    }
 }

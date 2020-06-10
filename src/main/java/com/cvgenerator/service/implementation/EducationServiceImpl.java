@@ -42,4 +42,8 @@ public class EducationServiceImpl implements EducationService {
 
         educationRepository.save(foundedEducation);
     }
+
+    public void deleteEducation(Long id) {
+        educationRepository.deleteById(id);
+    }
 }
