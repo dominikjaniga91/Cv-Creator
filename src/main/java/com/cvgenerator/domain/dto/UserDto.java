@@ -22,4 +22,79 @@ public class UserDto {
     private boolean isActive;
     private LocalDateTime registration;
     private List<UserCvShortDto> userCvDtoList;
+
+    private UserDto(UserDtoBuilder builder){
+        id              = builder.id;
+        firstName       = builder.firstName;
+        lastName        = builder.lastName;
+        email           = builder.email;
+        role            = builder.role;
+        password        = builder.password;
+        isActive        = builder.isActive;
+        registration    = builder.registration;
+        userCvDtoList   = builder.userCvDtoList;
+    }
+
+    public static class UserDtoBuilder{
+
+        private Long id;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private String role;
+        private String password;
+        private boolean isActive;
+        private LocalDateTime registration;
+        private List<UserCvShortDto> userCvDtoList;
+
+        public UserDtoBuilder setId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public UserDtoBuilder setFirstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public UserDtoBuilder setLastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public UserDtoBuilder setEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public UserDtoBuilder setRole(String role) {
+            this.role = role;
+            return this;
+        }
+
+        public UserDtoBuilder setPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public UserDtoBuilder setActive(boolean active) {
+            isActive = active;
+            return this;
+        }
+
+        public UserDtoBuilder setRegistration(LocalDateTime registration) {
+            this.registration = registration;
+            return this;
+        }
+
+        public UserDtoBuilder setUserCvDtoList(List<UserCvShortDto> userCvDtoList) {
+            this.userCvDtoList = userCvDtoList;
+            return this;
+        }
+
+        public UserDto buildUserDto(){
+            return new UserDto(this);
+        }
+
+    }
 }
