@@ -8,6 +8,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,7 +87,7 @@ public class UserControllerTest {
     @DisplayName("POST should return status 'created' after post User")
     void shouldReturnStatusCreated_afterPostUser() throws Exception {
 
-        BDDMockito.doNothing().when(userService).saveUser(userDto);
+        BDDMockito.doNothing().when(userService).saveUser(ArgumentMatchers.any(UserDto.class));
 
         mockMvc.perform(post("/api/user")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -95,13 +96,16 @@ public class UserControllerTest {
                 .header("Access-Control-Expose-Headers", "Authorization"))
                 .andExpect(status().isCreated())
                 .andDo(print());
+
+        BDDMockito.verify(userService, Mockito.times(1)).saveUser(ArgumentMatchers.any(UserDto.class));
+        BDDMockito.verifyNoMoreInteractions(userService);
     }
 
     @Test
     @DisplayName("PUT should return status 'ok' after update User")
     void shouldReturnStatusOK_afterUpdateUser() throws Exception {
 
-        BDDMockito.doNothing().when(userService).updateUser(userDto);
+        BDDMockito.doNothing().when(userService).updateUser(ArgumentMatchers.any(UserDto.class));
 
         mockMvc.perform(put("/api/user")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -110,6 +114,9 @@ public class UserControllerTest {
                 .header("Access-Control-Expose-Headers", "Authorization"))
                 .andExpect(status().isOk())
                 .andDo(print());
+
+        BDDMockito.verify(userService, Mockito.times(1)).updateUser(ArgumentMatchers.any(UserDto.class));
+        BDDMockito.verifyNoMoreInteractions(userService);
     }
 
     @Test
@@ -124,5 +131,8 @@ public class UserControllerTest {
                 .header("Access-Control-Expose-Headers", "Authorization"))
                 .andExpect(status().isOk())
                 .andDo(print());
+
+        BDDMockito.verify(userService, Mockito.times(1)).deleteUserAccount(1L, "admin");
+        BDDMockito.verifyNoMoreInteractions(userService);
     }
 }
