@@ -49,12 +49,14 @@ public class UserController {
 
     @ApiOperation(value ="Updates information about user account")
     @PutMapping("/user")
+    @ResponseStatus(HttpStatus.OK)
     public void updateUserAccount(@RequestBody UserDto userDto){
         userService.updateUser(userDto);
     }
 
     @ApiOperation(value ="Delete user account with all resumes")
     @DeleteMapping("/user/{userId}")
+    @ResponseStatus(HttpStatus.OK)
     public void deleteUserAccount(@PathVariable Long userId,
                                   @RequestParam String password){
 

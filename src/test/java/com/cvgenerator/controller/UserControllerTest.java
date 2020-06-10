@@ -25,6 +25,7 @@ import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@WithMockUser(username = "admin", password = "admin")
 @DisplayName("Request to user controller using http method")
 public class UserControllerTest {
 
@@ -58,7 +59,6 @@ public class UserControllerTest {
 
 
     @Test
-    @WithMockUser(username = "admin", password = "admin")
     @DisplayName("GET should return user account details")
     void shouldReturnUserDetails_afterRequestToEndpoint() throws Exception {
 
@@ -84,7 +84,6 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin")
     @DisplayName("POST should return status 'created' after post User")
     void shouldReturnStatusCreated_afterPostUser() throws Exception {
 
@@ -96,6 +95,21 @@ public class UserControllerTest {
                 .header("Authorization", "Bearer " + token)
                 .header("Access-Control-Expose-Headers", "Authorization"))
                 .andExpect(status().isCreated())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("PUT should return status 'ok' after update User")
+    void shouldReturnStatusOK_afterUpdateUser() throws Exception {
+
+        BDDMockito.doNothing().when(userService).updateUser(userDto);
+
+        mockMvc.perform(put("/api/user", 1L)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(userDto))
+                .header("Authorization", "Bearer " + token)
+                .header("Access-Control-Expose-Headers", "Authorization"))
+                .andExpect(status().isOk())
                 .andDo(print());
     }
 
