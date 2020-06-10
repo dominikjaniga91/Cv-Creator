@@ -2,12 +2,14 @@ package com.cvgenerator.controller;
 
 import com.cvgenerator.domain.dto.UserDto;
 import com.cvgenerator.service.implementation.UserServiceImpl;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -76,6 +78,25 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.role", is("USER")))
                 .andExpect(jsonPath("$.active", is(true)));
 
+        BDDMockito.verify(userService, Mockito.times(1)).findUserById(1L);
+        BDDMockito.verifyNoMoreInteractions(userService);
+
+    }
+
+    @Test
+    @WithMockUser(username = "admin", password = "admin")
+    @DisplayName("POST should return status 'created' after post User")
+    void shouldReturnStatusCreated_afterPostUser() throws Exception {
+
+        BDDMockito.doNothing().when(userService).saveUser(userDto);
+
+        mockMvc.perform(post("/api/user", 1L)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(userDto))
+                .header("Authorization", "Bearer " + token)
+                .header("Access-Control-Expose-Headers", "Authorization"))
+                .andExpect(status().isCreated())
+                .andDo(print());
     }
 
 }
