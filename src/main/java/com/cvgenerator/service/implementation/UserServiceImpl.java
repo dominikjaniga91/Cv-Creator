@@ -84,8 +84,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUserAccount(Long userId, String password){
+    public void deleteUserAccount(Long userId, String requestPassword){
         User user = userRepository.findById(userId).orElseThrow();
+        String password = passwordEncoder.encode(requestPassword);
         if(user.getPassword().equals(password)){
             userRepository.delete(user);
         }

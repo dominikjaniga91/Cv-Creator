@@ -58,7 +58,7 @@ public class UserController {
     @DeleteMapping("/user/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteUserAccount(@PathVariable Long userId,
-                                  @RequestParam String password){
+                                  @RequestBody String password){
 
         userService.deleteUserAccount(userId, password);
     }
