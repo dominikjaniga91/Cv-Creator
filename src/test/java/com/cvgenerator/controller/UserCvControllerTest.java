@@ -96,4 +96,27 @@ public class UserCvControllerTest {
         BDDMockito.verify(userCvService).getUserCvById(1L);
         BDDMockito.verifyNoMoreInteractions(userCvService);
     }
+
+    @Test
+    @DisplayName("POST should return status 'created' after request with new user cv")
+    void shouldReturnStatusCreated_afterPostNewUserCv() throws Exception {
+
+        UserCvDto userCvDto1 = new UserCvDto.UserCvDtoBuilder()
+                .setName("my cv")
+                .setTemplateName("aquarius dark")
+                .buildUserCvDto();
+
+        BDDMockito.doNothing().when(userCvService).saveUserCv(ArgumentMatchers.anyLong(), ArgumentMatchers.any(UserCvDto.class));
+
+        mockMvc.perform(post("/api/cv/{userId}", 1L)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(userCvDto1))
+                .header("Authorization", "Bearer " + token)
+                .header("Access-Control-Expose-Headers", "Authorization"))
+                .andExpect(status().isCreated())
+                .andDo(print());
+
+        BDDMockito.verify(userCvService).saveUserCv(ArgumentMatchers.anyLong(), ArgumentMatchers.any(UserCvDto.class));
+        BDDMockito.verifyNoMoreInteractions(userCvService);
+    }
 }
