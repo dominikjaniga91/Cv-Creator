@@ -119,4 +119,43 @@ public class UserCvControllerTest {
         BDDMockito.verify(userCvService).saveUserCv(ArgumentMatchers.anyLong(), ArgumentMatchers.any(UserCvDto.class));
         BDDMockito.verifyNoMoreInteractions(userCvService);
     }
+
+    @Test
+    @DisplayName("DELETE should return status 'Ok' after request for delete user cv")
+    void shouldReturnStatusOk_afterDeleteUserCv() throws Exception {
+
+        BDDMockito.doNothing().when(userCvService).deleteCvById(ArgumentMatchers.anyLong());
+
+        mockMvc.perform(delete("/api/cv/{id}", 1L)
+                .header("Authorization", "Bearer " + token)
+                .header("Access-Control-Expose-Headers", "Authorization"))
+                .andExpect(status().isOk())
+                .andDo(print());
+
+        BDDMockito.verify(userCvService).deleteCvById(ArgumentMatchers.anyLong());
+        BDDMockito.verifyNoMoreInteractions(userCvService);
+    }
+
+    @Test
+    @DisplayName("PUT should return status 'Ok' after request for update user cv")
+    void shouldReturnStatusOk_afterUpdateUserCv() throws Exception {
+
+        UserCvDto userCvDto1 = new UserCvDto.UserCvDtoBuilder()
+                .setName("my cv")
+                .setTemplateName("aquarius dark")
+                .buildUserCvDto();
+
+        BDDMockito.doNothing().when(userCvService).updateUserCvBasicInfo(ArgumentMatchers.any(UserCvDto.class));
+
+        mockMvc.perform(put("/api/cv/{id}", 1L)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(userCvDto1))
+                .header("Authorization", "Bearer " + token)
+                .header("Access-Control-Expose-Headers", "Authorization"))
+                .andExpect(status().isOk())
+                .andDo(print());
+
+        BDDMockito.verify(userCvService).updateUserCvBasicInfo(ArgumentMatchers.any(UserCvDto.class));
+        BDDMockito.verifyNoMoreInteractions(userCvService);
+    }
 }
