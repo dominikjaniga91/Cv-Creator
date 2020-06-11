@@ -1,6 +1,5 @@
 package com.cvgenerator.domain.dto;
 
-import com.cvgenerator.domain.entity.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,10 +18,12 @@ public class UserCvDto {
     private String summary;
     private String clause;
     private PersonalDataDto personalData;
+    private List<CourseDto> courses;
     private List<ProjectDto> projects;
     private List<SkillDto> skills;
     private List<LanguageDto> languages;
     private List<InterestDto> interests;
     private List<EducationDto> educations;
     private List<ExperienceDto> experiences;
+
 }
