@@ -28,7 +28,7 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public void sendConfirmationEmail(User user) {
-        String token = tokenService.createConfirmationToken(user);
+        String token = tokenService.createConfirmationToken(user).getValue();
         String message = mail.getConfirmationMessage() + "\n" +
                          mail.getConfirmationLink() +
                          token;
@@ -51,7 +51,7 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public void sendPasswordResetEmail(User user) {
-        String token = tokenService.createPasswordResetToken(user);
+        String token = tokenService.createPasswordResetToken(user).getValue();
         String message = mail.getPasswordMessage() + "\n" +
                          mail.getPasswordLink() +
                          token;

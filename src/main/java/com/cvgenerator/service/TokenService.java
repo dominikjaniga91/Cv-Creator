@@ -7,9 +7,9 @@ import java.util.Optional;
 
 public interface TokenService {
 
-    String createConfirmationToken(User user);
+    Token createConfirmationToken(User user);
 
-    String createPasswordResetToken(User user);
+    Token createPasswordResetToken(User user);
 
     Optional<Token> findTokenByValue(String value);
 }
