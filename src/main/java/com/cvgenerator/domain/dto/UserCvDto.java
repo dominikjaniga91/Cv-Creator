@@ -34,6 +34,7 @@ public class UserCvDto {
         summary         = builder.summary;
         clause          = builder.clause;
         personalData    = builder.personalData;
+        courses         = builder.courses;
         projects        = builder.projects;
         skills          = builder.skills;
         languages       = builder.languages;
@@ -50,6 +51,7 @@ public class UserCvDto {
         private String summary;
         private String clause;
         private PersonalDataDto personalData;
+        private List<CourseDto> courses;
         private List<ProjectDto> projects;
         private List<SkillDto> skills;
         private List<LanguageDto> languages;
@@ -84,6 +86,11 @@ public class UserCvDto {
 
         public UserCvDtoBuilder setPersonalData(PersonalDataDto personalData) {
             this.personalData = personalData;
+            return this;
+        }
+
+        public UserCvDtoBuilder setCourses(List<CourseDto> courses) {
+            this.courses = courses;
             return this;
         }
 
