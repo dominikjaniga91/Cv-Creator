@@ -31,6 +31,7 @@ public class UserCvController {
 
     @ApiOperation(value = "Save new CV in database linked with user")
     @PostMapping("/cv/{userId}")
+    @ResponseStatus(HttpStatus.CREATED)
     public void saveUserCv(@PathVariable Long userId, @RequestBody UserCvDto userCvDto){
         userCvService.saveUserCv(userId, userCvDto);
     }
