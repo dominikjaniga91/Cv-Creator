@@ -26,4 +26,21 @@ public class ExperienceServiceImpl implements ExperienceService {
         experience.setUserCv(userCv);
         experienceRepository.save(experience);
     }
+
+    @Override
+    public void updateExperience(Experience experience) {
+
+        Long id = experience.getId();
+        Experience foundedExperience = experienceRepository.findById(id).orElseThrow();
+
+        foundedExperience.setId(experience.getId());
+        foundedExperience.setCompany(experience.getCompany());
+        foundedExperience.setCity(experience.getCity());
+        foundedExperience.setPosition(experience.getPosition());
+        foundedExperience.setStartDate(experience.getStartDate());
+        foundedExperience.setFinishDate(experience.getFinishDate());
+        foundedExperience.setDescription(experience.getDescription());
+
+        experienceRepository.save(foundedExperience);
+    }
 }
