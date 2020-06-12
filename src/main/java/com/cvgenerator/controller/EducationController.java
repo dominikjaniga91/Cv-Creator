@@ -37,7 +37,7 @@ public class EducationController {
 
     @ApiOperation(value = "Delete education from cv education")
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/cv/education/{id}")
+    @DeleteMapping("/cv/education/{id}")
     public void deleteEducation(@PathVariable Long id) {
         educationService.deleteEducation(id);
     }
