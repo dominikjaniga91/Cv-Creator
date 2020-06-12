@@ -21,7 +21,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void saveCourse(Long userCvId, Course course) {
+    public void createCourse(Long userCvId, Course course) {
         UserCv userCv = userCvRepository.findById(userCvId).orElseThrow();
         course.setUserCv(userCv);
         courseRepository.save(course);
