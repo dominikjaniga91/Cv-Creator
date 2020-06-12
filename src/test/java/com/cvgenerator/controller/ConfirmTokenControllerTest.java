@@ -36,7 +36,7 @@ public class ConfirmTokenControllerTest {
     private MailServiceImpl mailService;
 
     @Test
-    @DisplayName("should return status OK and activate account after request")
+    @DisplayName("GET should return status OK and activate account after request")
     void shouldReturnStatusOkAndActivateUser_afterRequest() throws Exception {
 
         User user = new User.UserBuilder()
@@ -62,7 +62,7 @@ public class ConfirmTokenControllerTest {
     }
 
     @Test
-    @DisplayName("should return status 'Bad request' after request")
+    @DisplayName("GET should return status 'Bad request' after request")
     void shouldReturnStatusBadRequest_afterRequest() throws Exception {
 
         mockMvc.perform(get("/api/token")
