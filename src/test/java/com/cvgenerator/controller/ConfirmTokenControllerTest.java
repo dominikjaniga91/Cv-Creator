@@ -1,5 +1,6 @@
 package com.cvgenerator.controller;
 
+import com.cvgenerator.domain.entity.Token;
 import com.cvgenerator.domain.entity.User;
 import com.cvgenerator.service.implementation.TokenServiceImpl;
 import com.cvgenerator.utils.service.implementation.MailServiceImpl;
@@ -49,11 +50,12 @@ public class ConfirmTokenControllerTest {
                 .setRegistration(LocalDateTime.now())
                 .buildUserDto();
 
-        String token = tokenService.createConfirmationToken(user);
+        Token token = tokenService.createConfirmationToken(user);
+        String tokenValue = token.getValue();
         BDDMockito.doNothing().when(mailService).sendConfirmationEmail(ArgumentMatchers.any(User.class));
 
         mockMvc.perform(get("/api/token")
-                .param("value", token))
+                .param("value", tokenValue))
                 .andExpect(status().isOk())
                 .andExpect(mvcResult -> Assertions.assertEquals(mvcResult.getResponse().getContentAsString(), "Your account is active"));
 
