@@ -21,7 +21,7 @@ public class ExperienceServiceImpl implements ExperienceService {
     }
 
     @Override
-    public void saveExperience(Long userCvId, Experience experience) {
+    public void createExperience(Long userCvId, Experience experience) {
         UserCv userCv = userCvRepository.findById(userCvId).orElseThrow();
         experience.setUserCv(userCv);
         experienceRepository.save(experience);
