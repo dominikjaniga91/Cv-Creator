@@ -43,4 +43,9 @@ public class ExperienceServiceImpl implements ExperienceService {
 
         experienceRepository.save(foundedExperience);
     }
+
+    @Override
+    public void deleteExperienceById(Long id) {
+        experienceRepository.deleteById(id);
+    }
 }
