@@ -29,14 +29,14 @@ public class ExperienceController {
 
     @ApiOperation(value = "Updates details about experience")
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/cv/education")
+    @PutMapping("/cv/experience")
     public void updateEducation(@RequestBody Experience experience) {
         experienceService.updateExperience(experience);
     }
 
     @ApiOperation(value = "Delete education from cv experience")
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/cv/education/{id}")
+    @DeleteMapping("/cv/experience/{id}")
     public void deleteEducation(@PathVariable Long id) {
         experienceService.deleteExperienceById(id);
     }
