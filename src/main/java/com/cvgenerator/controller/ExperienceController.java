@@ -1,6 +1,5 @@
 package com.cvgenerator.controller;
 
-import com.cvgenerator.domain.entity.Education;
 import com.cvgenerator.domain.entity.Experience;
 import com.cvgenerator.service.implementation.ExperienceServiceImpl;
 import io.swagger.annotations.Api;
@@ -23,15 +22,22 @@ public class ExperienceController {
 
     @ApiOperation(value = "Save new experience for cv with specific ID into database ")
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/cv/experience/{id}")
-    public void createEducation(@PathVariable Long id, @RequestBody Experience experience) {
-        experienceService.createExperience(id, experience);
+    @PostMapping("/cv/experience/{cvId}")
+    public void createEducation(@PathVariable Long cvId, @RequestBody Experience experience) {
+        experienceService.createExperience(cvId, experience);
     }
 
-    @ApiOperation(value = "Updates details about education")
+    @ApiOperation(value = "Updates details about experience")
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/cv/education")
     public void updateEducation(@RequestBody Experience experience) {
         experienceService.updateExperience(experience);
+    }
+
+    @ApiOperation(value = "Delete education from cv experience")
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("/cv/education/{id}")
+    public void deleteEducation(@PathVariable Long id) {
+        experienceService.deleteExperienceById(id);
     }
 }
