@@ -68,8 +68,8 @@ public class PasswordControllerTest {
     }
 
     @Test
-    @DisplayName("should return status Oo and change password after request")
-    void shouldReturnStatusOkAndActivateUser_afterRequest() throws Exception {
+    @DisplayName("POST should return status Oo and change password after request")
+    void shouldReturnStatusOk_afterRequestForPasswordChange() throws Exception {
 
         User user = new User.UserBuilder()
                 .setId(1L)
@@ -97,6 +97,26 @@ public class PasswordControllerTest {
                 .header("Access-Control-Expose-Headers", "Authorization"))
                 .andExpect(status().isOk())
                 .andExpect(mvcResult -> Assertions.assertEquals(mvcResult.getResponse().getContentAsString(), "Your password has been changed"));
+
+    }
+
+    @Test
+    @DisplayName("POST should return 'Unauthorized' after request for password change with invalid token")
+    void shouldReturnStatusBadRequest_afterRequestForPasswordChange() throws Exception {
+
+
+        String newPassword = "{\n" +
+                "\t\"password\": \"newpassword\"\n" +
+                "}";
+
+        mockMvc.perform(post("/api/new-password")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(newPassword)
+                .param("value", "validToken")
+                .header("Authorization", "Bearer " + apiToken)
+                .header("Access-Control-Expose-Headers", "Authorization"))
+                .andExpect(status().isUnauthorized())
+                .andExpect(mvcResult -> Assertions.assertEquals(mvcResult.getResponse().getContentAsString(), "Reset link is not valid"));
 
     }
 
