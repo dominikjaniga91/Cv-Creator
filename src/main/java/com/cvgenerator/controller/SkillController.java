@@ -25,4 +25,10 @@ public class SkillController {
         skillService.saveSkill(cvId, skill);
     }
 
+    @ApiOperation(value = "Updates user skill")
+    @PutMapping()
+    @ResponseStatus(HttpStatus.OK)
+    public void updateSkill(@RequestBody Skill skill){
+        skillService.updateSkill(skill);
+    }
 }

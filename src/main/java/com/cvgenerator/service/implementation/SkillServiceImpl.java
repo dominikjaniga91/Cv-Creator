@@ -28,4 +28,17 @@ public class SkillServiceImpl implements SkillService {
         skill.setUserCv(userCv);
         skillRepository.save(skill);
     }
+
+    @Override
+    public void updateSkill(Skill skill) {
+        Long id = skill.getId();
+        Skill foundedSkill = skillRepository.findById(id).orElseThrow();
+
+        foundedSkill.setName(skill.getName());
+        foundedSkill.setDescription(skill.getDescription());
+        foundedSkill.setLevel(skill.getLevel());
+        foundedSkill.setStars(skill.getStars());
+
+        skillRepository.save(foundedSkill);
+    }
 }
