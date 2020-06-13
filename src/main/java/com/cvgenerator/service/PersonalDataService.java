@@ -7,4 +7,6 @@ public interface PersonalDataService {
     void createPersonalData(Long userCvId, PersonalData personalData);
 
     void updatePersonalData(PersonalData personalData);
+
+    void deletePersonalDataById(Long id);
 }

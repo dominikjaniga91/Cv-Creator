@@ -31,4 +31,11 @@ public class PersonalDataController {
     public void updatePersonalData(@RequestBody PersonalData personalData){
         personalDataService.updatePersonalData(personalData);
     }
+
+    @ApiOperation(value = "Delete user personal data from database")
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deletePersonalData(@PathVariable Long id){
+        personalDataService.deletePersonalDataById(id);
+    }
 }
