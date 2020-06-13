@@ -27,4 +27,17 @@ public class ProjectServiceImpl implements ProjectService {
         project.setUserCv(userCv);
         projectRepository.save(project);
     }
+
+    @Override
+    public void updateProject(Project project) {
+        Long id = project.getId();
+        Project foundedProject = projectRepository.findById(id).orElseThrow();
+
+        foundedProject.setName(project.getName());
+        foundedProject.setStartDate(project.getStartDate());
+        foundedProject.setFinishDate(project.getFinishDate());
+        foundedProject.setDescription(project.getDescription());
+
+        projectRepository.save(foundedProject);
+    }
 }
