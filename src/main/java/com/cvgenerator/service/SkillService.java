@@ -7,4 +7,6 @@ public interface SkillService {
     void saveSkill(Long userCvId, Skill skill);
 
     void updateSkill(Skill skill);
+
+    void deleteSkillById(Long id);
 }
