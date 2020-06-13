@@ -1,6 +1,5 @@
 package com.cvgenerator.controller;
 
-
 import com.cvgenerator.domain.entity.Course;
 import com.cvgenerator.service.implementation.CourseServiceImpl;
 import io.swagger.annotations.Api;
@@ -31,5 +30,12 @@ public class CourseController {
     @PutMapping("/cv/course")
     public void updateEducation(@RequestBody Course course) {
         courseService.updateCourse(course);
+    }
+
+    @ApiOperation(value = "Delete course from database")
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("/cv/course/{id}")
+    public void deleteEducation(@PathVariable Long id) {
+        courseService.deleteCourse(id);
     }
 }

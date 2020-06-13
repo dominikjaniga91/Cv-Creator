@@ -40,4 +40,9 @@ public class CourseServiceImpl implements CourseService {
         courseRepository.save(foundedCourse);
 
     }
+
+    @Override
+    public void deleteCourse(Long id) {
+        courseRepository.deleteById(id);
+    }
 }

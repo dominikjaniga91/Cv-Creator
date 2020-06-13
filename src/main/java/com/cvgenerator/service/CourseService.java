@@ -7,4 +7,6 @@ public interface CourseService {
     void createCourse(Long userCvId, Course course);
 
     void updateCourse(Course course);
+
+    void deleteCourse(Long id);
 }
