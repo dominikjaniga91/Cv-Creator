@@ -34,4 +34,10 @@ public class ProjectController {
         projectService.updateProject(project);
     }
 
+    @ApiOperation(value = "Delete user project from database")
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteProject(@PathVariable Long id){
+        projectService.deleteProject(id);
+    }
 }

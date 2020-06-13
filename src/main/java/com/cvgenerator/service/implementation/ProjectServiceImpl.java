@@ -40,4 +40,9 @@ public class ProjectServiceImpl implements ProjectService {
 
         projectRepository.save(foundedProject);
     }
+
+    @Override
+    public void deleteProject(Long id) {
+        projectRepository.deleteById(id);
+    }
 }

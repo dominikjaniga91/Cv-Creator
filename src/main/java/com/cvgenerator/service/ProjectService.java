@@ -7,4 +7,6 @@ public interface ProjectService {
     void createProject(Long userCvId, Project project);
 
     void updateProject(Project project);
+
+    void deleteProject(Long id);
 }
