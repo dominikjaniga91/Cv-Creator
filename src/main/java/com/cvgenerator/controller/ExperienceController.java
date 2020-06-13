@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Api(tags = "Experience controller")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/cv")
 public class ExperienceController {
 
     private final ExperienceServiceImpl experienceService;
@@ -22,21 +22,21 @@ public class ExperienceController {
 
     @ApiOperation(value = "Save new experience for cv with specific ID into database ")
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/cv/experience/{cvId}")
+    @PostMapping("/experience/{cvId}")
     public void createEducation(@PathVariable Long cvId, @RequestBody Experience experience) {
         experienceService.createExperience(cvId, experience);
     }
 
     @ApiOperation(value = "Updates details about experience")
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/cv/experience")
+    @PutMapping("/experience")
     public void updateEducation(@RequestBody Experience experience) {
         experienceService.updateExperience(experience);
     }
 
     @ApiOperation(value = "Delete education from cv experience")
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/cv/experience/{id}")
+    @DeleteMapping("/experience/{id}")
     public void deleteEducation(@PathVariable Long id) {
         experienceService.deleteExperienceById(id);
     }
