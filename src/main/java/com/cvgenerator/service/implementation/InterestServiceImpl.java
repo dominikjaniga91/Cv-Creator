@@ -35,4 +35,9 @@ public class InterestServiceImpl implements InterestService {
         foundedInterest.setName(interest.getName());
         interestRepository.save(foundedInterest);
     }
+
+    @Override
+    public void deleteInterestById(Long id) {
+        interestRepository.deleteById(id);
+    }
 }

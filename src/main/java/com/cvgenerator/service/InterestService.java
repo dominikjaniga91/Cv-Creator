@@ -7,4 +7,6 @@ public interface InterestService {
     void createInterest(Long userCvId, Interest interest);
 
     void updateInterest(Interest interest);
+
+    void deleteInterestById(Long id);
 }

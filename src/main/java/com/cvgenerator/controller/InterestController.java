@@ -33,4 +33,12 @@ public class InterestController {
     public void updateInterest(@RequestBody Interest interest){
         interestService.updateInterest(interest);
     }
+
+    @ApiOperation(value = "Delete user interest from database")
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteInterest(@PathVariable Long id){
+        interestService.deleteInterestById(id);
+    }
+
 }
