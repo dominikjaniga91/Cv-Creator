@@ -26,4 +26,24 @@ public class PersonalDataServiceImpl implements PersonalDataService {
         personalData.setUserCv(userCv);
         dataRepository.save(personalData);
     }
+
+    @Override
+    public void updatePersonalData(PersonalData personalData) {
+        Long id = personalData.getId();
+        PersonalData foundedData = dataRepository.findById(id).orElseThrow();
+
+        foundedData.setFirstName(personalData.getFirstName());
+        foundedData.setSecondName(personalData.getSecondName());
+        foundedData.setLastName(personalData.getLastName());
+        foundedData.setEmail(personalData.getEmail());
+        foundedData.setPhoneNumber(personalData.getPhoneNumber());
+        foundedData.setProfession(personalData.getProfession());
+        foundedData.setLinkedIn(personalData.getLinkedIn());
+        foundedData.setGithub(personalData.getGithub());
+        foundedData.setTwitter(personalData.getTwitter());
+        foundedData.setWebsite(personalData.getWebsite());
+        foundedData.setAddress(personalData.getAddress());
+
+        dataRepository.save(foundedData);
+    }
 }

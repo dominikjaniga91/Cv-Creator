@@ -24,4 +24,11 @@ public class PersonalDataController {
     public void createPersonalData(@PathVariable Long cvId, @RequestBody PersonalData personalData){
         personalDataService.createPersonalData(cvId, personalData);
     }
+
+    @ApiOperation(value = "Update user personal data")
+    @PutMapping()
+    @ResponseStatus(HttpStatus.OK)
+    public void updatePersonalData(@RequestBody PersonalData personalData){
+        personalDataService.updatePersonalData(personalData);
+    }
 }
