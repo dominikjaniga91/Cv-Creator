@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Api(tags = "User CV controller")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/cv")
 public class UserCvController {
 
 
@@ -23,27 +23,27 @@ public class UserCvController {
     }
 
     @ApiOperation(value = "Get information about specific user's CV")
-    @GetMapping("/cv/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<UserCvDto> getCvById(@PathVariable Long id){
 
         return new ResponseEntity<>(userCvService.getUserCvById(id), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Save new CV in database linked with user")
-    @PostMapping("/cv/{userId}")
+    @PostMapping("/{userId}")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveUserCv(@PathVariable Long userId, @RequestBody UserCvDto userCvDto){
         userCvService.saveUserCv(userId, userCvDto);
     }
 
     @ApiOperation(value = "Update basic info about user CV (name and templateName)")
-    @PutMapping("/cv/{id}")
+    @PutMapping("/{id}")
     public void updateUserCvBasicInfo(@RequestBody UserCvDto userCvDto){
         userCvService.updateUserCvBasicInfo(userCvDto);
     }
 
     @ApiOperation(value = "Delete CV from database using ID")
-    @DeleteMapping("/cv/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteUserCv(@PathVariable Long id){
         userCvService.deleteCvById(id);
