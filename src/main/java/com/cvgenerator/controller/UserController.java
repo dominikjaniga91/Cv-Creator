@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Api(tags = "User controller")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 public class UserController {
 
     private final UserServiceImpl userService;
@@ -25,7 +25,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "Get information about user")
-    @GetMapping("/user/{userId}")
+    @GetMapping("/{userId}")
     public ResponseEntity<UserDto> getUserInformation(@PathVariable Long userId){
          return new ResponseEntity<>(userService.findUserById(userId), HttpStatus.OK);
     }
@@ -34,13 +34,13 @@ public class UserController {
      * @return Optional<List<UserCv>>
      */
     @ApiOperation(value = "Get list of user cv. List contains basic information about CV like: id, cv name, and template name")
-    @GetMapping("/user/resume/{id}")
+    @GetMapping("/cv/{id}")
     public ResponseEntity<?> getListOfUserCv(@PathVariable Long id){
         return new ResponseEntity<>(userService.getListOfUserCv(id), HttpStatus.OK);
     }
 
     @ApiOperation(value ="Creates new user account")
-    @PostMapping("/user")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public void createUserAccount(@RequestBody UserDto userDto){
         userService.saveUser(userDto);
@@ -48,14 +48,14 @@ public class UserController {
     }
 
     @ApiOperation(value ="Updates information about user account")
-    @PutMapping("/user")
+    @PutMapping()
     @ResponseStatus(HttpStatus.OK)
     public void updateUserAccount(@RequestBody UserDto userDto){
         userService.updateUser(userDto);
     }
 
     @ApiOperation(value ="Delete user account with all resumes")
-    @DeleteMapping("/user/{userId}")
+    @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteUserAccount(@PathVariable Long userId,
                                   @RequestBody String password){
