@@ -4,5 +4,5 @@ import com.cvgenerator.domain.entity.Interest;
 
 public interface InterestService {
 
-    void saveInterests(Long userCvId, Interest interest);
+    void createInterest(Long userCvId, Interest interest);
 }
