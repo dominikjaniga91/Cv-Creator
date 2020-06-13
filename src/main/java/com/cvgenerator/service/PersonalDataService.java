@@ -4,5 +4,5 @@ import com.cvgenerator.domain.entity.PersonalData;
 
 public interface PersonalDataService {
 
-    void savePersonalData(Long userCvId, PersonalData personalData);
+    void createPersonalData(Long userCvId, PersonalData personalData);
 }

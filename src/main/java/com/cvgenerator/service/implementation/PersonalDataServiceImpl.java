@@ -21,7 +21,7 @@ public class PersonalDataServiceImpl implements PersonalDataService {
     }
 
     @Override
-    public void savePersonalData(Long userCvId, PersonalData personalData) {
+    public void createPersonalData(Long userCvId, PersonalData personalData) {
         UserCv userCv = userCvRepository.findById(userCvId).orElseThrow();
         personalData.setUserCv(userCv);
         dataRepository.save(personalData);
