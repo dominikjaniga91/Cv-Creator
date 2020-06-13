@@ -26,4 +26,18 @@ public class CourseServiceImpl implements CourseService {
         course.setUserCv(userCv);
         courseRepository.save(course);
     }
+
+    @Override
+    public void updateCourse(Course course) {
+        Long id = course.getId();
+        Course foundedCourse = courseRepository.findById(id).orElseThrow();
+
+        foundedCourse.setSchool(course.getSchool());
+        foundedCourse.setCity(course.getCity());
+        foundedCourse.setStartDate(course.getStartDate());
+        foundedCourse.setFinishDate(course.getFinishDate());
+        foundedCourse.setDescription(course.getDescription());
+        courseRepository.save(foundedCourse);
+
+    }
 }

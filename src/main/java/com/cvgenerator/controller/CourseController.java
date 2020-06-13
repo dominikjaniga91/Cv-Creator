@@ -2,7 +2,6 @@ package com.cvgenerator.controller;
 
 
 import com.cvgenerator.domain.entity.Course;
-import com.cvgenerator.domain.entity.Education;
 import com.cvgenerator.service.implementation.CourseServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,10 +19,17 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-    @ApiOperation(value = "Save new education for cv with specific ID into database ")
+    @ApiOperation(value = "Save new course for cv with specific ID into database ")
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/cv/education/{id}")
+    @PostMapping("/cv/course/{id}")
     public void createCourse(@PathVariable Long id, @RequestBody Course course) {
         courseService.createCourse(id, course);
+    }
+
+    @ApiOperation(value = "Updates details about user courses")
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/cv/course")
+    public void updateEducation(@RequestBody Course course) {
+        courseService.updateCourse(course);
     }
 }

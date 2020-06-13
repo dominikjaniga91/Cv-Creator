@@ -5,4 +5,6 @@ import com.cvgenerator.domain.entity.Course;
 public interface CourseService {
 
     void createCourse(Long userCvId, Course course);
+
+    void updateCourse(Course course);
 }
