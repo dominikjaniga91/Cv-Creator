@@ -4,6 +4,6 @@ import com.cvgenerator.domain.entity.Project;
 
 public interface ProjectService {
 
-    void saveProject(Long userCvId, Project project);
+    void createProject(Long userCvId, Project project);
 
 }

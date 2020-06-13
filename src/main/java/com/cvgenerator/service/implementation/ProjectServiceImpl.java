@@ -21,7 +21,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void saveProject(Long userCvId, Project project) {
+    public void createProject(Long userCvId, Project project) {
 
         UserCv userCv = userCvRepository.findById(userCvId).orElseThrow();
         project.setUserCv(userCv);
