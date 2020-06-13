@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Api(tags = "Course controller")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/cv")
 public class CourseController {
 
     private final CourseServiceImpl courseService;
@@ -20,21 +20,21 @@ public class CourseController {
 
     @ApiOperation(value = "Save new course for cv with specific ID into database ")
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/cv/course/{id}")
+    @PostMapping("/course/{id}")
     public void createCourse(@PathVariable Long id, @RequestBody Course course) {
         courseService.createCourse(id, course);
     }
 
     @ApiOperation(value = "Updates details about user courses")
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/cv/course")
+    @PutMapping("/course")
     public void updateEducation(@RequestBody Course course) {
         courseService.updateCourse(course);
     }
 
     @ApiOperation(value = "Delete course from database")
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/cv/course/{id}")
+    @DeleteMapping("/course/{id}")
     public void deleteEducation(@PathVariable Long id) {
         courseService.deleteCourse(id);
     }
