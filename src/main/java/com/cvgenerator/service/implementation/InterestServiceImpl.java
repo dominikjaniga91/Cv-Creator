@@ -27,4 +27,12 @@ public class InterestServiceImpl implements InterestService {
         interest.setUserCv(userCv);
         interestRepository.save(interest);
     }
+
+    @Override
+    public void updateInterest(Interest interest) {
+        Long id = interest.getId();
+        Interest foundedInterest = interestRepository.findById(id).orElseThrow();
+        foundedInterest.setName(interest.getName());
+        interestRepository.save(foundedInterest);
+    }
 }

@@ -26,4 +26,11 @@ public class InterestController {
     public void createInterest(@PathVariable Long cvId, @RequestBody Interest interest){
         interestService.createInterest(cvId, interest);
     }
+
+    @ApiOperation(value = "Update details about user interest")
+    @PutMapping()
+    @ResponseStatus(HttpStatus.OK)
+    public void updateInterest(@RequestBody Interest interest){
+        interestService.updateInterest(interest);
+    }
 }
