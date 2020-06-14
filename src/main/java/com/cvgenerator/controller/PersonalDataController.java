@@ -26,7 +26,7 @@ public class PersonalDataController {
     }
 
     @ApiOperation(value = "Update user personal data")
-    @PutMapping()
+    @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public void updatePersonalData(@RequestBody PersonalData personalData){
         personalDataService.updatePersonalData(personalData);

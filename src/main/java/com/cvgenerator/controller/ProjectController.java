@@ -28,7 +28,7 @@ public class ProjectController {
     }
 
     @ApiOperation(value = "Updates details about user project")
-    @PutMapping()
+    @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public void updateProject(@RequestBody Project project){
         projectService.updateProject(project);

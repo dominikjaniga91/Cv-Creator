@@ -25,9 +25,9 @@ public class UserController {
     }
 
     @ApiOperation(value = "Get information about user")
-    @GetMapping("/{userId}")
-    public ResponseEntity<UserDto> getUserInformation(@PathVariable Long userId){
-         return new ResponseEntity<>(userService.findUserById(userId), HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDto> getUserInformation(@PathVariable Long id){
+         return new ResponseEntity<>(userService.findUserById(id), HttpStatus.OK);
     }
 
     /**
@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @ApiOperation(value ="Creates new user account")
-    @PostMapping()
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createUserAccount(@RequestBody UserDto userDto){
         userService.saveUser(userDto);
@@ -48,19 +48,19 @@ public class UserController {
     }
 
     @ApiOperation(value ="Updates information about user account")
-    @PutMapping()
+    @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public void updateUserAccount(@RequestBody UserDto userDto){
         userService.updateUser(userDto);
     }
 
     @ApiOperation(value ="Delete user account with all resumes")
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteUserAccount(@PathVariable Long userId,
+    public void deleteUserAccount(@PathVariable Long id,
                                   @RequestBody String password){
 
-        userService.deleteUserAccount(userId, password);
+        userService.deleteUserAccount(id, password);
     }
 
 }

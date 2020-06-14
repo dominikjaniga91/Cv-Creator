@@ -37,7 +37,7 @@ public class CourseController {
     @ApiOperation(value = "Delete course from database")
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{id}")
-    public void deleteEducation(@ApiParam(value = "education ID", example = "1") @PathVariable Long id) {
+    public void deleteEducation(@PathVariable Long id) {
         courseService.deleteCourse(id);
     }
 }

@@ -37,7 +37,7 @@ public class UserCvController {
     }
 
     @ApiOperation(value = "Update basic info about user CV (name and templateName)")
-    @PutMapping("/{id}")
+    @PutMapping
     public void updateUserCvBasicInfo(@RequestBody UserCvDto userCvDto){
         userCvService.updateUserCvBasicInfo(userCvDto);
     }

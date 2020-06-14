@@ -4,6 +4,7 @@ import com.cvgenerator.domain.entity.Skill;
 import com.cvgenerator.service.implementation.SkillServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,7 @@ public class SkillController {
     }
 
     @ApiOperation(value = "Updates user skill")
-    @PutMapping()
+    @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public void updateSkill(@RequestBody Skill skill){
         skillService.updateSkill(skill);
@@ -34,7 +35,8 @@ public class SkillController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteSkill(@PathVariable Long id){
+    public void deleteSkill(@ApiParam(value = "skill ID", example = "1")
+                            @PathVariable Long id){
         skillService.deleteSkillById(id);
     }
 }

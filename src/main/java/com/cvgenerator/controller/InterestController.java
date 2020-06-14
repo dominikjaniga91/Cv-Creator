@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@Api(value = "Interest Controller")
+@Api(tags = "Interest Controller")
 @RequestMapping("/api/cv/interest")
 public class InterestController {
 
@@ -28,7 +28,7 @@ public class InterestController {
     }
 
     @ApiOperation(value = "Update details about user interest")
-    @PutMapping()
+    @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public void updateInterest(@RequestBody Interest interest){
         interestService.updateInterest(interest);
