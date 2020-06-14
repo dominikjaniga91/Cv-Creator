@@ -49,6 +49,9 @@ public class PersonalDataServiceImpl implements PersonalDataService {
 
     @Override
     public void deletePersonalDataById(Long id) {
+        PersonalData foundedData = dataRepository.findById(id).orElseThrow();
+        UserCv cv = foundedData.getUserCv();
+        cv.setPersonalData(null);
         dataRepository.deleteById(id);
     }
 }
