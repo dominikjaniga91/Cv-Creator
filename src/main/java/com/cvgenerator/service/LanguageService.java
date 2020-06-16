@@ -4,5 +4,5 @@ import com.cvgenerator.domain.entity.Language;
 
 public interface LanguageService {
 
-    void saveLanguage(Long userCvId, Language language);
+    void createLanguage(Long userCvId, Language language);
 }

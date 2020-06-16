@@ -21,7 +21,7 @@ public class LanguageServiceImpl implements LanguageService {
     }
 
     @Override
-    public void saveLanguage(Long userCvId, Language language) {
+    public void createLanguage(Long userCvId, Language language) {
         UserCv userCv = userCvRepository.findById(userCvId).orElseThrow();
         language.setUserCv(userCv);
         languageRepository.save(language);
