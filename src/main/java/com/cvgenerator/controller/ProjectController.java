@@ -38,6 +38,6 @@ public class ProjectController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteProject(@PathVariable Long id){
-        projectService.deleteProject(id);
+        projectService.deleteProjectById(id);
     }
 }
