@@ -49,22 +49,10 @@ public class ConfirmTokenController {
                                                          @RequestParam("value") String tokenValue){
 
         Token token = tokenService.findTokenByValue(tokenValue);
-
-            if(isNotExpired(token)){
-                User user = token.getUser();
-                user.setActive(true);
-                userRepository.save(user);
-                mailService.sendWelcomeEmail(user);
-                return new ResponseEntity<>("Your account is active", HttpStatus.OK);
-            }else{
-                return new ResponseEntity<>("Confirmation link expired", HttpStatus.BAD_REQUEST);
-            }
-    }
-
-    private boolean isNotExpired(Token foundedToken){
-        LocalDateTime expirationDate = foundedToken.getExpiryDate();
-        LocalDateTime now = LocalDateTime.now();
-        return expirationDate.isAfter(now);
-
+        User user = token.getUser();
+        user.setActive(true);
+        userRepository.save(user);
+        mailService.sendWelcomeEmail(user);
+        return new ResponseEntity<>("Your account is active", HttpStatus.OK);
     }
 }

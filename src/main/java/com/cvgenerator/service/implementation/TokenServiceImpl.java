@@ -4,6 +4,7 @@ import com.cvgenerator.config.Messages;
 import com.cvgenerator.domain.entity.Token;
 import com.cvgenerator.domain.entity.User;
 import com.cvgenerator.domain.enums.TokenType;
+import com.cvgenerator.exceptions.TokenExpiredException;
 import com.cvgenerator.exceptions.notfound.TokenNotFoundException;
 import com.cvgenerator.repository.TokenRepository;
 import com.cvgenerator.service.TokenService;
@@ -51,6 +52,20 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public Token findTokenByValue(String value) {
-        return tokenRepository.getTokenByValue(value).orElseThrow(() -> new TokenNotFoundException(messages.get("token.notfound")));
+
+        Token token = tokenRepository.getTokenByValue(value).orElseThrow(() -> new TokenNotFoundException(messages.get("token.notfound")));
+        if(isNotExpired(token)){
+            return token;
+        } else {
+            throw new TokenExpiredException(messages.get("token.expired"));
+        }
+
+    }
+
+    private boolean isNotExpired(Token foundedToken){
+        LocalDateTime expirationDate = foundedToken.getExpiryDate();
+        LocalDateTime now = LocalDateTime.now();
+        return expirationDate.isAfter(now);
+
     }
 }
