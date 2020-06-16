@@ -1,5 +1,6 @@
 package com.cvgenerator.controller;
 
+import com.cvgenerator.domain.entity.Interest;
 import com.cvgenerator.domain.entity.Language;
 import com.cvgenerator.service.implementation.LanguageServiceImpl;
 import io.swagger.annotations.Api;
@@ -25,5 +26,13 @@ public class LanguageController {
     @ResponseStatus(HttpStatus.CREATED)
     public void createLanguage(@PathVariable Long cvId, @RequestBody Language language){
         languageService.createLanguage(cvId, language);
+    }
+
+
+    @ApiOperation(value = "Update details about user language")
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void updateInterest(@RequestBody Language language){
+        languageService.updateLanguage(language);
     }
 }
