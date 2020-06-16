@@ -19,7 +19,7 @@ public class ErrorMessage {
         this.developerMessage   = builder.developerMessage;
     }
 
-    private static class Builder{
+    public static class Builder{
 
         private int errorCode;
         private String errorMessage;
