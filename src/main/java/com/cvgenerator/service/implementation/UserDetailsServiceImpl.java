@@ -1,15 +1,12 @@
 package com.cvgenerator.service.implementation;
 
 import com.cvgenerator.config.Messages;
-import com.cvgenerator.domain.entity.User;
-import com.cvgenerator.exceptions.UserNotFoundException;
+import com.cvgenerator.exceptions.notfound.UserNotFoundException;
 import com.cvgenerator.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

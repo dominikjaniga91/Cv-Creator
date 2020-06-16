@@ -4,16 +4,14 @@ import com.cvgenerator.config.Messages;
 import com.cvgenerator.domain.dto.UserCvDto;
 import com.cvgenerator.domain.entity.User;
 import com.cvgenerator.domain.entity.UserCv;
-import com.cvgenerator.exceptions.UserCvNotFoundException;
-import com.cvgenerator.exceptions.UserNotFoundException;
+import com.cvgenerator.exceptions.notfound.UserCvNotFoundException;
+import com.cvgenerator.exceptions.notfound.UserNotFoundException;
 import com.cvgenerator.repository.UserCvRepository;
 import com.cvgenerator.repository.UserRepository;
 import com.cvgenerator.service.UserCvService;
 import com.cvgenerator.service.dtoConverters.UserCvDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class UserCvServiceImpl implements UserCvService {
