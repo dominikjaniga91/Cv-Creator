@@ -2,6 +2,7 @@ package com.cvgenerator.config.security;
 
 import com.cvgenerator.config.filter.AuthenticationFilter;
 import com.cvgenerator.config.filter.LoginFilter;
+import com.cvgenerator.exceptions.RestAuthenticationEntryPoint;
 import com.cvgenerator.service.implementation.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -48,7 +49,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterBefore(new LoginFilter("/login", authenticationManager(), authenticationService),
                                 UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new AuthenticationFilter(authenticationService), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new AuthenticationFilter(authenticationService), UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling().authenticationEntryPoint(new RestAuthenticationEntryPoint());
 
         http.headers().frameOptions().disable();
     }
