@@ -11,5 +11,5 @@ public interface TokenService {
 
     Token createPasswordResetToken(User user);
 
-    Optional<Token> findTokenByValue(String value);
+    Token findTokenByValue(String value);
 }

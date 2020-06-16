@@ -2,6 +2,7 @@ package com.cvgenerator.controller;
 
 import com.cvgenerator.domain.entity.Token;
 import com.cvgenerator.domain.entity.User;
+import com.cvgenerator.exceptions.TokenExpiredException;
 import com.cvgenerator.repository.UserRepository;
 import com.cvgenerator.service.implementation.TokenServiceImpl;
 import com.cvgenerator.utils.service.implementation.MailServiceImpl;
@@ -47,12 +48,10 @@ public class ConfirmTokenController {
     public ResponseEntity<?> checkConfirmationEmailToken(@ApiParam(value = "Value of token which was send with confirmation link")
                                                          @RequestParam("value") String tokenValue){
 
-        Optional<Token> token = tokenService.findTokenByValue(tokenValue);
-        if (token.isPresent()){
+        Token token = tokenService.findTokenByValue(tokenValue);
 
-            Token foundedToken = token.get();
-            if(isNotExpired(foundedToken)){
-                User user = foundedToken.getUser();
+            if(isNotExpired(token)){
+                User user = token.getUser();
                 user.setActive(true);
                 userRepository.save(user);
                 mailService.sendWelcomeEmail(user);
@@ -60,9 +59,6 @@ public class ConfirmTokenController {
             }else{
                 return new ResponseEntity<>("Confirmation link expired", HttpStatus.BAD_REQUEST);
             }
-        } else {
-            return new ResponseEntity<>("Confirmation link doesn't exist", HttpStatus.BAD_REQUEST);
-        }
     }
 
     private boolean isNotExpired(Token foundedToken){

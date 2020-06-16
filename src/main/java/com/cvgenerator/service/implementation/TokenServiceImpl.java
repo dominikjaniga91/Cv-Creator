@@ -1,8 +1,10 @@
 package com.cvgenerator.service.implementation;
 
+import com.cvgenerator.config.Messages;
 import com.cvgenerator.domain.entity.Token;
 import com.cvgenerator.domain.entity.User;
 import com.cvgenerator.domain.enums.TokenType;
+import com.cvgenerator.exceptions.notfound.TokenNotFoundException;
 import com.cvgenerator.repository.TokenRepository;
 import com.cvgenerator.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +17,13 @@ import java.util.UUID;
 public class TokenServiceImpl implements TokenService {
 
     private final TokenRepository tokenRepository;
+    private final Messages messages;
 
     @Autowired
-    public TokenServiceImpl(TokenRepository tokenRepository) {
+    public TokenServiceImpl(TokenRepository tokenRepository,
+                            Messages messages) {
         this.tokenRepository = tokenRepository;
+        this.messages = messages;
     }
 
     @Override
@@ -45,7 +50,7 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public Optional<Token> findTokenByValue(String value) {
-        return tokenRepository.getTokenByValue(value);
+    public Token findTokenByValue(String value) {
+        return tokenRepository.getTokenByValue(value).orElseThrow(() -> new TokenNotFoundException(messages.get("token.notfound")));
     }
 }
