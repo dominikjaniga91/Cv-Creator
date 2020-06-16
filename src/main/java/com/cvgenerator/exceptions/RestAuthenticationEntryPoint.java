@@ -12,6 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
+/**
+ * This class is needed because global exception handler
+ * cannot catch exception associated with authentication
+ * filters like expired or malformed JWT
+ *
+ */
+
 @Slf4j
 @Component
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
