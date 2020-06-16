@@ -45,4 +45,13 @@ public class LanguageServiceImpl implements LanguageService {
 
         languageRepository.save(foundedLanguage);
     }
+
+    @Override
+    public void deleteLanguage(Long id) {
+        try{
+            languageRepository.deleteById(id);
+        }catch (Exception ex){
+            throw new LanguageNotFoundException(messages.get("language.notfound"));
+        }
+    }
 }

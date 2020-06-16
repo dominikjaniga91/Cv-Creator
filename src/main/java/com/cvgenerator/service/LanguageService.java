@@ -7,4 +7,6 @@ public interface LanguageService {
     void createLanguage(Long userCvId, Language language);
 
     void updateLanguage(Language language);
+
+    void deleteLanguage(Long id);
 }

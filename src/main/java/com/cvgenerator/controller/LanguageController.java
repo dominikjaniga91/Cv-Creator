@@ -35,4 +35,11 @@ public class LanguageController {
     public void updateInterest(@RequestBody Language language){
         languageService.updateLanguage(language);
     }
+
+    @ApiOperation(value = "Delete user language from database")
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteLanguage(@PathVariable Long id){
+        languageService.deleteLanguage(id);
+    }
 }
