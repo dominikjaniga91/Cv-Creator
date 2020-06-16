@@ -23,7 +23,7 @@ public class SkillController {
     @PostMapping("/{cvId}")
     @ResponseStatus(HttpStatus.CREATED)
     public void createSkill(@PathVariable Long cvId, @RequestBody Skill skill){
-        skillService.saveSkill(cvId, skill);
+        skillService.createSkill(cvId, skill);
     }
 
     @ApiOperation(value = "Updates user skill")

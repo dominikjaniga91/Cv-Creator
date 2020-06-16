@@ -29,7 +29,7 @@ public class SkillServiceImpl implements SkillService {
     }
 
     @Override
-    public void saveSkill(Long userCvId, Skill skill) {
+    public void createSkill(Long userCvId, Skill skill) {
 
         UserCv userCv = userCvRepository.findById(userCvId).orElseThrow(() -> new UserCvNotFoundException(messages.get("userCv.notfound")));
         skill.setUserCv(userCv);
