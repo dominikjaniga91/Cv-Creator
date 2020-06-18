@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -42,13 +41,14 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
         }
     }
 
-    private ErrorMessage getErrorMessage(Exception ex){
+    private ErrorMessage getErrorMessage(Exception exception){
 
-        return new ErrorMessage.Builder()
-                .setErrorCode(HttpStatus.UNAUTHORIZED.value())
-                .setTimestamp(LocalDateTime.now())
-                .setErrorMessage(ex.getMessage())
-                .setDeveloperMessage(ex.getClass().toString())
-                .buildErrorMessage();
+        ErrorMessage errorMessage = new ErrorMessage();
+        errorMessage.setErrorCode(HttpStatus.UNAUTHORIZED.value());
+        errorMessage.setTimestamp(LocalDateTime.now());
+        errorMessage.setErrorMessage(exception.getMessage());
+        errorMessage.setDeveloperMessage(exception.getClass().toString());
+
+        return errorMessage;
     }
 }

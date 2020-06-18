@@ -9,20 +9,20 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
 import java.time.LocalDateTime;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private ErrorMessage getErrorMessage(HttpStatus code, Exception ex){
+    private ErrorMessage getErrorMessage(HttpStatus code, Exception exception){
 
-        return new ErrorMessage.Builder()
-                                .setErrorCode(code.value())
-                                .setTimestamp(LocalDateTime.now())
-                                .setErrorMessage(ex.getMessage())
-                                .setDeveloperMessage(ex.getClass().toString())
-                                .buildErrorMessage();
+        ErrorMessage errorMessage = new ErrorMessage();
+        errorMessage.setErrorCode(code.value());
+        errorMessage.setTimestamp(LocalDateTime.now());
+        errorMessage.setErrorMessage(exception.getMessage());
+        errorMessage.setDeveloperMessage(exception.getClass().toString());
+
+        return errorMessage;
     }
 
     @Override
