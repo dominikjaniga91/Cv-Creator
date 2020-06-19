@@ -11,6 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
+@Builder
 @Entity(name = "languages")
 public class Language {
 
