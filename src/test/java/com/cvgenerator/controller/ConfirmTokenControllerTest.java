@@ -4,6 +4,7 @@ import com.cvgenerator.domain.entity.Token;
 import com.cvgenerator.domain.entity.User;
 import com.cvgenerator.service.implementation.TokenServiceImpl;
 import com.cvgenerator.utils.service.implementation.MailServiceImpl;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -67,8 +68,8 @@ public class ConfirmTokenControllerTest {
 
         mockMvc.perform(get("/api/token")
                 .param("value", "validToken"))
-                .andExpect(status().isBadRequest())
-                .andExpect(mvcResult -> Assertions.assertEquals(mvcResult.getResponse().getContentAsString(), "Confirmation link doesn't exist"));
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.errorMessage", Matchers.is("Token does not exist")));
 
     }
 }
