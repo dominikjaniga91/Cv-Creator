@@ -3,7 +3,7 @@ package com.cvgenerator.service.implementation;
 import com.cvgenerator.config.Messages;
 import com.cvgenerator.domain.entity.Education;
 import com.cvgenerator.domain.entity.UserCv;
-import com.cvgenerator.exceptions.EducationNotFoundException;
+import com.cvgenerator.exceptions.notfound.EducationNotFoundException;
 import com.cvgenerator.exceptions.notfound.UserCvNotFoundException;
 import com.cvgenerator.repository.EducationRepository;
 import com.cvgenerator.repository.UserCvRepository;
