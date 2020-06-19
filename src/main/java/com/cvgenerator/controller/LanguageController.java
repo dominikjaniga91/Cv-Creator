@@ -40,6 +40,6 @@ public class LanguageController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteLanguage(@PathVariable Long id){
-        languageService.deleteLanguage(id);
+        languageService.deleteLanguageById(id);
     }
 }

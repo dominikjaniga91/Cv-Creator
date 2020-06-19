@@ -8,5 +8,5 @@ public interface LanguageService {
 
     void updateLanguage(Language language);
 
-    void deleteLanguage(Long id);
+    void deleteLanguageById(Long id);
 }
