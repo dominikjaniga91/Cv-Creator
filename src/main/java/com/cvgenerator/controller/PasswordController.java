@@ -9,6 +9,7 @@ import com.cvgenerator.utils.service.implementation.MailServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@Slf4j
 @Api(tags = "Password controller")
 @RestController
 @RequestMapping("/api")
@@ -56,26 +58,13 @@ public class PasswordController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> resetUserPassword(@ApiParam(value = "Value of token which was send with confirmation link")
                                                @RequestParam("value") String tokenValue,
-                                               @RequestBody String newPassword) throws JsonProcessingException {
+                                                   @RequestBody String request) throws JsonProcessingException {
 
-        Optional<Token> token = tokenService.findTokenByValue(tokenValue);
-        if(token.isPresent()){
-            Token foundedToken = token.get();
-            if(isNotExpired(foundedToken)){
-                User user = foundedToken.getUser();
-                String password = new ObjectMapper().readTree(newPassword).get("password").asText();
-                userService.updateUserPassword(user, password);
-                return new ResponseEntity<>("Your password has been changed", HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Reset link expired", HttpStatus.OK);
-        }else{
-           return new ResponseEntity<>("Reset link is not valid", HttpStatus.UNAUTHORIZED);
-        }
-    }
+        Token token = tokenService.findTokenByValue(tokenValue);
+        User user = token.getUser();
+        String password = new ObjectMapper().readTree(request).get("password").asText();
+        userService.updateUserPassword(user, password);
+        return new ResponseEntity<>("Your password has been changed", HttpStatus.OK);
 
-    private boolean isNotExpired(Token foundedToken){
-        LocalDateTime expirationDate = foundedToken.getExpiryDate();
-        LocalDateTime now = LocalDateTime.now();
-        return expirationDate.isAfter(now);
     }
 }

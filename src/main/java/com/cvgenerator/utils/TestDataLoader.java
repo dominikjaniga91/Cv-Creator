@@ -57,7 +57,7 @@ public class TestDataLoader {
     @PostConstruct
     public void saveUsersToDatabase(){
 
-        User user1 = createUser("Dominik", "Janiga", "dominikjaniga@gmail.com",passwordEncoder.encode("dominik123"), true, "ROLE_USER", LocalDateTime.now());
+        User user1 = createUser("Dominik", "Janiga", "dominikjaniga91@gmail.com",passwordEncoder.encode("dominik123"), true, "ROLE_USER", LocalDateTime.now());
         User user2 = createUser("Andrzej", "Kowalski", "andrezjkowalski@gmail.com", passwordEncoder.encode("andrej123"), true, "ROLE_USER", LocalDateTime.now());
         User user3 = createUser("Jurek", "Nowak", "jureknowak@gmail.com", passwordEncoder.encode("jurek123"), true, "ROLE_USER", LocalDateTime.now());
         User user4 = createUser("Katarzyna", "Piekarska", "katarzynapiekarska@gmail.com", passwordEncoder.encode("kasia123"), true, "ROLE_USER", LocalDateTime.now());
