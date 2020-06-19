@@ -39,6 +39,6 @@ public class EducationController {
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{id}")
     public void deleteEducation(@PathVariable Long id) {
-        educationService.deleteEducation(id);
+        educationService.deleteEducationById(id);
     }
 }

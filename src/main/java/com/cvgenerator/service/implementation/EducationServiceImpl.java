@@ -34,6 +34,7 @@ public class EducationServiceImpl implements EducationService {
         educationRepository.save(education);
     }
 
+    @Override
     public void updateEducation(Education education) {
         Long id = education.getId();
         Education foundedEducation = educationRepository.findById(id).orElseThrow(() -> new EducationNotFoundException(messages.get("education.notfound")));
@@ -50,7 +51,8 @@ public class EducationServiceImpl implements EducationService {
         educationRepository.save(foundedEducation);
     }
 
-    public void deleteEducation(Long id) {
+    @Override
+    public void deleteEducationById(Long id) {
         try {
             educationRepository.deleteById(id);
         }catch (Exception ex){
