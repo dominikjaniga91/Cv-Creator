@@ -38,6 +38,6 @@ public class CourseController {
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{id}")
     public void deleteEducation(@PathVariable Long id) {
-        courseService.deleteCourse(id);
+        courseService.deleteCourseById(id);
     }
 }

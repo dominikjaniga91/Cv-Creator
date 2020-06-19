@@ -49,7 +49,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void deleteCourse(Long id) {
+    public void deleteCourseById(Long id) {
         try {
             courseRepository.deleteById(id);
         }catch (Exception ex){
