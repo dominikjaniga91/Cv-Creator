@@ -6,6 +6,7 @@ import com.cvgenerator.service.implementation.TokenServiceImpl;
 import com.cvgenerator.utils.service.implementation.MailServiceImpl;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -56,7 +57,7 @@ public class PasswordControllerTest {
     }
 
     @Test
-    @DisplayName("GET should status oK after request to password reset endpoint")
+    @DisplayName("GET should status Ok after request to password reset endpoint")
     void shouldReturnStatusOk_afterRequestToPasswordResetEndpoint() throws Exception {
 
         BDDMockito.doNothing().when(mailService).sendPasswordResetEmail(ArgumentMatchers.any(User.class));
@@ -68,7 +69,7 @@ public class PasswordControllerTest {
     }
 
     @Test
-    @DisplayName("POST should return status Oo and change password after request")
+    @DisplayName("POST should return status Ok and change password after request")
     void shouldReturnStatusOk_afterRequestForPasswordChange() throws Exception {
 
         User user = new User.UserBuilder()
@@ -101,7 +102,7 @@ public class PasswordControllerTest {
     }
 
     @Test
-    @DisplayName("POST should return 'Unauthorized' after request for password change with invalid token")
+    @DisplayName("POST should return 'Not-found' after request for password change with invalid token")
     void shouldReturnStatusBadRequest_afterRequestForPasswordChange() throws Exception {
 
 
@@ -115,8 +116,8 @@ public class PasswordControllerTest {
                 .param("value", "validToken")
                 .header("Authorization", "Bearer " + apiToken)
                 .header("Access-Control-Expose-Headers", "Authorization"))
-                .andExpect(status().isUnauthorized())
-                .andExpect(mvcResult -> Assertions.assertEquals(mvcResult.getResponse().getContentAsString(), "Reset link is not valid"));
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.errorMessage", Matchers.is("Token does not exist")));
 
     }
 

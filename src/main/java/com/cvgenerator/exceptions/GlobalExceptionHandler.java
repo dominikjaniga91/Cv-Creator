@@ -104,8 +104,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(TokenExpiredException.class)
     public ResponseEntity<?> getTokenExpiredExceptionHandler(TokenExpiredException exception){
 
-        ErrorMessage errorMessage = getErrorMessage(HttpStatus.NOT_FOUND, exception);
-        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+        ErrorMessage errorMessage = getErrorMessage(HttpStatus.UNAUTHORIZED, exception);
+        return new ResponseEntity<>(errorMessage, HttpStatus.UNAUTHORIZED);
     }
 
 }
