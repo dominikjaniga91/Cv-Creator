@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@CrossOrigin(origins = {"${settings.cors_origin}"})
 @Slf4j
 @Api(tags = "Password controller")
 @RestController

@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = {"${settings.cors_origin}"})
 @Api(tags = "Skill controller")
 @RestController
 @RequestMapping("/api/cv/skill")
