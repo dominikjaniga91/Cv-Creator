@@ -1,9 +1,13 @@
 # CV creator
 
-## Description
+### Description
 
 The application has been created to build own resume choosing among many templates. Each CV category is a separate entity.
 Users choose a CV template, add information to an appropriate category, and finally generate cv.
+
+### Documentation:
+
+https://cvbuilderapp.herokuapp.com/swagger-ui.html
 
 ### Database architecture:
 
@@ -16,6 +20,7 @@ SHA-256 Secure Hash Algorithm. The user's password is encrypted using the BCrypt
 
 
 ### Applied technologies and libraries:
+
 #### Backend:
 
 * Java 11
@@ -26,14 +31,12 @@ SHA-256 Secure Hash Algorithm. The user's password is encrypted using the BCrypt
 * Lombok - version 1.18.10
 * MySQL - varsion 8.0.16
 * Maven - version 3.6.3
-* iText pdf - version 5.5.13.1
-* Apache pdfbox - version 2.0.19
-* Bouncycastle - version 1.65
 
 #### Frontend:
 * React.js 
 * CSS 
 * Bootstrap
+* jsPdf
 
 ### To do:
 * add functionality to save data to excel or pdf file
