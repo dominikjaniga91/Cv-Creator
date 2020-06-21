@@ -1,4 +1,4 @@
-# CV creator
+# CV builder
 
 ### Description
 
