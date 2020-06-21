@@ -9,10 +9,6 @@ Users choose a CV template, add information to an appropriate category, and fina
 
 https://cvbuilderapp.herokuapp.com/swagger-ui.html
 
-### Website:
-
-https://cv-builder.vercel.app
-
 ### Database architecture:
 
 ![image](src/main/resources/static/db_schema.png)
