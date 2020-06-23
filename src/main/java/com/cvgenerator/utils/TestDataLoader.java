@@ -81,23 +81,26 @@ public class TestDataLoader {
         PersonalData personalData4 = createPersonalData("Katarzyna", "Halina", "Piekarska", "katarzynapiekarska@gmail.com", "778465334", "Nauczycielka", null, null, null, null, address4);
         PersonalData personalData5 = createPersonalData("Anna", "Małgorzata", "Pompka", "annapompka@gmail.com", "998657332", "Dyrektor ds Administracji", null, null, null, null, address5);
 
-        UserCv cv1 = createUserCv("cv1", "aquarius", user1, personalData1);
-        UserCv cv2 = createUserCv("cv2", "new york", user2, personalData2);
-        UserCv cv3 = createUserCv("cv3", "basic", user3, personalData3);
-        UserCv cv4 = createUserCv("cv4", "premium", user4, personalData4);
-        UserCv cv5 = createUserCv("cv5", "semantic",user5, personalData5);
+        Summary summary1 = createSummary("summary 1");
+        Summary summary2 = createSummary("summary 2");
+        Summary summary3 = createSummary("summary 3");
+        Summary summary4 = createSummary("summary 4");
+        Summary summary5 = createSummary("summary 5");
 
-        createSummary("summary 1", cv1);
-        createSummary("summary 2", cv2);
-        createSummary("summary 3", cv3);
-        createSummary("summary 4", cv4);
-        createSummary("summary 5", cv5);
+        Clause clause1 = createClause("clause 1");
+        Clause clause2 = createClause("clause 2");
+        Clause clause3 = createClause("clause 3");
+        Clause clause4 = createClause("clause 4");
+        Clause clause5 = createClause("clause 5");
 
-        createClause("clause 1", cv1);
-        createClause("clause 2", cv2);
-        createClause("clause 3", cv3);
-        createClause("clause 4", cv4);
-        createClause("clause 5", cv5);
+
+
+        UserCv cv1 = createUserCv("cv1", "aquarius",  user1,  clause1, summary1, personalData1);
+        UserCv cv2 = createUserCv("cv2", "new york", user2, clause2, summary2, personalData2);
+        UserCv cv3 = createUserCv("cv3", "basic", user3, clause3, summary3, personalData3);
+        UserCv cv4 = createUserCv("cv4", "premium", user4, clause4, summary4, personalData4);
+        UserCv cv5 = createUserCv("cv5", "semantic",user5, clause5, summary5, personalData5);
+
 
 
         createCourse("Altkom Akademia", "Kraków", LocalDate.of(2020,1,1), LocalDate.of(2020,6,30), "Java programming", cv1);
@@ -146,18 +149,18 @@ public class TestDataLoader {
 
     }
 
-    private void createSummary(String value, UserCv cv) {
+    private Summary createSummary(String value) {
         Summary summary = new Summary();
         summary.setValue(value);
-        summary.setUserCv(cv);
         summaryRepository.save(summary);
+        return summary;
     }
 
-    private void createClause(String value, UserCv cv) {
+    private Clause createClause(String value) {
         Clause clause = new Clause();
         clause.setValue(value);
-        clause.setUserCv(cv);
         clauseRepository.save(clause);
+        return clause;
     }
 
     private void createCourse(String school,
@@ -295,11 +298,15 @@ public class TestDataLoader {
     private UserCv createUserCv(String name,
                                 String templateName,
                                 User user,
+                                Clause clause,
+                                Summary summary,
                                 PersonalData personalData){
         UserCv userCv  = new UserCv();
         userCv.setName(name);
         userCv.setTemplateName(templateName);
         userCv.setUser(user);
+        userCv.setClause(clause);
+        userCv.setSummary(summary);
         userCv.setPersonalData(personalData);
         userCvRepository.save(userCv);
         return userCv;
