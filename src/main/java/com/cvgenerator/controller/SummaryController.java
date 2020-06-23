@@ -1,6 +1,5 @@
 package com.cvgenerator.controller;
 
-import com.cvgenerator.domain.entity.PersonalData;
 import com.cvgenerator.domain.entity.Summary;
 import com.cvgenerator.service.implementation.SummaryServiceImpl;
 import io.swagger.annotations.Api;
@@ -32,5 +31,12 @@ public class SummaryController {
     @ResponseStatus(HttpStatus.OK)
     public void updateSummary(@RequestBody Summary summary){
         summaryService.updateSummary(summary);
+    }
+
+    @ApiOperation(value = "Delete cv summary from database")
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deletePersonalData(@PathVariable Long id){
+        summaryService.deleteSummaryById(id);
     }
 }

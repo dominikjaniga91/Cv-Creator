@@ -7,4 +7,6 @@ public interface SummaryService {
     void createSummary(Long userCvId, Summary summary);
 
     void updateSummary(Summary summary);
+
+    void deleteSummaryById(Long id);
 }

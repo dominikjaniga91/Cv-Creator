@@ -1,18 +1,12 @@
 package com.cvgenerator.service.implementation;
 
 import com.cvgenerator.config.Messages;
-import com.cvgenerator.domain.entity.Address;
-import com.cvgenerator.domain.entity.PersonalData;
 import com.cvgenerator.domain.entity.Summary;
 import com.cvgenerator.domain.entity.UserCv;
-import com.cvgenerator.exceptions.notfound.PersonalDataNotFoundException;
 import com.cvgenerator.exceptions.notfound.SummaryNotFoundException;
 import com.cvgenerator.exceptions.notfound.UserCvNotFoundException;
-import com.cvgenerator.repository.AddressRepository;
-import com.cvgenerator.repository.PersonalDataRepository;
 import com.cvgenerator.repository.SummaryRepository;
 import com.cvgenerator.repository.UserCvRepository;
-import com.cvgenerator.service.PersonalDataService;
 import com.cvgenerator.service.SummaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,5 +40,13 @@ public class SummaryServiceImpl implements SummaryService {
         Summary foundedSummary = summaryRepository.findById(id).orElseThrow(() -> new SummaryNotFoundException(messages.get("summary.notfound")));
         foundedSummary.setValue(summary.getValue());
         summaryRepository.save(summary);
+    }
+
+    @Override
+    public void deleteSummaryById(Long id) {
+        Summary foundedData = summaryRepository.findById(id).orElseThrow(() -> new SummaryNotFoundException(messages.get("summary.notfound")));
+        UserCv cv = foundedData.getUserCv();
+        cv.setSummary(null);
+        summaryRepository.deleteById(id);
     }
 }
