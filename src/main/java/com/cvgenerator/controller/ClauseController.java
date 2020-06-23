@@ -1,10 +1,7 @@
 package com.cvgenerator.controller;
 
 import com.cvgenerator.domain.entity.Clause;
-import com.cvgenerator.domain.entity.Summary;
-import com.cvgenerator.service.ClauseService;
 import com.cvgenerator.service.implementation.ClauseServiceImpl;
-import com.cvgenerator.service.implementation.SummaryServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
@@ -32,8 +29,15 @@ public class ClauseController {
     @ApiOperation(value = "Update cv clause")
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public void updateSummary(@RequestBody Clause clause){
+    public void updateClause(@RequestBody Clause clause){
         clauseService.updateClause(clause);
+    }
+
+    @ApiOperation(value = "Delete cv clause from database")
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteClause(@PathVariable Long id){
+        clauseService.deleteClauseById(id);
     }
 
 }

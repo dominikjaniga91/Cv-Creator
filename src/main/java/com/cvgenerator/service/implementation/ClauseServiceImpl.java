@@ -2,16 +2,12 @@ package com.cvgenerator.service.implementation;
 
 import com.cvgenerator.config.Messages;
 import com.cvgenerator.domain.entity.Clause;
-import com.cvgenerator.domain.entity.Summary;
 import com.cvgenerator.domain.entity.UserCv;
 import com.cvgenerator.exceptions.notfound.ClauseNotFoundException;
-import com.cvgenerator.exceptions.notfound.SummaryNotFoundException;
 import com.cvgenerator.exceptions.notfound.UserCvNotFoundException;
 import com.cvgenerator.repository.ClauseRepository;
-import com.cvgenerator.repository.SummaryRepository;
 import com.cvgenerator.repository.UserCvRepository;
 import com.cvgenerator.service.ClauseService;
-import com.cvgenerator.service.SummaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,5 +40,13 @@ public class ClauseServiceImpl implements ClauseService {
         Clause foundedClause = clauseRepository.findById(id).orElseThrow(() -> new ClauseNotFoundException(messages.get("clause.notfound")));
         foundedClause.setValue(clause.getValue());
         clauseRepository.save(clause);
+    }
+
+    @Override
+    public void deleteClauseById(Long id) {
+        Clause foundedData = clauseRepository.findById(id).orElseThrow(() -> new ClauseNotFoundException(messages.get("clause.notfound")));
+        UserCv cv = foundedData.getUserCv();
+        cv.setClause(null);
+        clauseRepository.deleteById(id);
     }
 }

@@ -7,4 +7,6 @@ public interface ClauseService {
     void createClause(Long userCvId, Clause clause);
 
     void updateClause(Clause clause);
+
+    void deleteClauseById(Long id);
 }
