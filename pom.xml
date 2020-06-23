@@ -109,6 +109,14 @@
             <version>2.9.2</version>
         </dependency>
 
+        <!-- sms -->
+
+        <dependency>
+            <groupId>com.twilio.sdk</groupId>
+            <artifactId>twilio</artifactId>
+            <version>7.52.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
