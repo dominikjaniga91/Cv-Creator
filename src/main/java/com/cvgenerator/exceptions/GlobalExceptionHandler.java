@@ -115,4 +115,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(ClauseNotFoundException.class)
+    public ResponseEntity<?> getClauseNotFoundException(ClauseNotFoundException exception){
+
+        ErrorMessage errorMessage = getErrorMessage(HttpStatus.NOT_FOUND, exception);
+        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+    }
+
 }
