@@ -4,6 +4,7 @@ import com.cvgenerator.config.Messages;
 import com.cvgenerator.domain.entity.Clause;
 import com.cvgenerator.domain.entity.Summary;
 import com.cvgenerator.domain.entity.UserCv;
+import com.cvgenerator.exceptions.notfound.ClauseNotFoundException;
 import com.cvgenerator.exceptions.notfound.SummaryNotFoundException;
 import com.cvgenerator.exceptions.notfound.UserCvNotFoundException;
 import com.cvgenerator.repository.ClauseRepository;
@@ -34,6 +35,14 @@ public class ClauseServiceImpl implements ClauseService {
     public void createClause(Long userCvId, Clause clause) {
         UserCv userCv = userCvRepository.findById(userCvId).orElseThrow(() -> new UserCvNotFoundException(messages.get("userCv.notfound")));
         clause.setUserCv(userCv);
+        clauseRepository.save(clause);
+    }
+
+    @Override
+    public void updateClause(Clause clause) {
+        Long id = clause.getId();
+        Clause foundedClause = clauseRepository.findById(id).orElseThrow(() -> new ClauseNotFoundException(messages.get("clause.notfound")));
+        foundedClause.setValue(clause.getValue());
         clauseRepository.save(clause);
     }
 }

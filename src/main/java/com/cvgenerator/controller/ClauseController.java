@@ -29,4 +29,11 @@ public class ClauseController {
         clauseService.createClause(cvId, clause);
     }
 
+    @ApiOperation(value = "Update cv clause")
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void updateSummary(@RequestBody Clause clause){
+        clauseService.updateClause(clause);
+    }
+
 }
