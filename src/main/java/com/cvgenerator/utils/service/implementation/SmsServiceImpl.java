@@ -19,8 +19,8 @@ public class SmsServiceImpl {
     public void sendSms() {
 
         // Find your Account Sid and Token at twilio.com/user/account
-        String ACCOUNT_SID = "ACe7a4e8ea4d8b0ad232638682cfcbc66c";
-        String AUTH_TOKEN = "3216de312ee4f9a014b80585235b6060";
+        String ACCOUNT_SID ="";
+        String AUTH_TOKEN = "";
 
 
             Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
