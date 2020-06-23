@@ -1,5 +1,6 @@
 package com.cvgenerator.controller;
 
+import com.cvgenerator.domain.entity.PersonalData;
 import com.cvgenerator.domain.entity.Summary;
 import com.cvgenerator.service.implementation.SummaryServiceImpl;
 import io.swagger.annotations.Api;
@@ -26,4 +27,10 @@ public class SummaryController {
         summaryService.createSummary(cvId, summary);
     }
 
+    @ApiOperation(value = "Update cv summary")
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void updateSummary(@RequestBody Summary summary){
+        summaryService.updateSummary(summary);
+    }
 }

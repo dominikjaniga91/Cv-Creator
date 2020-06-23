@@ -6,6 +6,7 @@ import com.cvgenerator.domain.entity.PersonalData;
 import com.cvgenerator.domain.entity.Summary;
 import com.cvgenerator.domain.entity.UserCv;
 import com.cvgenerator.exceptions.notfound.PersonalDataNotFoundException;
+import com.cvgenerator.exceptions.notfound.SummaryNotFoundException;
 import com.cvgenerator.exceptions.notfound.UserCvNotFoundException;
 import com.cvgenerator.repository.AddressRepository;
 import com.cvgenerator.repository.PersonalDataRepository;
@@ -39,4 +40,11 @@ public class SummaryServiceImpl implements SummaryService {
         summaryRepository.save(summary);
     }
 
+    @Override
+    public void updateSummary(Summary summary) {
+        Long id = summary.getId();
+        Summary foundedSummary = summaryRepository.findById(id).orElseThrow(() -> new SummaryNotFoundException(messages.get("summary.notfound")));
+        foundedSummary.setValue(summary.getValue());
+        summaryRepository.save(summary);
+    }
 }
