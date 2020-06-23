@@ -25,6 +25,8 @@ public class TestDataLoader {
     private CourseRepository courseRepository;
     private AddressRepository addressRepository;
     private PasswordEncoder passwordEncoder;
+    private SummaryRepository summaryRepository;
+    private ClauseRepository clauseRepository;
 
     @Autowired
     public TestDataLoader(UserRepository userRepository,
@@ -38,7 +40,9 @@ public class TestDataLoader {
                           EducationRepository educationRepository,
                           CourseRepository courseRepository,
                           AddressRepository addressRepository,
-                          PasswordEncoder passwordEncoder) {
+                          PasswordEncoder passwordEncoder,
+                          SummaryRepository summaryRepository,
+                          ClauseRepository clauseRepository) {
 
         this.userRepository = userRepository;
         this.userCvRepository = userCvRepository;
@@ -52,6 +56,8 @@ public class TestDataLoader {
         this.courseRepository = courseRepository;
         this.addressRepository = addressRepository;
         this.passwordEncoder = passwordEncoder;
+        this.summaryRepository = summaryRepository;
+        this.clauseRepository = clauseRepository;
     }
 
     @PostConstruct
@@ -75,11 +81,24 @@ public class TestDataLoader {
         PersonalData personalData4 = createPersonalData("Katarzyna", "Halina", "Piekarska", "katarzynapiekarska@gmail.com", "778465334", "Nauczycielka", null, null, null, null, address4);
         PersonalData personalData5 = createPersonalData("Anna", "Małgorzata", "Pompka", "annapompka@gmail.com", "998657332", "Dyrektor ds Administracji", null, null, null, null, address5);
 
-        UserCv cv1 = createUserCv("cv1", "aquarius", " summary template1", " RODO clause1", user1, personalData1);
-        UserCv cv2 = createUserCv("cv2", "new york", " summary template2", " RODO clause2", user2, personalData2);
-        UserCv cv3 = createUserCv("cv3", "basic", " summary template3", " RODO clause3", user3, personalData3);
-        UserCv cv4 = createUserCv("cv4", "premium", " summary template4", " RODO clause4", user4, personalData4);
-        UserCv cv5 = createUserCv("cv5", "semantic", " summary template5", " RODO clause5", user5, personalData5);
+        UserCv cv1 = createUserCv("cv1", "aquarius", user1, personalData1);
+        UserCv cv2 = createUserCv("cv2", "new york", user2, personalData2);
+        UserCv cv3 = createUserCv("cv3", "basic", user3, personalData3);
+        UserCv cv4 = createUserCv("cv4", "premium", user4, personalData4);
+        UserCv cv5 = createUserCv("cv5", "semantic",user5, personalData5);
+
+        createSummary("summary 1", cv1);
+        createSummary("summary 2", cv2);
+        createSummary("summary 3", cv3);
+        createSummary("summary 4", cv4);
+        createSummary("summary 5", cv5);
+
+        createClause("clause 1", cv1);
+        createClause("clause 2", cv2);
+        createClause("clause 3", cv3);
+        createClause("clause 4", cv4);
+        createClause("clause 5", cv5);
+
 
         createCourse("Altkom Akademia", "Kraków", LocalDate.of(2020,1,1), LocalDate.of(2020,6,30), "Java programming", cv1);
         createCourse("Kodilla", "Online", LocalDate.of(2020,1,1), LocalDate.of(2020,6,30), "JavaScript programming", cv2);
@@ -125,6 +144,20 @@ public class TestDataLoader {
         createSkills("SQL", null, "Zaawansowany", 4, cv4);
         createSkills("GIT", null, "Zaawansowany", 4, cv5);
 
+    }
+
+    private void createSummary(String value, UserCv cv) {
+        Summary summary = new Summary();
+        summary.setValue(value);
+        summary.setUserCv(cv);
+        summaryRepository.save(summary);
+    }
+
+    private void createClause(String value, UserCv cv) {
+        Clause clause = new Clause();
+        clause.setValue(value);
+        clause.setUserCv(cv);
+        clauseRepository.save(clause);
     }
 
     private void createCourse(String school,
@@ -261,15 +294,11 @@ public class TestDataLoader {
 
     private UserCv createUserCv(String name,
                                 String templateName,
-                                String summary,
-                                String clause,
                                 User user,
                                 PersonalData personalData){
         UserCv userCv  = new UserCv();
         userCv.setName(name);
         userCv.setTemplateName(templateName);
-        userCv.setSummary(summary);
-        userCv.setClause(clause);
         userCv.setUser(user);
         userCv.setPersonalData(personalData);
         userCvRepository.save(userCv);

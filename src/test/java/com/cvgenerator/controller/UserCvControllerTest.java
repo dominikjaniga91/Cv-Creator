@@ -69,8 +69,6 @@ public class UserCvControllerTest {
                                             .setId(1L)
                                             .setName("cv1")
                                             .setTemplateName("aquarius")
-                                            .setSummary("summary template1")
-                                            .setClause("RODO clause1")
                                             .setPersonalData(personalDataDto)
                                             .setCourses(courseDtos)
                                             .setProjects(projectDtos)
