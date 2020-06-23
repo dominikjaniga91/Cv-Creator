@@ -108,4 +108,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorMessage, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(SummaryNotFoundException.class)
+    public ResponseEntity<?> getSummaryNotFoundException(SummaryNotFoundException exception){
+
+        ErrorMessage errorMessage = getErrorMessage(HttpStatus.NOT_FOUND, exception);
+        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+    }
+
 }
