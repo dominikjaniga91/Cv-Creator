@@ -20,11 +20,13 @@ public class UserCv {
     private String name;
     private String templateName;
 
-    private String clause;
-
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
+
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn(name = "clauseId")
+    private Clause clause;
 
     @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "summaryId")

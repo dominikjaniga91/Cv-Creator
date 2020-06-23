@@ -16,8 +16,8 @@ public class UserCvDto {
     private Long id;
     private String name;
     private String templateName;
-    private String summary;
-    private String clause;
+    private Summary summary;
+    private Clause clause;
     private PersonalDataDto personalData;
     private List<CourseDto> courses;
     private List<ProjectDto> projects;
@@ -48,8 +48,8 @@ public class UserCvDto {
         private Long id;
         private String name;
         private String templateName;
-        private String summary;
-        private String clause;
+        private Summary summary;
+        private Clause clause;
         private PersonalDataDto personalData;
         private List<CourseDto> courses;
         private List<ProjectDto> projects;
@@ -74,12 +74,12 @@ public class UserCvDto {
             return this;
         }
 
-        public UserCvDtoBuilder setSummary(String summary) {
+        public UserCvDtoBuilder setSummary(Summary summary) {
             this.summary = summary;
             return this;
         }
 
-        public UserCvDtoBuilder setClause(String clause) {
+        public UserCvDtoBuilder setClause(Clause clause) {
             this.clause = clause;
             return this;
         }
