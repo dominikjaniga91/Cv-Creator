@@ -66,7 +66,7 @@ public class LanguageControllerTest {
 
     @Test
     @DisplayName("POST should return status 'created' after post Language")
-    void shouldReturnStatusCreated_afterPostProject() throws Exception {
+    void shouldReturnStatusCreated_afterPostLanguage() throws Exception {
 
         BDDMockito.doNothing().when(languageService).createLanguage(anyLong(), any(Language.class));
 
@@ -84,7 +84,7 @@ public class LanguageControllerTest {
 
     @Test
     @DisplayName("PUT should return status 'ok' after update Language")
-    void shouldReturnStatusOK_afterUpdateProject() throws Exception {
+    void shouldReturnStatusOK_afterUpdateLanguage() throws Exception {
 
         BDDMockito.doNothing().when(languageService).updateLanguage(ArgumentMatchers.any(Language.class));
 
@@ -102,7 +102,7 @@ public class LanguageControllerTest {
 
     @Test
     @DisplayName("DELETE should return status 'ok' after delete Language")
-    void shouldReturnStatusOK_afterDeleteProject() throws Exception {
+    void shouldReturnStatusOK_afterDeleteLanguage() throws Exception {
 
         BDDMockito.doNothing().when(languageService).deleteLanguageById(1L);
 

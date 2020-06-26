@@ -66,7 +66,7 @@ public class CourseControllerTest {
 
     @Test
     @DisplayName("POST should return status 'created' after post Course")
-    void shouldReturnStatusCreated_afterPostProject() throws Exception {
+    void shouldReturnStatusCreated_afterPostCourse() throws Exception {
 
         BDDMockito.doNothing().when(courseService).createCourse(anyLong(), any(Course.class));
 
@@ -84,7 +84,7 @@ public class CourseControllerTest {
 
     @Test
     @DisplayName("PUT should return status 'ok' after update Course")
-    void shouldReturnStatusOK_afterUpdateProject() throws Exception {
+    void shouldReturnStatusOK_afterUpdateCourse() throws Exception {
 
         BDDMockito.doNothing().when(courseService).updateCourse(ArgumentMatchers.any(Course.class));
 
@@ -102,7 +102,7 @@ public class CourseControllerTest {
 
     @Test
     @DisplayName("DELETE should return status 'ok' after delete Course")
-    void shouldReturnStatusOK_afterDeleteProject() throws Exception {
+    void shouldReturnStatusOK_afterDeleteCourse() throws Exception {
 
         BDDMockito.doNothing().when(courseService).deleteCourseById(1L);
 

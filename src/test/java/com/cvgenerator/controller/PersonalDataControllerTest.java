@@ -67,7 +67,7 @@ public class PersonalDataControllerTest {
 
     @Test
     @DisplayName("POST should return status 'created' after post Personal data")
-    void shouldReturnStatusCreated_afterPostProject() throws Exception {
+    void shouldReturnStatusCreated_afterPostPersonalData() throws Exception {
 
         BDDMockito.doNothing().when(personalDataService).createPersonalData(anyLong(), any(PersonalData.class));
 
@@ -85,7 +85,7 @@ public class PersonalDataControllerTest {
 
     @Test
     @DisplayName("PUT should return status 'ok' after update Personal data")
-    void shouldReturnStatusOK_afterUpdateProject() throws Exception {
+    void shouldReturnStatusOK_afterUpdatePersonalData() throws Exception {
 
         BDDMockito.doNothing().when(personalDataService).updatePersonalData(ArgumentMatchers.any(PersonalData.class));
 
@@ -103,7 +103,7 @@ public class PersonalDataControllerTest {
 
     @Test
     @DisplayName("DELETE should return status 'ok' after delete Personal data")
-    void shouldReturnStatusOK_afterDeleteProject() throws Exception {
+    void shouldReturnStatusOK_afterDeletePersonalData() throws Exception {
 
         BDDMockito.doNothing().when(personalDataService).deletePersonalDataById(1L);
 

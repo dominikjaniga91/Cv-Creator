@@ -62,7 +62,7 @@ public class InterestControllerTest {
 
     @Test
     @DisplayName("POST should return status 'created' after post Interest")
-    void shouldReturnStatusCreated_afterPostProject() throws Exception {
+    void shouldReturnStatusCreated_afterPostInterest() throws Exception {
 
         BDDMockito.doNothing().when(interestService).createInterest(anyLong(), any(Interest.class));
 
@@ -80,7 +80,7 @@ public class InterestControllerTest {
 
     @Test
     @DisplayName("PUT should return status 'ok' after update Interest")
-    void shouldReturnStatusOK_afterUpdateProject() throws Exception {
+    void shouldReturnStatusOK_afterUpdateInterest() throws Exception {
 
         BDDMockito.doNothing().when(interestService).updateInterest(ArgumentMatchers.any(Interest.class));
 
@@ -98,7 +98,7 @@ public class InterestControllerTest {
 
     @Test
     @DisplayName("DELETE should return status 'ok' after delete Interest")
-    void shouldReturnStatusOK_afterDeleteProject() throws Exception {
+    void shouldReturnStatusOK_afterDeleteInterest() throws Exception {
 
         BDDMockito.doNothing().when(interestService).deleteInterestById(1L);
 

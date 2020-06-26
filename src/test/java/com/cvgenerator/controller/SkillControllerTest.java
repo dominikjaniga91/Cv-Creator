@@ -77,7 +77,7 @@ public class SkillControllerTest {
 
     @Test
     @DisplayName("PUT should return status 'ok' after update Skill")
-    void shouldReturnStatusOK_afterUpdateUser() throws Exception {
+    void shouldReturnStatusOK_afterUpdateSkill() throws Exception {
 
         BDDMockito.doNothing().when(skillService).updateSkill(ArgumentMatchers.any(Skill.class));
 
@@ -95,7 +95,7 @@ public class SkillControllerTest {
 
     @Test
     @DisplayName("DELETE should return status 'ok' after delete Skill")
-    void shouldReturnStatusOK_afterDeleteUser() throws Exception {
+    void shouldReturnStatusOK_afterDeleteSkill() throws Exception {
 
         BDDMockito.doNothing().when(skillService).deleteSkillById(1L);
 

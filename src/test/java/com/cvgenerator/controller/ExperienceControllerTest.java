@@ -67,7 +67,7 @@ public class ExperienceControllerTest {
 
     @Test
     @DisplayName("POST should return status 'created' after post Experience")
-    void shouldReturnStatusCreated_afterPostProject() throws Exception {
+    void shouldReturnStatusCreated_afterPostExperience() throws Exception {
 
         BDDMockito.doNothing().when(experienceService).createExperience(anyLong(), any(Experience.class));
 
@@ -85,7 +85,7 @@ public class ExperienceControllerTest {
 
     @Test
     @DisplayName("PUT should return status 'ok' after update Experience")
-    void shouldReturnStatusOK_afterUpdateProject() throws Exception {
+    void shouldReturnStatusOK_afterUpdateExperience() throws Exception {
 
         BDDMockito.doNothing().when(experienceService).updateExperience(ArgumentMatchers.any(Experience.class));
 
@@ -103,7 +103,7 @@ public class ExperienceControllerTest {
 
     @Test
     @DisplayName("DELETE should return status 'ok' after delete Experience")
-    void shouldReturnStatusOK_afterDeleteProject() throws Exception {
+    void shouldReturnStatusOK_afterDeleteExperience() throws Exception {
 
         BDDMockito.doNothing().when(experienceService).deleteExperienceById(1L);
 
