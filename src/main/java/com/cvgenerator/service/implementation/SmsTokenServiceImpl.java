@@ -4,9 +4,7 @@ import com.cvgenerator.config.Messages;
 import com.cvgenerator.domain.entity.SmsToken;
 import com.cvgenerator.domain.entity.User;
 import com.cvgenerator.exceptions.notfound.SmsTokenNotFoundException;
-import com.cvgenerator.exceptions.notfound.UserNotFoundException;
 import com.cvgenerator.repository.SmsTokenRepository;
-import com.cvgenerator.repository.UserRepository;
 import com.cvgenerator.service.SmsTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,30 +17,24 @@ import java.util.stream.Collectors;
 public class SmsTokenServiceImpl implements SmsTokenService {
 
     private final SmsTokenRepository smsTokenRepository;
-    private final UserRepository userRepository;
     private final Messages messages;
 
     @Autowired
     public SmsTokenServiceImpl(SmsTokenRepository smsTokenRepository,
-                               UserRepository userRepository,
                                Messages messages) {
 
         this.smsTokenRepository = smsTokenRepository;
-        this.userRepository = userRepository;
         this.messages = messages;
     }
 
     /**
-     * Find user by email provided as method param. Throw an exception if user does not exist.
      * Create instance of SmsToken assigned to specific user and save to database.
-     *
-     * @param email existing user email
+     * @param user existing user
      * @return instance of SmsToken
      */
 
     @Override
-    public SmsToken createSmsToken(String email) {
-        User user = userRepository.findUserByEmail(email).orElseThrow(() -> new UserNotFoundException(messages.get("user.notfound")));
+    public SmsToken createSmsToken(User user) {
         SmsToken smsToken = SmsToken.builder()
                 .value(tokenValue())
                 .expiryDate(LocalDateTime.now().plusMinutes(1))
