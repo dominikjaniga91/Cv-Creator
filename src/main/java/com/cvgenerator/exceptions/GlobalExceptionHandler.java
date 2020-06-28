@@ -129,5 +129,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(SmsTokenExpiredException.class)
+    public ResponseEntity<?> getSmsTokenExpiredExceptionHandler(SmsTokenExpiredException exception){
+
+        ErrorMessage errorMessage = getErrorMessage(HttpStatus.UNAUTHORIZED, exception);
+        return new ResponseEntity<>(errorMessage, HttpStatus.UNAUTHORIZED);
+    }
+
 
 }
