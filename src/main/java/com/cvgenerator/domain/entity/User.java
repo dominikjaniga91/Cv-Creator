@@ -42,6 +42,9 @@ public class User implements UserDetails {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     List<Token> tokens;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    List<SmsToken> smsTokens;
+
     private User(UserBuilder builder){
         id              = builder.id;
         firstName       = builder.firstName;
@@ -54,6 +57,7 @@ public class User implements UserDetails {
         registration    = builder.registration;
         listOfUserCv    = builder.listOfUserCv;
         tokens          = builder.tokens;
+        smsTokens       = builder.smsTokens;
     }
 
     @Override
@@ -99,6 +103,7 @@ public class User implements UserDetails {
         private LocalDateTime registration;
         private List<UserCv> listOfUserCv;
         private List<Token> tokens;
+        List<SmsToken> smsTokens;
 
         public UserBuilder setId(Long id) {
             this.id = id;
@@ -152,6 +157,11 @@ public class User implements UserDetails {
 
         public UserBuilder setUserTokenList(List<Token> tokens) {
             this.tokens = tokens;
+            return this;
+        }
+
+        public UserBuilder setUserSmsTokenList(List<SmsToken> smsTokens) {
+            this.smsTokens = smsTokens;
             return this;
         }
 
