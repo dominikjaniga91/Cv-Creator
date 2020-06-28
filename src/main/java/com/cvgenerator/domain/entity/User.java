@@ -34,6 +34,7 @@ public class User implements UserDetails {
     private String password;
     private boolean enable2FA;
     private boolean isActive;
+    private String phoneNumber;
     private LocalDateTime registration;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
@@ -54,6 +55,7 @@ public class User implements UserDetails {
         password        = builder.password;
         enable2FA       = builder.enable2FA;
         isActive        = builder.isActive;
+        phoneNumber     = builder.phoneNumber;
         registration    = builder.registration;
         listOfUserCv    = builder.listOfUserCv;
         tokens          = builder.tokens;
@@ -100,6 +102,7 @@ public class User implements UserDetails {
         private String password;
         private boolean enable2FA;
         private boolean isActive;
+        private String phoneNumber;
         private LocalDateTime registration;
         private List<UserCv> listOfUserCv;
         private List<Token> tokens;
@@ -142,6 +145,11 @@ public class User implements UserDetails {
 
         public UserBuilder setActive(boolean active) {
             isActive = active;
+            return this;
+        }
+
+        public UserBuilder setPhoneNumber(String phoneNumber) {
+            this.phoneNumber = phoneNumber;
             return this;
         }
 
