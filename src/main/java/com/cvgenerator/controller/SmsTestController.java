@@ -1,12 +1,10 @@
 package com.cvgenerator.controller;
 
 import com.cvgenerator.utils.service.implementation.SmsServiceImpl;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -21,11 +19,11 @@ public class SmsTestController{
 
     @GetMapping("/sms")
     @ResponseStatus(HttpStatus.OK)
-    public void getSms(){
-
+    public void getSms(@RequestBody String request) {
         try{
-            smsService.sendSms();
-        }catch (Throwable throwable){
+            String email = new ObjectMapper().readTree(request).get("email").asText();
+            smsService.sendSms(email);
+        }catch (Throwable throwable ){
             System.out.println(throwable.getMessage());
             throwable.printStackTrace();
         }
