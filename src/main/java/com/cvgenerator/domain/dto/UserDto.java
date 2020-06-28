@@ -19,6 +19,7 @@ public class UserDto {
     private String email;
     private String role;
     private String password;
+    private boolean enable2FA;
     private boolean isActive;
     private LocalDateTime registration;
     private List<UserCvShortDto> userCvDtoList;
@@ -30,6 +31,7 @@ public class UserDto {
         email           = builder.email;
         role            = builder.role;
         password        = builder.password;
+        enable2FA       = builder.enable2FA;
         isActive        = builder.isActive;
         registration    = builder.registration;
         userCvDtoList   = builder.userCvDtoList;
@@ -43,6 +45,7 @@ public class UserDto {
         private String email;
         private String role;
         private String password;
+        private boolean enable2FA;
         private boolean isActive;
         private LocalDateTime registration;
         private List<UserCvShortDto> userCvDtoList;
@@ -74,6 +77,11 @@ public class UserDto {
 
         public UserDtoBuilder setPassword(String password) {
             this.password = password;
+            return this;
+        }
+
+        public UserDtoBuilder setEnable2FA(boolean enable2FA) {
+            this.enable2FA = enable2FA;
             return this;
         }
 

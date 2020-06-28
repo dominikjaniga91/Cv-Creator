@@ -32,6 +32,7 @@ public class User implements UserDetails {
     private String email;
     private String role;
     private String password;
+    private boolean enable2FA;
     private boolean isActive;
     private LocalDateTime registration;
 
@@ -48,6 +49,7 @@ public class User implements UserDetails {
         email           = builder.email;
         role            = builder.role;
         password        = builder.password;
+        enable2FA       = builder.enable2FA;
         isActive        = builder.isActive;
         registration    = builder.registration;
         listOfUserCv    = builder.listOfUserCv;
@@ -92,6 +94,7 @@ public class User implements UserDetails {
         private String email;
         private String role;
         private String password;
+        private boolean enable2FA;
         private boolean isActive;
         private LocalDateTime registration;
         private List<UserCv> listOfUserCv;
@@ -124,6 +127,11 @@ public class User implements UserDetails {
 
         public  UserBuilder setPassword(String password) {
             this.password = password;
+            return this;
+        }
+
+        public  UserBuilder enable2FA(boolean enable2FA) {
+            this.enable2FA = enable2FA;
             return this;
         }
 
