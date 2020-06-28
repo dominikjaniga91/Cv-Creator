@@ -56,7 +56,7 @@ public class SmsTokenServiceImpl implements SmsTokenService {
 
     private String tokenValue(){
 
-        return new Random().ints()
+        return new Random().ints(0,9)
                             .limit(6)
                             .mapToObj(String::valueOf)
                             .collect(Collectors.joining());
