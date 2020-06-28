@@ -2,8 +2,15 @@ package com.cvgenerator.utils.service.implementation;
 
 import com.clicksend.controllers.SMSController;
 import com.clicksend.models.SmsMessageCollection;
+import com.cvgenerator.config.Messages;
+import com.cvgenerator.domain.entity.SmsToken;
+import com.cvgenerator.domain.entity.User;
+import com.cvgenerator.exceptions.notfound.UserNotFoundException;
+import com.cvgenerator.repository.UserRepository;
+import com.cvgenerator.service.implementation.SmsTokenServiceImpl;
 import com.cvgenerator.utils.service.SmsService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import com.clicksend.models.SmsMessageBuilder;
 import com.clicksend.models.SmsMessage;
@@ -15,14 +22,38 @@ import java.util.List;
 @Service
 public class SmsServiceImpl implements SmsService {
 
-    SMSController smsController = SMSController.getInstance();
+    private final SmsTokenServiceImpl smsTokenService;
+    private final SMSController smsController;
+    private final UserRepository userRepository;
+    private final Messages messages;
 
-    public void sendSms() throws Throwable {
+    @Value("${sms.message}")
+    private String smsMessage;
 
-        Configuration.username = "dominikjaniga91@gmail.com";
-        Configuration.key = "E1C79FA2-D9F3-8283-54FD-74176F747A33";
+    @Value("${sms.apiKey}")
+    private String apiKey;
+
+    @Value("${sms.username}")
+    private String username;
+
+    public SmsServiceImpl(SmsTokenServiceImpl smsTokenService,
+                          UserRepository userRepository,
+                          Messages messages) {
+        this.smsTokenService = smsTokenService;
+        this.smsController = SMSController.getInstance();
+        this.userRepository = userRepository;
+        this.messages = messages;
+    }
+
+
+
+    public void sendSms(String email) throws Throwable {
+
+        Configuration.username = this.username;
+        Configuration.key = this.apiKey;
+        User user = userRepository.findUserByEmail(email).orElseThrow(() -> new UserNotFoundException(messages.get("user.notfound")));
         
-        List<SmsMessage> messageList = List.of(message());
+        List<SmsMessage> messageList = List.of(message(user));
         SmsMessageCollection collection = new SmsMessageCollection();
         collection.setMessages(messageList);
 
@@ -30,11 +61,13 @@ public class SmsServiceImpl implements SmsService {
 
     }
 
-    private SmsMessage message(){
+    private SmsMessage message(User user){
+        SmsToken smsToken =  smsTokenService.createSmsToken(user);
+
         return new SmsMessageBuilder()
-                .body("hehehe")
+                .body(smsMessage + smsToken.getValue())
                 .country("Poland")
-                .to("+48881463106")
+                .to(user.getPhoneNumber())
                 .build();
     }
 }
