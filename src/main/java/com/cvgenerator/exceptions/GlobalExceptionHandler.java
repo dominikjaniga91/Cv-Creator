@@ -122,4 +122,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(SmsTokenNotFoundException.class)
+    public ResponseEntity<?> getSmsTokenNotFoundExceptionHandler(SmsTokenNotFoundException exception){
+
+        ErrorMessage errorMessage = getErrorMessage(HttpStatus.NOT_FOUND, exception);
+        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+    }
+
+
 }
