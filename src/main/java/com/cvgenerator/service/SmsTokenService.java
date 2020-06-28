@@ -1,10 +1,11 @@
 package com.cvgenerator.service;
 
+import com.cvgenerator.domain.entity.SmsToken;
 import com.cvgenerator.domain.entity.Token;
 
 public interface SmsTokenService {
 
-    Token createSmsToken(String email);
+    SmsToken createSmsToken(String email);
 
-    Token findSmsTokenByValue(String value);
+    SmsToken findSmsTokenByValue(String value);
 }
