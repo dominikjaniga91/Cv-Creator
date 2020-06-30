@@ -1,5 +1,9 @@
 package com.cvgenerator.domain.enums;
 
+import com.cvgenerator.utils.serializers.CountrySerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+@JsonSerialize(using = CountrySerializer.class)
 public enum Country {
 
     AFGHANISTAN("Afghanistan","+93"),
@@ -243,17 +247,17 @@ public enum Country {
     ZIMBABWE("Zimbabwe","+263");
 
 
-    String country;
+    String value;
     String areaCode;
 
-    private Country(String country, String areaCode) {
-        this.country = country;
+
+    Country(String country, String areaCode) {
+        this.value = country;
         this.areaCode = areaCode;
     }
 
-    @Override
-    public String toString() {
-        return country;
+    public String getValue() {
+        return value;
     }
 
     public String getAreaCode() {

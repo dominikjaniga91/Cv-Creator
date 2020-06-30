@@ -24,10 +24,7 @@ public class UserDto {
     private boolean enable2FA;
     private boolean isActive;
     private String phoneNumber;
-
-    @JsonFormat(shape = JsonFormat.Shape.OBJECT)
     private Country country;
-
     private LocalDateTime registration;
     private List<UserCvShortDto> userCvDtoList;
 
