@@ -64,11 +64,11 @@ public class TestDataLoader {
     @PostConstruct
     public void saveUsersToDatabase(){
 
-        User user1 = createUser("Dominik", "Janiga", "dominikjaniga91@gmail.com",passwordEncoder.encode("dominik123"), true, "+48881463106", Country.POLAND, "ROLE_USER", LocalDateTime.now());
-        User user2 = createUser("Andrzej", "Kowalski", "andrezjkowalski@gmail.com", passwordEncoder.encode("andrej123"), true, "+48881463106", Country.POLAND, "ROLE_USER", LocalDateTime.now());
+        User user1 = createUser("Dominik", "Janiga", "dominikjaniga91@gmail.com",passwordEncoder.encode("dominik123"), true, "881463106", Country.POLAND, "ROLE_USER", LocalDateTime.now());
+        User user2 = createUser("Andrzej", "Kowalski", "andrezjkowalski@gmail.com", passwordEncoder.encode("andrej123"), true, "881463106", Country.POLAND, "ROLE_USER", LocalDateTime.now());
         User user3 = createUser("Jurek", "Nowak", "jureknowak@gmail.com", passwordEncoder.encode("jurek123"), true, "+48881463106", Country.POLAND, "ROLE_USER", LocalDateTime.now());
-        User user4 = createUser("Katarzyna", "Piekarska", "katarzynapiekarska@gmail.com", passwordEncoder.encode("kasia123"), true, "+48881463106", Country.POLAND, "ROLE_USER", LocalDateTime.now());
-        User user5 = createUser("Anna", "Pompka", "annapompka@gmail.com", passwordEncoder.encode("anna123"), false, "+48881463106", Country.POLAND, "ROLE_USER", LocalDateTime.now());
+        User user4 = createUser("Katarzyna", "Piekarska", "katarzynapiekarska@gmail.com", passwordEncoder.encode("kasia123"), true, "881463106", Country.POLAND, "ROLE_USER", LocalDateTime.now());
+        User user5 = createUser("Anna", "Pompka", "annapompka@gmail.com", passwordEncoder.encode("anna123"), false, "881463106", Country.POLAND, "ROLE_USER", LocalDateTime.now());
 
         Address address1 = createAddress("Źródlana", 56, "33-111", "Koszyce Male");
         Address address2 = createAddress("Bitwy pod Lenino", 24, "80-809", "Gdansk");

@@ -48,26 +48,30 @@ public class SmsServiceImpl implements SmsService {
 
 
     public void sendSms(String email) throws Throwable {
-
-        Configuration.username = this.username;
-        Configuration.key = this.apiKey;
+        setUpConfigData();
         User user = userRepository.findUserByEmail(email).orElseThrow(() -> new UserNotFoundException(messages.get("user.notfound")));
-        
         List<SmsMessage> messageList = List.of(message(user));
         SmsMessageCollection collection = new SmsMessageCollection();
         collection.setMessages(messageList);
-
         smsController.sendSms(collection);
 
     }
 
     private SmsMessage message(User user){
         SmsToken smsToken =  smsTokenService.createSmsToken(user);
+        String message = smsMessage + smsToken.getValue();
+        String country = user.getCountry().getValue();
+        String phoneNumber = user.getCountry().getAreaCode() + user.getPhoneNumber();
 
         return new SmsMessageBuilder()
-                .body(smsMessage + smsToken.getValue())
-                .country("Poland")
-                .to(user.getPhoneNumber())
+                .body(message)
+                .country(country)
+                .to(phoneNumber)
                 .build();
+    }
+
+    private void setUpConfigData(){
+        Configuration.username = username;
+        Configuration.key = apiKey;
     }
 }
