@@ -136,5 +136,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorMessage, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(com.clicksend.exceptions.APIException.class)
+    public ResponseEntity<?> getClickSendAPIExceptionHandler(com.clicksend.exceptions.APIException exception){
+
+        ErrorMessage errorMessage = getErrorMessage(HttpStatus.UNAUTHORIZED, exception);
+        errorMessage.setErrorMessage("2 Factor authorization is temporary unavailable. Please contact our customer service");
+        return new ResponseEntity<>(errorMessage, HttpStatus.UNAUTHORIZED);
+    }
+
 
 }
