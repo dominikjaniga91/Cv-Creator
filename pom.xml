@@ -109,6 +109,21 @@
             <version>2.9.2</version>
         </dependency>
 
+        <!-- sms service -->
+
+        <dependency>
+            <groupId>com.clicksend</groupId>
+            <artifactId>ClickSend</artifactId>
+            <version>3.1.1</version>
+        </dependency>
+
+        <!-- CSV  -->
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.2</version>
+        </dependency>
+
     </dependencies>
 
     <build>
