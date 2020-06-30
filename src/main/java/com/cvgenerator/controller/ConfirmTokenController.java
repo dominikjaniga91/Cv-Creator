@@ -2,6 +2,7 @@ package com.cvgenerator.controller;
 
 import com.cvgenerator.domain.entity.Token;
 import com.cvgenerator.domain.entity.User;
+import com.cvgenerator.exceptions.TokenExpiredException;
 import com.cvgenerator.repository.UserRepository;
 import com.cvgenerator.service.implementation.TokenServiceImpl;
 import com.cvgenerator.utils.service.implementation.MailServiceImpl;
@@ -9,13 +10,12 @@ import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@CrossOrigin(origins = {"${settings.cors_origin}"})
 @Api(tags = "Confirmation token controller")
 @RestController
 @RequestMapping("/api")
@@ -47,28 +47,11 @@ public class ConfirmTokenController {
     public ResponseEntity<?> checkConfirmationEmailToken(@ApiParam(value = "Value of token which was send with confirmation link")
                                                          @RequestParam("value") String tokenValue){
 
-        Optional<Token> token = tokenService.findTokenByValue(tokenValue);
-        if (token.isPresent()){
-
-            Token foundedToken = token.get();
-            if(isNotExpired(foundedToken)){
-                User user = foundedToken.getUser();
-                user.setActive(true);
-                userRepository.save(user);
-                mailService.sendWelcomeEmail(user);
-                return new ResponseEntity<>("Your account is active", HttpStatus.OK);
-            }else{
-                return new ResponseEntity<>("Confirmation link expired", HttpStatus.BAD_REQUEST);
-            }
-        } else {
-            return new ResponseEntity<>("Confirmation link doesn't exist", HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    private boolean isNotExpired(Token foundedToken){
-        LocalDateTime expirationDate = foundedToken.getExpiryDate();
-        LocalDateTime now = LocalDateTime.now();
-        return expirationDate.isAfter(now);
-
+        Token token = tokenService.findTokenByValue(tokenValue);
+        User user = token.getUser();
+        user.setActive(true);
+        userRepository.save(user);
+        mailService.sendWelcomeEmail(user);
+        return new ResponseEntity<>("Your account is active", HttpStatus.OK);
     }
 }

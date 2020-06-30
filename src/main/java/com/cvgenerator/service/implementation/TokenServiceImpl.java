@@ -1,8 +1,11 @@
 package com.cvgenerator.service.implementation;
 
+import com.cvgenerator.config.Messages;
 import com.cvgenerator.domain.entity.Token;
 import com.cvgenerator.domain.entity.User;
 import com.cvgenerator.domain.enums.TokenType;
+import com.cvgenerator.exceptions.TokenExpiredException;
+import com.cvgenerator.exceptions.notfound.TokenNotFoundException;
 import com.cvgenerator.repository.TokenRepository;
 import com.cvgenerator.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,23 +18,26 @@ import java.util.UUID;
 public class TokenServiceImpl implements TokenService {
 
     private final TokenRepository tokenRepository;
+    private final Messages messages;
 
     @Autowired
-    public TokenServiceImpl(TokenRepository tokenRepository) {
+    public TokenServiceImpl(TokenRepository tokenRepository,
+                            Messages messages) {
         this.tokenRepository = tokenRepository;
+        this.messages = messages;
     }
 
     @Override
-    public String createConfirmationToken(User user) {
+    public Token createConfirmationToken(User user) {
         return generateToken(user, TokenType.VERIFICATION);
     }
 
     @Override
-    public String createPasswordResetToken(User user) {
+    public Token createPasswordResetToken(User user) {
        return generateToken(user, TokenType.PASSWORD_RESET);
     }
 
-    private String generateToken(User user, TokenType tokenType){
+    private Token generateToken(User user, TokenType tokenType){
 
         String tokenValue = UUID.randomUUID().toString();
         Token token = new Token();
@@ -41,11 +47,25 @@ public class TokenServiceImpl implements TokenService {
         token.setValue(tokenValue);
         tokenRepository.save(token);
 
-        return tokenValue;
+        return token;
     }
 
     @Override
-    public Optional<Token> findTokenByValue(String value) {
-        return tokenRepository.getTokenByValue(value);
+    public Token findTokenByValue(String value) {
+
+        Token token = tokenRepository.getTokenByValue(value).orElseThrow(() -> new TokenNotFoundException(messages.get("token.notfound")));
+        if(isNotExpired(token)){
+            return token;
+        } else {
+            throw new TokenExpiredException(messages.get("token.expired"));
+        }
+
+    }
+
+    private boolean isNotExpired(Token foundedToken){
+        LocalDateTime expirationDate = foundedToken.getExpiryDate();
+        LocalDateTime now = LocalDateTime.now();
+        return expirationDate.isAfter(now);
+
     }
 }

@@ -1,6 +1,7 @@
 package com.cvgenerator.utils;
 
 import com.cvgenerator.domain.entity.*;
+import com.cvgenerator.domain.enums.Country;
 import com.cvgenerator.domain.enums.LanguageLevel;
 import com.cvgenerator.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class TestDataLoader {
     private CourseRepository courseRepository;
     private AddressRepository addressRepository;
     private PasswordEncoder passwordEncoder;
+    private SummaryRepository summaryRepository;
+    private ClauseRepository clauseRepository;
 
     @Autowired
     public TestDataLoader(UserRepository userRepository,
@@ -38,7 +41,9 @@ public class TestDataLoader {
                           EducationRepository educationRepository,
                           CourseRepository courseRepository,
                           AddressRepository addressRepository,
-                          PasswordEncoder passwordEncoder) {
+                          PasswordEncoder passwordEncoder,
+                          SummaryRepository summaryRepository,
+                          ClauseRepository clauseRepository) {
 
         this.userRepository = userRepository;
         this.userCvRepository = userCvRepository;
@@ -52,16 +57,18 @@ public class TestDataLoader {
         this.courseRepository = courseRepository;
         this.addressRepository = addressRepository;
         this.passwordEncoder = passwordEncoder;
+        this.summaryRepository = summaryRepository;
+        this.clauseRepository = clauseRepository;
     }
 
     @PostConstruct
     public void saveUsersToDatabase(){
 
-        User user1 = createUser("Dominik", "Janiga", "dominikjaniga@gmail.com",passwordEncoder.encode("dominik123"), true, "ROLE_USER", LocalDateTime.now());
-        User user2 = createUser("Andrzej", "Kowalski", "andrezjkowalski@gmail.com", passwordEncoder.encode("andrej123"), true, "ROLE_USER", LocalDateTime.now());
-        User user3 = createUser("Jurek", "Nowak", "jureknowak@gmail.com", passwordEncoder.encode("jurek123"), true, "ROLE_USER", LocalDateTime.now());
-        User user4 = createUser("Katarzyna", "Piekarska", "katarzynapiekarska@gmail.com", passwordEncoder.encode("kasia123"), true, "ROLE_USER", LocalDateTime.now());
-        User user5 = createUser("Anna", "Pompka", "annapompka@gmail.com", passwordEncoder.encode("anna123"), false, "ROLE_USER", LocalDateTime.now());
+        User user1 = createUser("Dominik", "Janiga", "dominikjaniga91@gmail.com",passwordEncoder.encode("dominik123"), true, "881463106", Country.POLAND, "ROLE_USER", LocalDateTime.now());
+        User user2 = createUser("Andrzej", "Kowalski", "andrezjkowalski@gmail.com", passwordEncoder.encode("andrej123"), true, "881463106", Country.POLAND, "ROLE_USER", LocalDateTime.now());
+        User user3 = createUser("Jurek", "Nowak", "jureknowak@gmail.com", passwordEncoder.encode("jurek123"), true, "+48881463106", Country.POLAND, "ROLE_USER", LocalDateTime.now());
+        User user4 = createUser("Katarzyna", "Piekarska", "katarzynapiekarska@gmail.com", passwordEncoder.encode("kasia123"), true, "881463106", Country.POLAND, "ROLE_USER", LocalDateTime.now());
+        User user5 = createUser("Anna", "Pompka", "annapompka@gmail.com", passwordEncoder.encode("anna123"), false, "881463106", Country.POLAND, "ROLE_USER", LocalDateTime.now());
 
         Address address1 = createAddress("Źródlana", 56, "33-111", "Koszyce Male");
         Address address2 = createAddress("Bitwy pod Lenino", 24, "80-809", "Gdansk");
@@ -75,11 +82,27 @@ public class TestDataLoader {
         PersonalData personalData4 = createPersonalData("Katarzyna", "Halina", "Piekarska", "katarzynapiekarska@gmail.com", "778465334", "Nauczycielka", null, null, null, null, address4);
         PersonalData personalData5 = createPersonalData("Anna", "Małgorzata", "Pompka", "annapompka@gmail.com", "998657332", "Dyrektor ds Administracji", null, null, null, null, address5);
 
-        UserCv cv1 = createUserCv("cv1", "aquarius", " summary template1", " RODO clause1", user1, personalData1);
-        UserCv cv2 = createUserCv("cv2", "new york", " summary template2", " RODO clause2", user2, personalData2);
-        UserCv cv3 = createUserCv("cv3", "basic", " summary template3", " RODO clause3", user3, personalData3);
-        UserCv cv4 = createUserCv("cv4", "premium", " summary template4", " RODO clause4", user4, personalData4);
-        UserCv cv5 = createUserCv("cv5", "semantic", " summary template5", " RODO clause5", user5, personalData5);
+        Summary summary1 = createSummary("summary 1");
+        Summary summary2 = createSummary("summary 2");
+        Summary summary3 = createSummary("summary 3");
+        Summary summary4 = createSummary("summary 4");
+        Summary summary5 = createSummary("summary 5");
+
+        Clause clause1 = createClause("clause 1");
+        Clause clause2 = createClause("clause 2");
+        Clause clause3 = createClause("clause 3");
+        Clause clause4 = createClause("clause 4");
+        Clause clause5 = createClause("clause 5");
+
+
+
+        UserCv cv1 = createUserCv("cv1", "aquarius",  user1,  clause1, summary1, personalData1);
+        UserCv cv2 = createUserCv("cv2", "new york", user2, clause2, summary2, personalData2);
+        UserCv cv3 = createUserCv("cv3", "basic", user3, clause3, summary3, personalData3);
+        UserCv cv4 = createUserCv("cv4", "premium", user4, clause4, summary4, personalData4);
+        UserCv cv5 = createUserCv("cv5", "semantic",user5, clause5, summary5, personalData5);
+
+
 
         createCourse("Altkom Akademia", "Kraków", LocalDate.of(2020,1,1), LocalDate.of(2020,6,30), "Java programming", cv1);
         createCourse("Kodilla", "Online", LocalDate.of(2020,1,1), LocalDate.of(2020,6,30), "JavaScript programming", cv2);
@@ -125,6 +148,20 @@ public class TestDataLoader {
         createSkills("SQL", null, "Zaawansowany", 4, cv4);
         createSkills("GIT", null, "Zaawansowany", 4, cv5);
 
+    }
+
+    private Summary createSummary(String value) {
+        Summary summary = new Summary();
+        summary.setValue(value);
+        summaryRepository.save(summary);
+        return summary;
+    }
+
+    private Clause createClause(String value) {
+        Clause clause = new Clause();
+        clause.setValue(value);
+        clauseRepository.save(clause);
+        return clause;
     }
 
     private void createCourse(String school,
@@ -244,6 +281,8 @@ public class TestDataLoader {
                              String email,
                              String password,
                              boolean isActive,
+                             String phoneNumber,
+                             Country country,
                              String role,
                              LocalDateTime registration){
 
@@ -253,6 +292,8 @@ public class TestDataLoader {
         user.setEmail(email);
         user.setPassword(password);
         user.setActive(isActive);
+        user.setPhoneNumber(phoneNumber);
+        user.setCountry(country);
         user.setRole(role);
         user.setRegistration(registration);
         userRepository.save(user);
@@ -261,16 +302,16 @@ public class TestDataLoader {
 
     private UserCv createUserCv(String name,
                                 String templateName,
-                                String summary,
-                                String clause,
                                 User user,
+                                Clause clause,
+                                Summary summary,
                                 PersonalData personalData){
         UserCv userCv  = new UserCv();
         userCv.setName(name);
         userCv.setTemplateName(templateName);
-        userCv.setSummary(summary);
-        userCv.setClause(clause);
         userCv.setUser(user);
+        userCv.setClause(clause);
+        userCv.setSummary(summary);
         userCv.setPersonalData(personalData);
         userCvRepository.save(userCv);
         return userCv;

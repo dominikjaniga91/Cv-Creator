@@ -8,9 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = {"${settings.cors_origin}"})
 @Api(tags = "Education controller")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/cv/education")
 public class EducationController {
 
 
@@ -23,22 +24,22 @@ public class EducationController {
 
     @ApiOperation(value = "Save new education for cv with specific ID into database ")
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/cv/education/{id}")
+    @PostMapping("/{id}")
     public void createEducation(@PathVariable Long id, @RequestBody Education education) {
         educationService.createEducation(id, education);
     }
 
     @ApiOperation(value = "Updates details about education")
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/cv/education")
+    @PutMapping
     public void updateEducation(@RequestBody Education education) {
         educationService.updateEducation(education);
     }
 
     @ApiOperation(value = "Delete education from cv education")
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/cv/education/{id}")
+    @DeleteMapping("/{id}")
     public void deleteEducation(@PathVariable Long id) {
-        educationService.deleteEducation(id);
+        educationService.deleteEducationById(id);
     }
 }

@@ -19,12 +19,18 @@ public class UserCv {
     private Long id;
     private String name;
     private String templateName;
-    private String summary;
-    private String clause;
 
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
+
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn(name = "clauseId")
+    private Clause clause;
+
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn(name = "summaryId")
+    private Summary summary;
 
     @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "personalDataId")

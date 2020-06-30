@@ -1,10 +1,9 @@
 package com.cvgenerator.config.security;
 
 import com.cvgenerator.domain.entity.User;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Collections;
 import java.util.Date;
 
+@Slf4j
 @Service
 @NoArgsConstructor
 public class AuthenticationService {
@@ -45,20 +45,31 @@ public class AuthenticationService {
     public Authentication getAuthentication(HttpServletRequest request) {
 
         String token = request.getHeader(jwtConfig.getHeader());
+        try {
+            if (token != null && token.startsWith("Bearer")) {
 
-        if(token != null && token.startsWith("Bearer")){
+                Claims claims = Jwts.parser()
+                        .setSigningKey(jwtConfig.getSecret())
+                        .parseClaimsJws(token.substring(7))
+                        .getBody();
 
-            Claims claims = Jwts.parser()
-                                .setSigningKey(jwtConfig.getSecret())
-                                .parseClaimsJws(token.substring(7))
-                                .getBody();
+                String username = claims.getSubject();
+                String role = "ROLE_" + claims.get("role").toString();
 
-            String username = claims.getSubject();
-            String role = "ROLE_" + claims.get("role").toString();
-
-            if(username != null){
-                return new UsernamePasswordAuthenticationToken(username, null, Collections.singleton(new SimpleGrantedAuthority(role)));
+                if (username != null) {
+                    return new UsernamePasswordAuthenticationToken(username, null, Collections.singleton(new SimpleGrantedAuthority(role)));
+                }
             }
+        }catch (ExpiredJwtException ex){
+            log.error("Request to parse expired JWT : {} \n failed : {}", token, ex.getMessage());
+        }catch (MalformedJwtException ex){
+            log.error("Request to parse invalid JWT : {} \n failed : {}", token, ex.getMessage());
+        }catch (UnsupportedJwtException ex){
+            log.error("Request to parse unsupported JWT : {} \n failed : {}", token, ex.getMessage());
+        }catch (SignatureException ex){
+            log.error("Request to parse JWT with invalid signature : {} \n failed : {}", token, ex.getMessage());
+        }catch (IllegalArgumentException ex){
+            log.error("Request to parse empty or null JWT : {} \n failed : {}", token, ex.getMessage());
         }
 
         return null;

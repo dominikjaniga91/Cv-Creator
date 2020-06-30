@@ -1,9 +1,11 @@
 package com.cvgenerator.service.implementation;
 
+import com.cvgenerator.config.Messages;
 import com.cvgenerator.domain.dto.UserCvShortDto;
 import com.cvgenerator.domain.dto.UserDto;
 import com.cvgenerator.domain.entity.User;
 import com.cvgenerator.domain.entity.UserCv;
+import com.cvgenerator.exceptions.notfound.UserNotFoundException;
 import com.cvgenerator.repository.UserCvRepository;
 import com.cvgenerator.repository.UserRepository;
 import com.cvgenerator.service.UserService;
@@ -25,6 +27,7 @@ public class UserServiceImpl implements UserService {
     private final UserDtoConverter userDtoConverter;
     private final UserCvShortDtoConverter userCvShortDtoConverter;
     private final MailServiceImpl mailService;
+    private final Messages messages;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
@@ -32,7 +35,8 @@ public class UserServiceImpl implements UserService {
                            PasswordEncoder passwordEncoder,
                            UserDtoConverter userDtoConverter,
                            UserCvShortDtoConverter userCvShortDtoConverter,
-                           MailServiceImpl mailService){
+                           MailServiceImpl mailService,
+                           Messages messages){
 
         this.userRepository = userRepository;
         this.userCvRepository = userCvRepository;
@@ -40,6 +44,7 @@ public class UserServiceImpl implements UserService {
         this.userDtoConverter = userDtoConverter;
         this.userCvShortDtoConverter = userCvShortDtoConverter;
         this.mailService = mailService;
+        this.messages = messages;
     }
 
     @Override
@@ -53,21 +58,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto findUserById(Long id){
-        User user = userRepository.findById(id).orElseThrow();
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(messages.get("user.notfound")));
         return userDtoConverter.convertToDto(user);
     }
 
     @Override
     public List<UserCvShortDto> getListOfUserCv(Long id) {
 
-        User user = userRepository.findById(id).orElseThrow();
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(messages.get("user.notfound")));
         List<UserCv> userCv = userCvRepository.getAllByUser(user).orElseThrow();
         return userCvShortDtoConverter.convertListToDto(userCv);
     }
 
     @Override
     public void updateUser(UserDto userDto) {
-        User foundedUser = userRepository.findUserByEmail(userDto.getEmail()).orElseThrow();
+        User foundedUser = userRepository.findUserByEmail(userDto.getEmail()).orElseThrow(() -> new UserNotFoundException(messages.get("user.notfound")));
         foundedUser.setFirstName(userDto.getFirstName());
         foundedUser.setLastName(userDto.getLastName());
         foundedUser.setEmail(userDto.getEmail());
@@ -78,14 +83,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUserPassword(User user, String password) {
         System.out.println(" password " + password);
-        User foundedUser = userRepository.findUserByEmail(user.getEmail()).orElseThrow();
+        User foundedUser = userRepository.findUserByEmail(user.getEmail()).orElseThrow(() -> new UserNotFoundException(messages.get("user.notfound")));
         foundedUser.setPassword(passwordEncoder.encode(password));
         userRepository.save(foundedUser);
     }
 
     @Override
-    public void deleteUserAccount(Long userId, String password){
-        User user = userRepository.findById(userId).orElseThrow();
+    public void deleteUserAccount(Long userId, String requestPassword){
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(messages.get("user.notfound")));
+        String password = passwordEncoder.encode(requestPassword);
         if(user.getPassword().equals(password)){
             userRepository.delete(user);
         }

@@ -1,5 +1,7 @@
 package com.cvgenerator.domain.dto;
 
+import com.cvgenerator.domain.enums.Country;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +21,10 @@ public class UserDto {
     private String email;
     private String role;
     private String password;
+    private boolean enable2FA;
     private boolean isActive;
+    private String phoneNumber;
+    private Country country;
     private LocalDateTime registration;
     private List<UserCvShortDto> userCvDtoList;
 
@@ -30,7 +35,10 @@ public class UserDto {
         email           = builder.email;
         role            = builder.role;
         password        = builder.password;
+        enable2FA       = builder.enable2FA;
         isActive        = builder.isActive;
+        phoneNumber     = builder.phoneNumber;
+        country         = builder.country;
         registration    = builder.registration;
         userCvDtoList   = builder.userCvDtoList;
     }
@@ -43,7 +51,10 @@ public class UserDto {
         private String email;
         private String role;
         private String password;
+        private boolean enable2FA;
         private boolean isActive;
+        private String phoneNumber;
+        private Country country;
         private LocalDateTime registration;
         private List<UserCvShortDto> userCvDtoList;
 
@@ -77,8 +88,23 @@ public class UserDto {
             return this;
         }
 
+        public UserDtoBuilder setEnable2FA(boolean enable2FA) {
+            this.enable2FA = enable2FA;
+            return this;
+        }
+
         public UserDtoBuilder setActive(boolean active) {
             isActive = active;
+            return this;
+        }
+
+        public UserDtoBuilder setPhoneNumber(String phoneNumber) {
+            this.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        public UserDtoBuilder setCountry(Country country) {
+            this.country = country;
             return this;
         }
 
