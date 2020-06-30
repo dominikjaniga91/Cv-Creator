@@ -2,6 +2,7 @@ package com.cvgenerator.controller;
 
 import com.cvgenerator.utils.JsonProcessingService;
 import com.cvgenerator.utils.service.implementation.SmsServiceImpl;
+import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -30,9 +31,9 @@ public class SmsController {
     @ApiOperation(value = "Send SMS to user using user's email")
     @GetMapping("/sms")
     @ResponseStatus(HttpStatus.OK)
-    public void getSms(@ApiParam(value = "Request with Json object that has to contain 'email' field", example = "{ \"email\": \"jankowalski@gmail.com\" }")
-                       @RequestBody String request) throws Throwable {
-        String email = jsonProcessingService.processJsonString(request, "email");
+    public void getSms(@ApiParam(value = "Request with Json object that has to contain 'email' field. Example: { \"email\": \"jankowalski@gmail.com\" }")
+                       @RequestBody JsonNode request) throws Throwable {
+        String email =jsonProcessingService.processJsonString(request, "email");
         smsService.sendSms(email);
     }
 }
