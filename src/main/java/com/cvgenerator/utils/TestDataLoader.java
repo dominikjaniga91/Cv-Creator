@@ -1,6 +1,7 @@
 package com.cvgenerator.utils;
 
 import com.cvgenerator.domain.entity.*;
+import com.cvgenerator.domain.enums.Country;
 import com.cvgenerator.domain.enums.LanguageLevel;
 import com.cvgenerator.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,11 +64,11 @@ public class TestDataLoader {
     @PostConstruct
     public void saveUsersToDatabase(){
 
-        User user1 = createUser("Dominik", "Janiga", "dominikjaniga91@gmail.com",passwordEncoder.encode("dominik123"), true, "+48881463106", "ROLE_USER", LocalDateTime.now());
-        User user2 = createUser("Andrzej", "Kowalski", "andrezjkowalski@gmail.com", passwordEncoder.encode("andrej123"), true, "+48881463106", "ROLE_USER", LocalDateTime.now());
-        User user3 = createUser("Jurek", "Nowak", "jureknowak@gmail.com", passwordEncoder.encode("jurek123"), true, "+48881463106", "ROLE_USER", LocalDateTime.now());
-        User user4 = createUser("Katarzyna", "Piekarska", "katarzynapiekarska@gmail.com", passwordEncoder.encode("kasia123"), true, "+48881463106", "ROLE_USER", LocalDateTime.now());
-        User user5 = createUser("Anna", "Pompka", "annapompka@gmail.com", passwordEncoder.encode("anna123"), false, "+48881463106", "ROLE_USER", LocalDateTime.now());
+        User user1 = createUser("Dominik", "Janiga", "dominikjaniga91@gmail.com",passwordEncoder.encode("dominik123"), true, "+48881463106", Country.POLAND, "ROLE_USER", LocalDateTime.now());
+        User user2 = createUser("Andrzej", "Kowalski", "andrezjkowalski@gmail.com", passwordEncoder.encode("andrej123"), true, "+48881463106", Country.POLAND, "ROLE_USER", LocalDateTime.now());
+        User user3 = createUser("Jurek", "Nowak", "jureknowak@gmail.com", passwordEncoder.encode("jurek123"), true, "+48881463106", Country.POLAND, "ROLE_USER", LocalDateTime.now());
+        User user4 = createUser("Katarzyna", "Piekarska", "katarzynapiekarska@gmail.com", passwordEncoder.encode("kasia123"), true, "+48881463106", Country.POLAND, "ROLE_USER", LocalDateTime.now());
+        User user5 = createUser("Anna", "Pompka", "annapompka@gmail.com", passwordEncoder.encode("anna123"), false, "+48881463106", Country.POLAND, "ROLE_USER", LocalDateTime.now());
 
         Address address1 = createAddress("Źródlana", 56, "33-111", "Koszyce Male");
         Address address2 = createAddress("Bitwy pod Lenino", 24, "80-809", "Gdansk");
@@ -281,6 +282,7 @@ public class TestDataLoader {
                              String password,
                              boolean isActive,
                              String phoneNumber,
+                             Country country,
                              String role,
                              LocalDateTime registration){
 
@@ -291,6 +293,7 @@ public class TestDataLoader {
         user.setPassword(password);
         user.setActive(isActive);
         user.setPhoneNumber(phoneNumber);
+        user.setCountry(country);
         user.setRole(role);
         user.setRegistration(registration);
         userRepository.save(user);
