@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
-public class SmsTestController{
+public class SmsController {
 
     private final SmsServiceImpl smsService;
 
     @Autowired
-    public SmsTestController(SmsServiceImpl smsService) {
+    public SmsController(SmsServiceImpl smsService) {
         this.smsService = smsService;
     }
 
