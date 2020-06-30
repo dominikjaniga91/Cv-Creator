@@ -2,6 +2,7 @@ package com.cvgenerator.domain.entity;
 
 import com.cvgenerator.domain.dto.UserCvShortDto;
 import com.cvgenerator.domain.dto.UserDto;
+import com.cvgenerator.domain.enums.Country;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -35,6 +36,9 @@ public class User implements UserDetails {
     private boolean enable2FA;
     private boolean isActive;
     private String phoneNumber;
+
+    @Enumerated(EnumType.STRING)
+    private Country country;
     private LocalDateTime registration;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
@@ -56,6 +60,7 @@ public class User implements UserDetails {
         enable2FA       = builder.enable2FA;
         isActive        = builder.isActive;
         phoneNumber     = builder.phoneNumber;
+        country         = builder.country;
         registration    = builder.registration;
         listOfUserCv    = builder.listOfUserCv;
         tokens          = builder.tokens;
@@ -103,6 +108,7 @@ public class User implements UserDetails {
         private boolean enable2FA;
         private boolean isActive;
         private String phoneNumber;
+        private Country country;
         private LocalDateTime registration;
         private List<UserCv> listOfUserCv;
         private List<Token> tokens;
@@ -150,6 +156,11 @@ public class User implements UserDetails {
 
         public UserBuilder setPhoneNumber(String phoneNumber) {
             this.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        public UserBuilder setCountry(Country country) {
+            this.country = country;
             return this;
         }
 
