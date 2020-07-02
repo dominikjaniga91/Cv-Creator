@@ -15,7 +15,7 @@ import java.util.List;
 
 @DataJpaTest
 @ActiveProfiles("test")
-@DisplayName("Integration test with database should return")
+@DisplayName("User service test should return")
 public class UserServiceTest {
 
     @Autowired
@@ -40,13 +40,25 @@ public class UserServiceTest {
     @Test
     @Transactional
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
-    @DisplayName("user with name 'Dominik' ")
-    void shouldReturnOneUser_afterSaveUserToDatabase(){
+    @DisplayName("one user with name 'Dominik' ")
+    void shouldReturnOneUser_afterGetUsersFromDatabase(){
         String expected = "Dominik";
         List<User> users = userRepository.findAll();
         User foundedUser = users.get(0);
 
         Assertions.assertEquals(1, users.size());
         Assertions.assertEquals(expected, foundedUser.getFirstName());
+    }
+
+    @Test
+    @Transactional
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    @DisplayName("zero users after delete user from database ")
+    void shouldReturnZero_afterDeleteUserFromDatabase(){
+        int expected = 0;
+        userRepository.deleteById(1L);
+        List<User> users = userRepository.findAll();
+
+        Assertions.assertEquals(expected, users.size());
     }
 }
