@@ -1,40 +1,52 @@
 package com.cvgenerator.service;
 
+import com.cvgenerator.domain.dto.UserDto;
 import com.cvgenerator.domain.entity.User;
-import com.cvgenerator.repository.UserRepository;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import com.cvgenerator.exceptions.notfound.UserNotFoundException;
+import com.cvgenerator.service.implementation.UserServiceImpl;
+import com.cvgenerator.utils.service.implementation.MailServiceImpl;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
+import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import javax.transaction.Transactional;
-import java.util.List;
 
-@DataJpaTest
+@SpringBootTest
+@ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
 @DisplayName("User service test should return")
 public class UserServiceTest {
 
     @Autowired
-    private UserRepository userRepository;
-    private User user;
+    private UserServiceImpl userService;
+
+    @MockBean
+    private MailServiceImpl mailService;
+
+    private UserDto userDto;
 
     @BeforeEach
     void setUp() {
 
-        user = new User.UserBuilder()
+        BDDMockito.doNothing().when(mailService).sendConfirmationEmail(ArgumentMatchers.any(User.class));
+
+        userDto = new UserDto.UserDtoBuilder()
                 .setId(1L)
                 .setFirstName("Dominik")
                 .setLastName("Janiga")
                 .setEmail("dominikjaniga91@gmail.com")
+                .setPassword("dominik123")
                 .setRole("USER")
                 .setActive(true)
                 .buildUserDto();
 
-        userRepository.save(user);
+        userService.saveUser(userDto);
     }
 
     @Test
@@ -43,22 +55,17 @@ public class UserServiceTest {
     @DisplayName("one user with name 'Dominik' ")
     void shouldReturnOneUser_afterGetUsersFromDatabase(){
         String expected = "Dominik";
-        List<User> users = userRepository.findAll();
-        User foundedUser = users.get(0);
+        UserDto user = userService.findUserById(1L);
 
-        Assertions.assertEquals(1, users.size());
-        Assertions.assertEquals(expected, foundedUser.getFirstName());
+        Assertions.assertEquals(expected, user.getFirstName());
     }
 
     @Test
     @Transactional
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
-    @DisplayName("zero users after delete user from database ")
-    void shouldReturnZero_afterDeleteUserFromDatabase(){
-        int expected = 0;
-        userRepository.deleteById(1L);
-        List<User> users = userRepository.findAll();
-
-        Assertions.assertEquals(expected, users.size());
+    @DisplayName("an exception after delete user from database ")
+    void shouldThrownException_afterDeleteUserFromDatabase(){
+        userService.deleteUserAccount(1L, "dominik123");
+        Assertions.assertThrows(UserNotFoundException.class, () -> userService.findUserById(1L));
     }
 }
