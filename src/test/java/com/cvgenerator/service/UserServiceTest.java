@@ -83,4 +83,18 @@ public class UserServiceTest {
 
         Assertions.assertTrue(passwordEncoder.matches("dominik1234", foundedUser.getPassword()));
     }
+
+    @Test
+    @Transactional
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    @DisplayName("different user name after update user")
+    void shouldReturnDifferentName_AfterUpdateUser(){
+
+        userDto.setFirstName("Maciek");
+        userService.updateUser(userDto);
+        UserDto newUserDto = userService.findUserById(1L);
+
+        Assertions.assertEquals("Maciek",newUserDto.getFirstName());
+
+    }
 }
