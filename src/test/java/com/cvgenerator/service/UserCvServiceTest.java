@@ -83,4 +83,18 @@ public class UserCvServiceTest {
         userCvService.deleteCvById(1L);
         Assertions.assertThrows(UserCvNotFoundException.class, () -> userCvService.getUserCvById(1L));
     }
+
+    @Test
+    @Transactional
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    @DisplayName("different template name after update CV")
+    void shouldReturnDifferentTemplateName_AfterUpdateCv(){
+
+        userCvDto.setTemplateName("Redwood");
+        userCvService.updateUserCvBasicInfo(userCvDto);
+        UserCvDto newUserCvDto = userCvService.getUserCvById(1L);
+
+        Assertions.assertEquals("Redwood", newUserCvDto.getTemplateName());
+
+    }
 }
