@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveUser(UserDto userDto) {
         User user = userDtoConverter.convertToEntity(userDto);
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRegistration(LocalDateTime.now());
         userRepository.save(user);
         mailService.sendConfirmationEmail(user);
@@ -91,8 +91,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUserAccount(Long userId, String requestPassword){
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(messages.get("user.notfound")));
-        String password = passwordEncoder.encode(requestPassword);
-        if(passwordEncoder.matches(user.getPassword(), password)){
+        if(passwordEncoder.matches(requestPassword, user.getPassword())){
             userRepository.delete(user);
         }
 
