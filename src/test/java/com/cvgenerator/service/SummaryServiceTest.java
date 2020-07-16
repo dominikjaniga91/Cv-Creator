@@ -74,7 +74,7 @@ public class SummaryServiceTest {
     @Test
     @DisplayName("Should return summary value from database")
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
-    void shouldReturn(){
+    void shouldReturnSummaryValueFromDatabase(){
 
 
         Assertions.assertEquals("Lorem ipsum dolor sit amet.", summary.getValue());
