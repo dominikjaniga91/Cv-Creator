@@ -76,7 +76,19 @@ public class SummaryServiceTest {
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     void shouldReturn(){
 
-        Summary summary = repository.findById(1L).orElseThrow();
+
         Assertions.assertEquals("Lorem ipsum dolor sit amet.", summary.getValue());
+    }
+
+    @Test
+    @DisplayName("Should return new summary value after update")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void shouldReturnNewSummaryValueAfterUpdate(){
+
+        String expected = "There are many ways you can map a one-to-one relationship with Hibernate";
+        summary.setValue(expected);
+        summaryService.updateSummary(summary);
+        Summary foundedSummary = repository.findById(1L).orElseThrow();
+        Assertions.assertEquals(expected, foundedSummary.getValue());
     }
 }
