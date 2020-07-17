@@ -78,4 +78,16 @@ public class PersonalDataServiceTest {
         PersonalData foundedPersonalData = personalDataRepository.findById(1L).orElseThrow();
         Assertions.assertEquals("dominikjaniga91@gmail.com", foundedPersonalData.getEmail());
     }
+
+    @Test
+    @DisplayName("Should return new personal data email after update")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void shouldReturnNewPersonalDataEmailAfterUpdate(){
+
+        String expected = "migacz56@gmail.com";
+        personalData.setEmail(expected);
+        personalDataService.updatePersonalData(personalData);
+        PersonalData foundedPersonalData = personalDataRepository.findById(1L).orElseThrow();
+        Assertions.assertEquals(expected, foundedPersonalData.getEmail());
+    }
 }
