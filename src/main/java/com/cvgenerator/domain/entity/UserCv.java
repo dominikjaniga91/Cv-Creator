@@ -32,7 +32,7 @@ public class UserCv {
     @JoinColumn(name = "summaryId")
     private Summary summary;
 
-    @OneToOne(orphanRemoval = true)
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, orphanRemoval = true)
     @JoinColumn(name = "personalDataId")
     private PersonalData personalData;
 
