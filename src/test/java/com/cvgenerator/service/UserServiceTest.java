@@ -17,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import javax.transaction.Transactional;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -53,7 +52,6 @@ public class UserServiceTest {
     }
 
     @Test
-    @Transactional
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     @DisplayName("one user with name 'Dominik' ")
     void shouldReturnOneUser_afterGetUsersFromDatabase(){
@@ -64,7 +62,6 @@ public class UserServiceTest {
     }
 
     @Test
-    @Transactional
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     @DisplayName("an exception after delete user from database ")
     void shouldThrownException_afterDeleteUserFromDatabase(){
@@ -73,7 +70,6 @@ public class UserServiceTest {
     }
 
     @Test
-    @Transactional
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     @DisplayName("new password after change")
     void shouldReturnNewPassword_afterChange(){
@@ -85,7 +81,6 @@ public class UserServiceTest {
     }
 
     @Test
-    @Transactional
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     @DisplayName("different user name after update user")
     void shouldReturnDifferentName_AfterUpdateUser(){
