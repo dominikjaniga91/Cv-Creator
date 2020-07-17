@@ -75,8 +75,8 @@ public class SummaryServiceTest {
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     void shouldReturnSummaryValueFromDatabase(){
 
-
-        Assertions.assertEquals("Lorem ipsum dolor sit amet.", summary.getValue());
+        Summary foundedSummary = repository.findById(1L).orElseThrow();
+        Assertions.assertEquals("Lorem ipsum dolor sit amet.", foundedSummary.getValue());
     }
 
     @Test
