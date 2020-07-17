@@ -6,6 +6,9 @@ import com.cvgenerator.exceptions.notfound.UserNotFoundException;
 import com.cvgenerator.service.dtoConverters.UserDtoConverter;
 import com.cvgenerator.service.implementation.UserServiceImpl;
 import com.cvgenerator.utils.service.implementation.MailServiceImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
@@ -17,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -64,8 +68,10 @@ public class UserServiceTest {
     @Test
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     @DisplayName("an exception after delete user from database ")
-    void shouldThrownException_afterDeleteUserFromDatabase(){
-        userService.deleteUserAccount(1L, "dominik123");
+    void shouldThrownException_afterDeleteUserFromDatabase() throws JsonProcessingException, MissingServletRequestParameterException {
+        String json = "{\"password\":\"dominik123\"}";
+        JsonNode jsonNode = new ObjectMapper().readTree(json);
+        userService.deleteUserAccount(1L, jsonNode);
         Assertions.assertThrows(UserNotFoundException.class, () -> userService.findUserById(1L));
     }
 

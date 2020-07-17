@@ -3,6 +3,7 @@ package com.cvgenerator.controller;
 import com.cvgenerator.domain.dto.UserCvShortDto;
 import com.cvgenerator.domain.dto.UserDto;
 import com.cvgenerator.service.implementation.UserServiceImpl;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -130,8 +131,9 @@ public class UserControllerTest {
     @Test
     @DisplayName("DELETE should return status 'ok' after delete User")
     void shouldReturnStatusOK_afterDeleteUser() throws Exception {
-
-        BDDMockito.doNothing().when(userService).deleteUserAccount(1L, "admin");
+        String json = "{\"password\":\"dominik123\"}";
+        JsonNode jsonNode = new ObjectMapper().readTree(json);
+        BDDMockito.doNothing().when(userService).deleteUserAccount(1L, jsonNode);
 
         mockMvc.perform(delete("/api/user/{id}", 1L)
                 .content("admin")
@@ -140,7 +142,7 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print());
 
-        BDDMockito.verify(userService, Mockito.times(1)).deleteUserAccount(1L, "admin");
+        BDDMockito.verify(userService, Mockito.times(1)).deleteUserAccount(1L, jsonNode);
         BDDMockito.verifyNoMoreInteractions(userService);
     }
 
