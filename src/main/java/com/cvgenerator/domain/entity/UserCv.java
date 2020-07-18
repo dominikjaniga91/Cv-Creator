@@ -24,7 +24,7 @@ public class UserCv {
     @JoinColumn(name = "userId")
     private User user;
 
-    @OneToOne(orphanRemoval = true)
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, orphanRemoval = true)
     @JoinColumn(name = "clauseId")
     private Clause clause;
 
