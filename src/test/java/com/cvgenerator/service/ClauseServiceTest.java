@@ -75,4 +75,16 @@ public class ClauseServiceTest {
         Clause foundedClause = repository.findById(1L).orElseThrow();
         Assertions.assertEquals("Lorem ipsum dolor sit amet.", foundedClause.getValue());
     }
+
+    @Test
+    @DisplayName("Should return new clause value after update")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void shouldReturnNewClauseValueAfterUpdate(){
+
+        String expected = "There are many ways you can map a one-to-one relationship with Hibernate";
+        clause.setValue(expected);
+        clauseService.updateClause(clause);
+        Clause foundedClause = repository.findById(1L).orElseThrow();
+        Assertions.assertEquals(expected, foundedClause.getValue());
+    }
 }
