@@ -4,6 +4,7 @@ import com.cvgenerator.domain.dto.UserCvDto;
 import com.cvgenerator.domain.dto.UserDto;
 import com.cvgenerator.domain.entity.Course;
 import com.cvgenerator.domain.entity.User;
+import com.cvgenerator.exceptions.notfound.CourseNotFoundException;
 import com.cvgenerator.repository.CourseRepository;
 import com.cvgenerator.service.implementation.CourseServiceImpl;
 import com.cvgenerator.service.implementation.UserCvServiceImpl;
@@ -85,5 +86,14 @@ public class CourseServiceTest {
         courseService.updateCourse(course);
         Course foundedCourse = repository.findById(1L).orElseThrow();
         Assertions.assertEquals(expected, foundedCourse.getSchool());
+    }
+
+    @Test
+    @DisplayName("Should thrown an CourseNotFoundException")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void shouldThrownAnCourseNotFoundException(){
+        CourseNotFoundException exception = Assertions.assertThrows(CourseNotFoundException.class, () -> courseService.deleteCourseById(10L));
+        Assertions.assertEquals("Course does not exist", exception.getMessage());
+
     }
 }
