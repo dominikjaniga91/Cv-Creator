@@ -4,6 +4,7 @@ import com.cvgenerator.domain.dto.UserCvDto;
 import com.cvgenerator.domain.dto.UserDto;
 import com.cvgenerator.domain.entity.Clause;
 import com.cvgenerator.domain.entity.User;
+import com.cvgenerator.exceptions.notfound.ClauseNotFoundException;
 import com.cvgenerator.repository.ClauseRepository;
 import com.cvgenerator.service.implementation.ClauseServiceImpl;
 import com.cvgenerator.service.implementation.UserCvServiceImpl;
@@ -86,5 +87,14 @@ public class ClauseServiceTest {
         clauseService.updateClause(clause);
         Clause foundedClause = repository.findById(1L).orElseThrow();
         Assertions.assertEquals(expected, foundedClause.getValue());
+    }
+
+    @Test
+    @DisplayName("Should thrown an ClauseNotFoundException after try to delete non existing clause")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void shouldThrownAnClauseNotFoundException_afterTryToDeleteNonExistingClause(){
+        ClauseNotFoundException exception = Assertions.assertThrows(ClauseNotFoundException.class, () -> clauseService.deleteClauseById(10L));
+        Assertions.assertEquals("Clause does not exist", exception.getMessage());
+
     }
 }
