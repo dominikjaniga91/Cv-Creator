@@ -3,13 +3,11 @@ package com.cvgenerator.service;
 import com.cvgenerator.domain.dto.UserCvDto;
 import com.cvgenerator.domain.dto.UserDto;
 import com.cvgenerator.domain.entity.Course;
-import com.cvgenerator.domain.entity.PersonalData;
 import com.cvgenerator.domain.entity.User;
 import com.cvgenerator.repository.CourseRepository;
 import com.cvgenerator.service.implementation.CourseServiceImpl;
 import com.cvgenerator.service.implementation.UserCvServiceImpl;
 import com.cvgenerator.service.implementation.UserServiceImpl;
-import com.cvgenerator.utils.service.MailService;
 import com.cvgenerator.utils.service.implementation.MailServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -75,5 +73,17 @@ public class CourseServiceTest {
 
         Course foundedCourse = repository.findById(1L).orElseThrow();
         Assertions.assertEquals("Kodilla", foundedCourse.getSchool());
+    }
+
+    @Test
+    @DisplayName("Should return new course school after update")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void shouldReturnNewCourseSchoolAfterUpdate(){
+
+        String expected = "SD Academy";
+        course.setSchool(expected);
+        courseService.updateCourse(course);
+        Course foundedCourse = repository.findById(1L).orElseThrow();
+        Assertions.assertEquals(expected, foundedCourse.getSchool());
     }
 }
