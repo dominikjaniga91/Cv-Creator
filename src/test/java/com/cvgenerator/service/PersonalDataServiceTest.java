@@ -5,6 +5,7 @@ import com.cvgenerator.domain.dto.UserDto;
 import com.cvgenerator.domain.entity.Address;
 import com.cvgenerator.domain.entity.PersonalData;
 import com.cvgenerator.domain.entity.User;
+import com.cvgenerator.exceptions.notfound.PersonalDataNotFoundException;
 import com.cvgenerator.repository.PersonalDataRepository;
 import com.cvgenerator.service.implementation.PersonalDataServiceImpl;
 import com.cvgenerator.service.implementation.UserCvServiceImpl;
@@ -89,5 +90,14 @@ public class PersonalDataServiceTest {
         personalDataService.updatePersonalData(personalData);
         PersonalData foundedPersonalData = personalDataRepository.findById(1L).orElseThrow();
         Assertions.assertEquals(expected, foundedPersonalData.getEmail());
+    }
+
+    @Test
+    @DisplayName("Should thrown an PersonalDataNotFoundException")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void shouldThrownAnPersonalDataNotFoundException(){
+        PersonalDataNotFoundException exception = Assertions.assertThrows(PersonalDataNotFoundException.class, () -> personalDataService.deletePersonalDataById(10L));
+        Assertions.assertEquals("Personal data does not exist", exception.getMessage());
+
     }
 }
