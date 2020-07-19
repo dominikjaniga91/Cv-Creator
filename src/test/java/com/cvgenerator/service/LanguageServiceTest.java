@@ -22,7 +22,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
@@ -59,6 +58,7 @@ public class LanguageServiceTest {
                 .buildUserDto();
 
         language = Language.builder()
+                    .id(1L)
                     .name("English")
                     .level(LanguageLevel.B2)
                     .build();
@@ -75,5 +75,17 @@ public class LanguageServiceTest {
     void shouldReturnAppropriateLanguageFromDatabase(){
         Language foundedLanguage = repository.findById(1L).orElseThrow();
         assertEquals("English", foundedLanguage.getName());
+    }
+
+    @Test
+    @DisplayName("Should return new language level after update")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void shouldReturnNewLanguageLevelAfterUpdate(){
+
+        LanguageLevel expected = LanguageLevel.C1;
+        language.setLevel(expected);
+        languageService.updateLanguage(language);
+        Language foundedLanguage = repository.findById(1L).orElseThrow();
+        assertEquals(expected, foundedLanguage.getLevel());
     }
 }
