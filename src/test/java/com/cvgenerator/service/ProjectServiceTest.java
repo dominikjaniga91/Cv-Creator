@@ -4,6 +4,7 @@ import com.cvgenerator.domain.dto.UserCvDto;
 import com.cvgenerator.domain.dto.UserDto;
 import com.cvgenerator.domain.entity.Project;
 import com.cvgenerator.domain.entity.User;
+import com.cvgenerator.exceptions.notfound.ProjectNotFoundException;
 import com.cvgenerator.repository.ProjectRepository;
 import com.cvgenerator.service.implementation.ProjectServiceImpl;
 import com.cvgenerator.service.implementation.UserCvServiceImpl;
@@ -21,8 +22,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -87,5 +88,14 @@ public class ProjectServiceTest {
         projectService.updateProject(project);
         Project foundedProject= repository.findById(1L).orElseThrow();
         assertEquals(expected, foundedProject.getName());
+    }
+
+    @Test
+    @DisplayName("Should thrown an exception after try to delete non existing project ")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void shouldThrownAnException_afterTryToDeleteNonExistingProject(){
+
+        ProjectNotFoundException exception = assertThrows(ProjectNotFoundException.class, () -> projectService.deleteProjectById(10L));
+        assertEquals("Project does not exist", exception.getMessage());
     }
 }
