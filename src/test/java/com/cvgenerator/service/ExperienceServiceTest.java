@@ -74,6 +74,19 @@ public class ExperienceServiceTest {
         Experience foundedExperience = repository.findById(1L).orElseThrow();
         assertEquals("LPP S.A.", foundedExperience.getCompany());
     }
+
+    @Test
+    @DisplayName("Should return new experience company after update")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void shouldReturnNewExperienceCompanyAfterUpdate(){
+
+        String expected = "Jeronimo Martins Polska";
+        experience.setCompany(expected);
+        experienceService.updateExperience(experience);
+        Experience foundedExperience = repository.findById(1L).orElseThrow();
+        assertEquals(expected, foundedExperience.getCompany());
+    }
+
 }
 
 
