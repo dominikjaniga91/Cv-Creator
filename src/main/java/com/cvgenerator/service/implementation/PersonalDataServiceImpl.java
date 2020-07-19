@@ -37,8 +37,8 @@ public class PersonalDataServiceImpl implements PersonalDataService {
         Address address = personalData.getAddress();
         addressRepository.save(address);
         UserCv userCv = userCvRepository.findById(userCvId).orElseThrow(() -> new UserCvNotFoundException(messages.get("userCv.notfound")));
-        personalData.setUserCv(userCv);
-        dataRepository.save(personalData);
+        userCv.setPersonalData(personalData);
+        userCvRepository.save(userCv);
     }
 
     @Override

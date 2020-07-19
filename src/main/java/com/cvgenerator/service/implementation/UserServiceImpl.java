@@ -11,14 +11,19 @@ import com.cvgenerator.repository.UserRepository;
 import com.cvgenerator.service.UserService;
 import com.cvgenerator.service.dtoConverters.UserCvShortDtoConverter;
 import com.cvgenerator.service.dtoConverters.UserDtoConverter;
+import com.cvgenerator.utils.JsonProcessingService;
 import com.cvgenerator.utils.service.implementation.MailServiceImpl;
+import com.fasterxml.jackson.databind.JsonNode;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -28,6 +33,7 @@ public class UserServiceImpl implements UserService {
     private final UserCvShortDtoConverter userCvShortDtoConverter;
     private final MailServiceImpl mailService;
     private final Messages messages;
+    private final JsonProcessingService jsonService;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
@@ -36,7 +42,8 @@ public class UserServiceImpl implements UserService {
                            UserDtoConverter userDtoConverter,
                            UserCvShortDtoConverter userCvShortDtoConverter,
                            MailServiceImpl mailService,
-                           Messages messages){
+                           Messages messages,
+                           JsonProcessingService jsonService){
 
         this.userRepository = userRepository;
         this.userCvRepository = userCvRepository;
@@ -45,6 +52,7 @@ public class UserServiceImpl implements UserService {
         this.userCvShortDtoConverter = userCvShortDtoConverter;
         this.mailService = mailService;
         this.messages = messages;
+        this.jsonService = jsonService;
     }
 
     @Override
@@ -88,11 +96,12 @@ public class UserServiceImpl implements UserService {
         userRepository.save(foundedUser);
     }
 
+
     @Override
-    public void deleteUserAccount(Long userId, String requestPassword){
+    public void deleteUserAccount(Long userId, JsonNode requestPassword) throws MissingServletRequestParameterException{
+        String password = jsonService.processJsonString(requestPassword, "password");
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(messages.get("user.notfound")));
-        String password = passwordEncoder.encode(requestPassword);
-        if(user.getPassword().equals(password)){
+        if(passwordEncoder.matches(password, user.getPassword())){
             userRepository.delete(user);
         }
 
