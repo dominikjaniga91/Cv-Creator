@@ -5,6 +5,7 @@ import com.cvgenerator.domain.dto.UserDto;
 import com.cvgenerator.domain.entity.Language;
 import com.cvgenerator.domain.entity.User;
 import com.cvgenerator.domain.enums.LanguageLevel;
+import com.cvgenerator.exceptions.notfound.LanguageNotFoundException;
 import com.cvgenerator.repository.LanguageRepository;
 import com.cvgenerator.service.implementation.LanguageServiceImpl;
 import com.cvgenerator.service.implementation.UserCvServiceImpl;
@@ -23,6 +24,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -87,5 +89,14 @@ public class LanguageServiceTest {
         languageService.updateLanguage(language);
         Language foundedLanguage = repository.findById(1L).orElseThrow();
         assertEquals(expected, foundedLanguage.getLevel());
+    }
+
+    @Test
+    @DisplayName("Should thrown an exception after try to delete non existing language ")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void shouldThrownAnException_afterTryToDeleteNonExistingLanguage(){
+
+        LanguageNotFoundException exception = assertThrows(LanguageNotFoundException.class, () -> languageService.deleteLanguageById(10L));
+        assertEquals("Language does not exist", exception.getMessage());
     }
 }
