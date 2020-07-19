@@ -76,4 +76,16 @@ public class ProjectServiceTest {
         Project foundedProject = repository.findById(1L).orElseThrow();
         assertEquals("mydatabase.com", foundedProject.getName());
     }
+
+    @Test
+    @DisplayName("Should return new project name after update")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void shouldReturnNewProjectNameAfterUpdate(){
+
+        String expected = "bestapp.com";
+        project.setName(expected);
+        projectService.updateProject(project);
+        Project foundedProject= repository.findById(1L).orElseThrow();
+        assertEquals(expected, foundedProject.getName());
+    }
 }
