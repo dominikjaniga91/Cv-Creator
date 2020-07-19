@@ -10,7 +10,6 @@ import com.cvgenerator.service.implementation.EducationServiceImpl;
 import com.cvgenerator.service.implementation.UserCvServiceImpl;
 import com.cvgenerator.service.implementation.UserServiceImpl;
 import com.cvgenerator.utils.service.implementation.MailServiceImpl;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -85,7 +84,8 @@ public class EducationServiceTest {
         String expected = "V High school";
         education.setSchool(expected);
         educationService.updateEducation(education);
-        assertEquals(expected, education.getSchool());
+        Education foundedEducation = repository.findById(1L).orElseThrow();
+        assertEquals(expected, foundedEducation.getSchool());
     }
 
     @Test
