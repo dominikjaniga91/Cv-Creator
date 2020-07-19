@@ -21,7 +21,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
@@ -73,5 +72,17 @@ public class InterestServiceTest {
     void shouldReturnAppropriateInterestFromDatabase(){
         Interest foundedInterest = repository.findById(1L).orElseThrow();
         assertEquals("Basketball", foundedInterest.getName());
+    }
+
+    @Test
+    @DisplayName("Should return new interest after update")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void shouldReturnNewInterestAfterUpdate(){
+
+        String expected = "Swimming";
+        interest.setName(expected);
+        interestService.updateInterest(interest);
+        Interest foundedInterest = repository.findById(1L).orElseThrow();
+        assertEquals(expected, foundedInterest.getName());
     }
 }
