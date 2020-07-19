@@ -153,14 +153,14 @@
 //    private Summary createSummary(String value) {
 //        Summary summary = new Summary();
 //        summary.setValue(value);
-//        summaryRepository.save(summary);
+////        summaryRepository.save(summary);
 //        return summary;
 //    }
 //
 //    private Clause createClause(String value) {
 //        Clause clause = new Clause();
 //        clause.setValue(value);
-//        clauseRepository.save(clause);
+////        clauseRepository.save(clause);
 //        return clause;
 //    }
 //
@@ -341,7 +341,7 @@
 //        personalData.setTwitter(twitter);
 //        personalData.setWebsite(website);
 //        personalData.setAddress(address);
-//        personalDataRepository.save(personalData);
+////        personalDataRepository.save(personalData);
 //        return personalData;
 //    }
 //
