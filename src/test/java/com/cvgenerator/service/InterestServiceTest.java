@@ -4,6 +4,7 @@ import com.cvgenerator.domain.dto.UserCvDto;
 import com.cvgenerator.domain.dto.UserDto;
 import com.cvgenerator.domain.entity.Interest;
 import com.cvgenerator.domain.entity.User;
+import com.cvgenerator.exceptions.notfound.InterestNotFoundException;
 import com.cvgenerator.repository.InterestRepository;
 import com.cvgenerator.service.implementation.InterestServiceImpl;
 import com.cvgenerator.service.implementation.UserCvServiceImpl;
@@ -22,6 +23,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -84,5 +86,14 @@ public class InterestServiceTest {
         interestService.updateInterest(interest);
         Interest foundedInterest = repository.findById(1L).orElseThrow();
         assertEquals(expected, foundedInterest.getName());
+    }
+
+    @Test
+    @DisplayName("Should thrown an exception after try to delete non existing interest ")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void shouldThrownAnException_afterTryToDeleteNonExistingInterest(){
+
+        InterestNotFoundException exception = assertThrows(InterestNotFoundException.class, () -> interestService.deleteInterestById(10L));
+        assertEquals("Interest does not exist", exception.getMessage());
     }
 }
