@@ -4,6 +4,7 @@ import com.cvgenerator.domain.dto.UserCvDto;
 import com.cvgenerator.domain.dto.UserDto;
 import com.cvgenerator.domain.entity.Education;
 import com.cvgenerator.domain.entity.User;
+import com.cvgenerator.exceptions.notfound.EducationNotFoundException;
 import com.cvgenerator.repository.EducationRepository;
 import com.cvgenerator.service.implementation.EducationServiceImpl;
 import com.cvgenerator.service.implementation.UserCvServiceImpl;
@@ -22,6 +23,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -72,7 +74,7 @@ public class EducationServiceTest {
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     void shouldReturnEducationSchoolFromDatabase(){
         Education foundedEducation = repository.findById(1L).orElseThrow();
-        Assertions.assertEquals("IV High school", foundedEducation.getSchool());
+        assertEquals("IV High school", foundedEducation.getSchool());
     }
 
     @Test
@@ -83,7 +85,16 @@ public class EducationServiceTest {
         String expected = "V High school";
         education.setSchool(expected);
         educationService.updateEducation(education);
-        Assertions.assertEquals(expected, education.getSchool());
+        assertEquals(expected, education.getSchool());
+    }
+
+    @Test
+    @DisplayName("Should thrown an exception after try to delete non existing education ")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void shouldThrownAnException_afterTryToDeleteNonExistingEducation(){
+
+        EducationNotFoundException exception = assertThrows(EducationNotFoundException.class, () -> educationService.deleteEducationById(10L));
+        assertEquals("Education does not exist", exception.getMessage());
     }
 }
 
