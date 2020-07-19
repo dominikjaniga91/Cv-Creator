@@ -4,6 +4,7 @@ import com.cvgenerator.domain.dto.UserCvDto;
 import com.cvgenerator.domain.dto.UserDto;
 import com.cvgenerator.domain.entity.Experience;
 import com.cvgenerator.domain.entity.User;
+import com.cvgenerator.exceptions.notfound.ExperienceNotFoundException;
 import com.cvgenerator.repository.ExperienceRepository;
 import com.cvgenerator.service.implementation.ExperienceServiceImpl;
 import com.cvgenerator.service.implementation.UserCvServiceImpl;
@@ -85,6 +86,15 @@ public class ExperienceServiceTest {
         experienceService.updateExperience(experience);
         Experience foundedExperience = repository.findById(1L).orElseThrow();
         assertEquals(expected, foundedExperience.getCompany());
+    }
+
+    @Test
+    @DisplayName("Should thrown an exception after try to delete non existing experience ")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void shouldThrownAnException_afterTryToDeleteNonExistingExperience(){
+
+        ExperienceNotFoundException exception = assertThrows(ExperienceNotFoundException.class, () -> experienceService.deleteExperienceById(10L));
+        assertEquals("Experience does not exist", exception.getMessage());
     }
 
 }
