@@ -74,4 +74,17 @@ public class EducationServiceTest {
         Education foundedEducation = repository.findById(1L).orElseThrow();
         Assertions.assertEquals("IV High school", foundedEducation.getSchool());
     }
+
+    @Test
+    @DisplayName("Should return new education school after update")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void shouldReturnNewEducationSchoolAfterUpdate(){
+
+        String expected = "V High school";
+        education.setSchool(expected);
+        educationService.updateEducation(education);
+        Assertions.assertEquals(expected, education.getSchool());
+    }
 }
+
+
