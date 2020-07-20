@@ -4,6 +4,7 @@ import com.cvgenerator.domain.dto.UserCvDto;
 import com.cvgenerator.domain.dto.UserDto;
 import com.cvgenerator.domain.entity.Skill;
 import com.cvgenerator.domain.entity.User;
+import com.cvgenerator.exceptions.notfound.SkillNotFoundException;
 import com.cvgenerator.repository.SkillRepository;
 import com.cvgenerator.service.implementation.SkillServiceImpl;
 import com.cvgenerator.service.implementation.UserCvServiceImpl;
@@ -23,6 +24,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -87,5 +89,14 @@ public class SkillServiceTest {
         skillService.updateSkill(skill);
         Skill foundedSkill= repository.findById(1L).orElseThrow();
         assertEquals(expected, foundedSkill.getName());
+    }
+
+    @Test
+    @DisplayName("Should thrown an exception after try to delete non existing skill ")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void shouldThrownAnException_afterTryToDeleteNonExistingSkill(){
+
+        SkillNotFoundException exception = assertThrows(SkillNotFoundException.class, () -> skillService.deleteSkillById(10L));
+        assertEquals("Skill does not exist", exception.getMessage());
     }
 }
