@@ -76,4 +76,16 @@ public class SkillServiceTest {
         assertEquals("Playing heroes III", foundedSkill.getName());
     }
 
+
+    @Test
+    @DisplayName("Should return new skill name after update")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void shouldReturnNewSkillNameAfterUpdate(){
+
+        String expected = "Multitasking";
+        skill.setName(expected);
+        skillService.updateSkill(skill);
+        Skill foundedSkill= repository.findById(1L).orElseThrow();
+        assertEquals(expected, foundedSkill.getName());
+    }
 }
