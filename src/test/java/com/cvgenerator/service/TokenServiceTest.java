@@ -3,6 +3,7 @@ package com.cvgenerator.service;
 import com.cvgenerator.domain.entity.Token;
 import com.cvgenerator.domain.entity.User;
 import com.cvgenerator.domain.enums.TokenType;
+import com.cvgenerator.exceptions.notfound.TokenNotFoundException;
 import com.cvgenerator.repository.TokenRepository;
 import com.cvgenerator.service.dtoConverters.UserDtoConverter;
 import com.cvgenerator.service.implementation.TokenServiceImpl;
@@ -57,5 +58,14 @@ public class TokenServiceTest {
         tokenService.createConfirmationToken(user);
         Token token = repository.findById(1L).orElseThrow();
         Assertions.assertEquals(TokenType.VERIFICATION, token.getTokenType());
+    }
+
+    @Test
+    @DisplayName("Should thrown an exception after try to find non existing token")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void shouldThrownAnException_afterTryToFindNonExistingToken(){
+
+        TokenNotFoundException exception = Assertions.assertThrows(TokenNotFoundException.class, () -> tokenService.findTokenByValue("aaa"));
+        Assertions.assertEquals("Token does not exist", exception.getMessage());
     }
 }
