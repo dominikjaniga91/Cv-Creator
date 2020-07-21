@@ -30,8 +30,8 @@ public class ClauseServiceImpl implements ClauseService {
     @Override
     public void createClause(Long userCvId, Clause clause) {
         UserCv userCv = userCvRepository.findById(userCvId).orElseThrow(() -> new UserCvNotFoundException(messages.get("userCv.notfound")));
-        clause.setUserCv(userCv);
-        clauseRepository.save(clause);
+        userCv.setClause(clause);
+        userCvRepository.save(userCv);
     }
 
     @Override

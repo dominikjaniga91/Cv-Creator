@@ -1,14 +1,14 @@
 package com.cvgenerator.controller;
 
 import com.cvgenerator.domain.dto.UserDto;
-import com.cvgenerator.domain.entity.User;
 import com.cvgenerator.service.implementation.UserServiceImpl;
-import com.cvgenerator.utils.service.implementation.MailServiceImpl;
+import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = {"${settings.cors_origin}"})
@@ -59,9 +59,9 @@ public class UserController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteUserAccount(@PathVariable Long id,
-                                  @RequestBody String password){
+                                  @RequestBody JsonNode requestPassword) throws MissingServletRequestParameterException {
 
-        userService.deleteUserAccount(id, password);
+        userService.deleteUserAccount(id, requestPassword);
     }
 
 }

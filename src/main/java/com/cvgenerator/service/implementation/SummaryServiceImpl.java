@@ -30,8 +30,8 @@ public class SummaryServiceImpl implements SummaryService {
     @Override
     public void createSummary(Long userCvId, Summary summary) {
         UserCv userCv = userCvRepository.findById(userCvId).orElseThrow(() -> new UserCvNotFoundException(messages.get("userCv.notfound")));
-        summary.setUserCv(userCv);
-        summaryRepository.save(summary);
+        userCv.setSummary(summary);
+        userCvRepository.save(userCv);
     }
 
     @Override
