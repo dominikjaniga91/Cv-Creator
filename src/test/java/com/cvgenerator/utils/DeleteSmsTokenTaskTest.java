@@ -1,14 +1,10 @@
 package com.cvgenerator.utils;
 
 import com.cvgenerator.domain.entity.SmsToken;
-import com.cvgenerator.domain.entity.Token;
 import com.cvgenerator.domain.entity.User;
-import com.cvgenerator.domain.enums.TokenType;
 import com.cvgenerator.repository.SmsTokenRepository;
-import com.cvgenerator.repository.TokenRepository;
 import com.cvgenerator.repository.UserRepository;
 import com.cvgenerator.utils.scheduler.DeleteSmsTokenTask;
-import com.cvgenerator.utils.scheduler.DeleteTokenTask;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
