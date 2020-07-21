@@ -28,4 +28,17 @@ public class JsonProcessingServiceTest {
         Assertions.assertEquals("dominik123", service.processJsonString(jsonNode, "password"));
 
     }
+
+    @Test
+    @DisplayName("Should throw an exception after parse non existing value")
+    void shouldThrowAnException_afterParseNonExistingValue() throws JsonProcessingException {
+
+        String json = "{\"newpassword\":\"dominik123\"}";
+        JsonNode jsonNode = new ObjectMapper().readTree(json);
+        MissingServletRequestParameterException exception = Assertions.assertThrows(MissingServletRequestParameterException.class,
+                                                                                    () -> service.processJsonString(jsonNode, "password"));
+
+        Assertions.assertEquals("Required class java.lang.String parameter 'password' is not present", exception.getMessage());
+
+    }
 }
