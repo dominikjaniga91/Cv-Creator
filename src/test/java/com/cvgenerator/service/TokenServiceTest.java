@@ -3,6 +3,7 @@ package com.cvgenerator.service;
 import com.cvgenerator.domain.entity.Token;
 import com.cvgenerator.domain.entity.User;
 import com.cvgenerator.domain.enums.TokenType;
+import com.cvgenerator.exceptions.TokenExpiredException;
 import com.cvgenerator.exceptions.notfound.TokenNotFoundException;
 import com.cvgenerator.repository.TokenRepository;
 import com.cvgenerator.service.dtoConverters.UserDtoConverter;
@@ -22,6 +23,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import java.time.LocalDateTime;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -67,5 +69,16 @@ public class TokenServiceTest {
 
         TokenNotFoundException exception = Assertions.assertThrows(TokenNotFoundException.class, () -> tokenService.findTokenByValue("aaa"));
         Assertions.assertEquals("Token does not exist", exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("Should thrown an exception after get expired token")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void shouldThrownAnException_afterGetExpiredToken(){
+
+        Token token = new Token(1L, LocalDateTime.of(2020,1,1,10,10,10), TokenType.VERIFICATION, user, "aaa");
+        repository.save(token);
+        TokenExpiredException exception = Assertions.assertThrows(TokenExpiredException.class, () -> tokenService.findTokenByValue("aaa"));
+        Assertions.assertEquals("Link expired", exception.getMessage());
     }
 }
