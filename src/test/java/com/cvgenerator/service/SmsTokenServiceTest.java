@@ -2,6 +2,7 @@ package com.cvgenerator.service;
 
 import com.cvgenerator.domain.entity.SmsToken;
 import com.cvgenerator.domain.entity.User;
+import com.cvgenerator.exceptions.notfound.SmsTokenNotFoundException;
 import com.cvgenerator.repository.SmsTokenRepository;
 import com.cvgenerator.service.dtoConverters.UserDtoConverter;
 import com.cvgenerator.service.implementation.SmsTokenServiceImpl;
@@ -56,5 +57,15 @@ public class SmsTokenServiceTest {
         smsTokenService.createSmsToken(user);
         SmsToken smsToken = repository.findById(1L).orElseThrow();
         Assertions.assertTrue(smsToken.getValue().matches("[0-9]{6}"));
+    }
+
+    @Test
+    @DisplayName("Should thrown an exception after not found token in database")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void shouldThrownAnException_afterNotFoundToken(){
+
+        SmsTokenNotFoundException exception = Assertions.assertThrows(SmsTokenNotFoundException.class,
+                                                                    () -> smsTokenService.findSmsTokenByValue("95892"));
+        Assertions.assertEquals("Code does not exist", exception.getMessage());
     }
 }
