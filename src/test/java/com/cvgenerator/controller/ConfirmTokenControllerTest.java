@@ -2,6 +2,7 @@ package com.cvgenerator.controller;
 
 import com.cvgenerator.domain.entity.Token;
 import com.cvgenerator.domain.entity.User;
+import com.cvgenerator.repository.UserRepository;
 import com.cvgenerator.service.implementation.TokenServiceImpl;
 import com.cvgenerator.utils.service.implementation.MailServiceImpl;
 import org.hamcrest.Matchers;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDateTime;
@@ -24,6 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
 @DisplayName("Request to confirm controller using http method")
 public class ConfirmTokenControllerTest {
 
@@ -36,11 +39,15 @@ public class ConfirmTokenControllerTest {
     @MockBean
     private MailServiceImpl mailService;
 
+    @Autowired
+    private UserRepository userRepository;
+    private User user;
+
     @Test
     @DisplayName("GET should return status OK and activate account after request")
     void shouldReturnStatusOkAndActivateUser_afterRequest() throws Exception {
 
-        User user = new User.UserBuilder()
+        user = new User.UserBuilder()
                 .setId(1L)
                 .setFirstName("Dominik")
                 .setLastName("Janiga")
@@ -50,6 +57,8 @@ public class ConfirmTokenControllerTest {
                 .setActive(true)
                 .setRegistration(LocalDateTime.now())
                 .buildUserDto();
+
+        userRepository.save(user);
 
         Token token = tokenService.createConfirmationToken(user);
         String tokenValue = token.getValue();
