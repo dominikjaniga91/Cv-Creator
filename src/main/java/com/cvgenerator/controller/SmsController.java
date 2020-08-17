@@ -33,7 +33,7 @@ public class SmsController {
     }
 
     @ApiOperation(value = "Send SMS to user using user's email")
-    @GetMapping("/sms")
+    @PostMapping("/sms")
     @ResponseStatus(HttpStatus.OK)
     public void sendSmsToken(@ApiParam(value = "Request with Json object that has to contain 'email' field. Example: { \"email\": \"jankowalski@gmail.com\" }")
                        @RequestBody JsonNode request) throws Throwable {
@@ -42,7 +42,7 @@ public class SmsController {
     }
 
     @ApiOperation(value ="Process and validate provided sms token by user")
-    @PostMapping("/sms")
+    @PostMapping("/validate-sms")
     @ResponseStatus(HttpStatus.OK)
     public void validateSmsToken(@ApiParam(value = "Request with Json object that has to contain 'smsToken' field. Example: { \"smsToken\": \"657452\" }")
                                  @RequestBody JsonNode request) throws MissingServletRequestParameterException {
