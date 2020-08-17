@@ -20,6 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import java.util.Date;
@@ -32,6 +33,7 @@ import static org.hamcrest.Matchers.*;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
 @WithMockUser(username = "admin", password = "admin")
 @DisplayName("Request to user controller using http method")
 public class UserControllerTest {
@@ -50,6 +52,7 @@ public class UserControllerTest {
         userDto = new UserDto.UserDtoBuilder()
                                         .setId(1L)
                                         .setFirstName("Dominik")
+                                        .setPassword("dominik123")
                                         .setLastName("Janiga")
                                         .setEmail("dominikjaniga91@gmail.com")
                                         .setRole("USER")
@@ -136,7 +139,8 @@ public class UserControllerTest {
         BDDMockito.doNothing().when(userService).deleteUserAccount(1L, jsonNode);
 
         mockMvc.perform(delete("/api/user/{id}", 1L)
-                .content("admin")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
                 .header("Authorization", "Bearer " + token)
                 .header("Access-Control-Expose-Headers", "Authorization"))
                 .andExpect(status().isOk())
@@ -154,7 +158,7 @@ public class UserControllerTest {
         List<UserCvShortDto> userCvList = List.of(new UserCvShortDto(1L, "my cv", "blue template"));
         BDDMockito.given(userService.getListOfUserCv(1L)).willReturn(userCvList);
 
-        mockMvc.perform(get("/api/user/resume/{id}", 1L)
+        mockMvc.perform(get("/api/user/cv/{id}", 1L)
                 .header("Authorization", "Bearer " + token)
                 .header("Access-Control-Expose-Headers", "Authorization"))
                 .andExpect(status().isOk())
