@@ -2,6 +2,7 @@ package com.cvgenerator.controller;
 
 import com.cvgenerator.domain.entity.Token;
 import com.cvgenerator.domain.entity.User;
+import com.cvgenerator.repository.UserRepository;
 import com.cvgenerator.service.implementation.TokenServiceImpl;
 import com.cvgenerator.utils.service.implementation.MailServiceImpl;
 import io.jsonwebtoken.Jwts;
@@ -20,6 +21,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDateTime;
@@ -30,6 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 @DisplayName("Request to password controller using http method")
 @WithMockUser(username = "admin", password = "admin")
@@ -37,6 +40,9 @@ public class PasswordControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private TokenServiceImpl tokenService;
@@ -82,7 +88,7 @@ public class PasswordControllerTest {
                 .setActive(true)
                 .setRegistration(LocalDateTime.now())
                 .buildUserDto();
-
+        userRepository.save(user);
         Token token = tokenService.createPasswordResetToken(user);
         String tokenValue = token.getValue();
 
