@@ -43,6 +43,7 @@ public class SmsControllerTest {
 
     @Autowired private MockMvc mockMvc;
     @MockBean private SmsServiceImpl smsService;
+    @MockBean private SmsTokenServiceImpl smsTokenService;
     private String jwt;
 
     @BeforeEach
@@ -70,6 +71,23 @@ public class SmsControllerTest {
                     .header("Authorization", "Bearer " + jwt)
                     .header("Access-Control-Expose-Headers", "Authorization"))
                     .andExpect(status().isOk());
+
+    }
+
+    @Test
+    @DisplayName("should return status ok after request for validate sms token")
+    void shouldReturnStatusOk_afterRequestForValidateSmsToken() throws Exception {
+
+        SmsToken smsToken = SmsToken.builder().value("654728").build();
+        BDDMockito.given(smsTokenService.findSmsTokenByValue("654728")).willReturn(smsToken);
+        String content = "{ \"smsToken\": \"654728\" }";
+
+        mockMvc.perform(post("/api/validate-sms")
+                .content(content)
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer " + jwt)
+                .header("Access-Control-Expose-Headers", "Authorization"))
+                .andExpect(status().isOk());
 
     }
 }

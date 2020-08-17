@@ -47,7 +47,7 @@ public class SmsController {
     public void validateSmsToken(@ApiParam(value = "Request with Json object that has to contain 'smsToken' field. Example: { \"smsToken\": \"657452\" }")
                                  @RequestBody JsonNode request) throws MissingServletRequestParameterException {
 
-        String smsToken = jsonProcessingService.processJsonString(request, "sms");
+        String smsToken = jsonProcessingService.processJsonString(request, "smsToken");
         smsTokenService.findSmsTokenByValue(smsToken);
     }
 }
